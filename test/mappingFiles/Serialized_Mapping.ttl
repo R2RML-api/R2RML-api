@@ -1,0 +1,38 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix ex: <http://www.ex.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:tm
+        a       rr:TriplesMap ;
+        rr:logicalTable
+                ex:lt ;
+        rr:predicateObjectMap
+                ex:pom ;
+        rr:subjectMap
+                ex:sm .
+
+ex:lt
+        a       rr:BaseTableOrView ;
+        rr:tableName
+                "STUDENT" .
+
+ex:sm
+        a       rr:SubjectMap , rr:TermMap ;
+        rr:column
+                "UID" ;
+        rr:termType
+                rr:IRI .
+
+ex:pom
+        a       rr:PredicateObjectMap ;
+        rr:objectMap
+                ex:om ;
+        rr:predicate
+                ex:usr .
+
+ex:om
+        a       rr:TermMap , rr:ObjectMap ;
+        rr:column
+                "Username" ;
+        rr:termType
+                rr:Literal .
