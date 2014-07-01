@@ -126,6 +126,15 @@ public abstract class TermMapImpl implements TermMap {
 		if (getTermMapType() == TermMapType.CONSTANT_VALUED) {
 			if (constVal != null) {
 				this.constVal = constVal;
+
+                //Checking the value of the constant.
+                // By default an IRI will be generated;
+                // if it is a literal, we need to explicitly set the term type to rr:Literal
+                
+                // We assume that all the URIs start with "http://"
+                if (!constVal.startsWith("http://")){
+                    termtype = lc.createResource(R2RMLVocabulary.TERM_LITERAL);
+                }
 			} else {
 				throw new NullPointerException(
 						"A constant-valued TermMap must have a value.");
