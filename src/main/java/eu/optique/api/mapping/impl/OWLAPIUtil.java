@@ -72,7 +72,7 @@ public class OWLAPIUtil {
 
 		Set<RDFTriple> s = new HashSet<RDFTriple>();
 
-		TurtleParser tp = new TurtleParser(is, new RDFConsAdapter(s), IRI.create(""));
+		TurtleParser tp = new TurtleParser(is, new RDFConsAdapter(s), IRI.create("").toString());
 		tp.parseDocument();
 
 		return s;
