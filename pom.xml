@@ -26,5 +26,16 @@
       <artifactId>jena-core</artifactId>
       <version>2.11.1</version>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openrdf.sesame</groupId>
+      <artifactId>sesame-runtime</artifactId>
+      <version>2.7.11</version>
+    </dependency>
   </dependencies>
 </project>
