@@ -15,7 +15,7 @@
         <dependency>
             <groupId>net.sourceforge.owlapi</groupId>
             <artifactId>owlapi-api</artifactId>
-            <version>3.4.5</version>
+            <version>${owlapi.version}</version>
         </dependency>
         <dependency>
             <groupId>eu.optique-project</groupId>

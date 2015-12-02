@@ -4,22 +4,24 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.coode.owlapi.rdf.model.RDFLiteralNode;
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.RDFLiteral;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFResourceBlankNode;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
-
+import org.semanticweb.owlapi.io.RDFResourceIRI;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.TriplesMap;
 
 /**
  * The library configuration for the OWL API.
  * 
- * Uses org.coode.owlapi.rdf.model.RDFResourceNode as the resource class,
+ * Uses org.coode.owlapi.rdf.model.RDFResource as the resource class,
  * org.coode.owlapi.rdf.model.RDFTriple as the triple class and
  * java.util.Set<org.coode.owlapi.rdf.model.RDFTriple> as the graph class.
  * 
@@ -30,7 +32,7 @@ public class OWLAPIConfiguration implements LibConfiguration {
 	OWLOntologyManager manager;
 	OWLDataFactory factory;
 
-	private Class<RDFResourceNode> res = RDFResourceNode.class;
+	private Class<RDFResource> res = RDFResource.class;
 	private Class<RDFTriple> trpl = RDFTriple.class;
 	@SuppressWarnings("unchecked")
 	private Class<Set<RDFTriple>> graph = (Class<Set<RDFTriple>>) (Class<?>) Set.class;
@@ -41,12 +43,12 @@ public class OWLAPIConfiguration implements LibConfiguration {
 	}
 
 	@Override
-	public RDFResourceNode createResource(String URI) {
-		return new RDFResourceNode(IRI.create(URI));
+	public RDFResource createResource(String URI) {
+		return new RDFResourceIRI(IRI.create(URI));
 	}
 
 	@Override
-	public RDFResourceNode createBNode() {
+	public RDFResource createBNode() {
 
 		String s = factory.getOWLAnonymousIndividual().getID().getID();
 
@@ -56,7 +58,7 @@ public class OWLAPIConfiguration implements LibConfiguration {
 		 * number.
 		 */
 		int id = Integer.parseInt(s.replaceFirst("(\\D*)((^\\d)*)", ""));
-		return new RDFResourceNode(id);
+		return new RDFResourceBlankNode(id, /*isIndividual*/ true, /*forceId*/true);
 
 	}
 
@@ -64,9 +66,9 @@ public class OWLAPIConfiguration implements LibConfiguration {
 	public RDFTriple createTriple(Object subject, Object predicate,
 			Object object) {
 
-		RDFResourceNode s = (RDFResourceNode) subject;
-		RDFResourceNode p = (RDFResourceNode) predicate;
-		RDFResourceNode o = (RDFResourceNode) object;
+		RDFResource s = (RDFResource) subject;
+        RDFResourceIRI p = (RDFResourceIRI) predicate;
+		RDFResource o = (RDFResource) object;
 		return new RDFTriple(s, p, o);
 
 	}
@@ -75,9 +77,9 @@ public class OWLAPIConfiguration implements LibConfiguration {
 	public RDFTriple createLiteralTriple(Object subject, Object predicate,
 			String litObject) {
 
-		RDFResourceNode s = (RDFResourceNode) subject;
-		RDFResourceNode p = (RDFResourceNode) predicate;
-		RDFLiteralNode lit = new RDFLiteralNode(litObject, (IRI) null);
+		RDFResource s = (RDFResource) subject;
+        RDFResourceIRI p = (RDFResourceIRI) predicate;
+		RDFLiteral lit = new RDFLiteral(litObject, /* lang */ "", (IRI) null);
 		return new RDFTriple(s, p, lit);
 
 	}
@@ -99,7 +101,7 @@ public class OWLAPIConfiguration implements LibConfiguration {
 	}
 
 	@Override
-	public RDFResourceNode getRDFType() {
+	public RDFResource getRDFType() {
 		return createResource(OWLRDFVocabulary.RDF_TYPE.getIRI().toString());
 	}
 
@@ -113,7 +115,7 @@ public class OWLAPIConfiguration implements LibConfiguration {
 
 		for (RDFTriple t : s) {
 			// Will not check literal triples.
-			if ((pred == null || t.getProperty().equals(pred))
+			if ((pred == null || t.getPredicate().equals(pred))
 					&& (obj == null || t.getObject().equals(obj))) {
 				c.add(t.getSubject());
 			}
@@ -134,9 +136,9 @@ public class OWLAPIConfiguration implements LibConfiguration {
 		for (RDFTriple t : s) {
 
 			if ((subj == null || t.getSubject().equals(subj))
-					&& (pred == null || t.getProperty().equals(pred))) {
-				if(t.getObject() instanceof RDFLiteralNode){
-					c.add(((RDFLiteralNode)t.getObject()).getLiteral());
+					&& (pred == null || t.getPredicate().equals(pred))) {
+				if(t.getObject() instanceof RDFLiteral){
+					c.add(((RDFLiteral)t.getObject()).getLexicalValue());
 				}else{
 					c.add(t.getObject());
 				}
@@ -149,7 +151,7 @@ public class OWLAPIConfiguration implements LibConfiguration {
 	}
 
 	@Override
-	public Class<RDFResourceNode> getResourceClass() {
+	public Class<RDFResource> getResourceClass() {
 		return res;
 	}
 

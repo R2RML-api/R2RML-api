@@ -26,7 +26,7 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFTriple;
+
 import org.junit.Test;
 
 import eu.optique.api.mapping.LogicalTable;
@@ -36,6 +36,7 @@ import eu.optique.api.mapping.R2RMLMappingManagerFactory;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.OWLAPIUtil;
+import org.semanticweb.owlapi.io.RDFTriple;
 
 /**
  * JUnit Test Cases
