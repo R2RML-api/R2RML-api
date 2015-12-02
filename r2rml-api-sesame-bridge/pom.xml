@@ -2,15 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>r2rml</artifactId>
-    <groupId>org.optique-project</groupId>
-    <version>0.1.3</version>
+    <groupId>eu.optique-project</groupId>
+    <version>0.1.4</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.optique-project</groupId>
-  <artifactId>r2rml-api-sesame-bridge</artifactId>
+    <artifactId>r2rml-api-sesame-bridge</artifactId>
   <packaging>pom</packaging>
-  <version>0.1.3</version>
+  <version>0.1.4</version>
   <name>Optique R2RML API - Sesame bridge</name>
   <dependencies>
     <dependency>
@@ -19,9 +18,9 @@
       <version>2.7.11</version>
     </dependency>
     <dependency>
-      <groupId>org.optique-project</groupId>
+      <groupId>eu.optique-project</groupId>
       <artifactId>r2rml-api</artifactId>
-      <version>0.1.3</version>
+      <version>0.1.4</version>
     </dependency>
   </dependencies>
 </project>
