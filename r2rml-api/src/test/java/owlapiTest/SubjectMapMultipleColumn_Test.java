@@ -25,8 +25,9 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFResourceIRI;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.IRI;
 
@@ -105,7 +106,7 @@ public class SubjectMapMultipleColumn_Test
 				
 				Iterator<PredicateMap> pmit=pom.getPredicateMaps().iterator();
 				PredicateMap p=pmit.next();
-				Assert.assertEquals(new RDFResourceNode(IRI.create(R2RMLVocabulary.TERM_IRI)),p.getTermType(RDFResourceNode.class));
+				Assert.assertEquals(new RDFResourceIRI(IRI.create(R2RMLVocabulary.TERM_IRI)),p.getTermType(RDFResource.class));
 				Assert.assertTrue(p.getConstant().contains("role"));
 				
 				Iterator<ObjectMap> omit=pom.getObjectMaps().iterator();

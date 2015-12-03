@@ -25,8 +25,8 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
 
 import eu.optique.api.mapping.GraphMap;
@@ -109,7 +109,7 @@ public class N3Syntax1_Test {
 					while(romit.hasNext()){
 						RefObjectMap rom=romit.next();
 						
-						Assert.assertTrue(rom.getParentMap(RDFResourceNode.class)!=null);
+						Assert.assertTrue(rom.getParentMap(RDFResource.class)!=null);
 						
 						Iterator<Join> itjoin=rom.getJoinConditions().iterator();
 						

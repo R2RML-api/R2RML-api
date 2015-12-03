@@ -25,14 +25,15 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+
 import org.junit.Test;
 
 import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.R2RMLMappingManagerFactory;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.OWLAPIUtil;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFTriple;
 
 /**
  * JUnit Test Cases
@@ -58,7 +59,7 @@ public class MultipleAssociatedClasses_Test
 			TriplesMap current=it.next();
 			
 			int cont=0;
-			Iterator<RDFResourceNode> iter=current.getSubjectMap().getClasses(RDFResourceNode.class).iterator();
+			Iterator<RDFResource> iter=current.getSubjectMap().getClasses(RDFResource.class).iterator();
 			while(iter.hasNext()){
 				iter.next();
 				cont++;

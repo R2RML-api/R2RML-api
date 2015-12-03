@@ -22,9 +22,11 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+
 import org.junit.Test;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFResourceIRI;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.semanticweb.owlapi.model.IRI;
 
 import eu.optique.api.mapping.MappingFactory;
@@ -44,14 +46,14 @@ public class SerializeSubMapTest {
 		
 		//SubjectMap
 		String subMapURI = "http://data.example.com/resource/subject";
-		RDFResourceNode subRes = new RDFResourceNode(IRI.create(subMapURI));
+		RDFResource subRes = new RDFResourceIRI(IRI.create(subMapURI));
 		Template templs = mfact.createTemplate("http://data.example.com/employee/{EMPNO}");
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		sm.setResource(subRes);
 		Set<RDFTriple> triples = sm.serialize(RDFTriple.class);
 		
 		for(RDFTriple tr : triples){
-			if(IRI.create(R2RMLVocabulary.PROP_TEMPLATE).equals(tr.getProperty().getIRI())){
+			if(IRI.create(R2RMLVocabulary.PROP_TEMPLATE).equals(tr.getPredicate().getIRI())){
 				Assert.assertTrue(tr.getObject().toString().contains("{EMPNO}"));
 			}				
 		}

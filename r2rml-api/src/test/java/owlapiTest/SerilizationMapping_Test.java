@@ -27,7 +27,8 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFTriple;
+import org.junit.Ignore;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
 
 import eu.optique.api.mapping.R2RMLMappingManager;
@@ -42,7 +43,7 @@ import eu.optique.api.mapping.impl.OWLAPIUtil;
  */
 public class SerilizationMapping_Test
 {
-	
+    @Ignore("RDF/XML is not officially supported by W3C R2RML mapping specification")
 	@Test
 	public void test1() throws Exception {
 

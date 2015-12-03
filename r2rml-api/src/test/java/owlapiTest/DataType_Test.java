@@ -18,17 +18,6 @@
  ******************************************************************************/
 package owlapiTest;
 
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
-
-import junit.framework.Assert;
-
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
-import org.junit.Test;
-
 import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.PredicateObjectMap;
@@ -36,6 +25,15 @@ import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.R2RMLMappingManagerFactory;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.OWLAPIUtil;
+import junit.framework.Assert;
+import org.junit.Test;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFTriple;
+
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * JUnit Test Cases
@@ -72,7 +70,7 @@ public class DataType_Test
 				Iterator<ObjectMap> omit=pom.getObjectMaps().iterator();
 				ObjectMap o=omit.next();
 				Assert.assertTrue(o.getColumn().contains("EMPNO"));
-				Assert.assertTrue(o.getDatatype(RDFResourceNode.class).toString().contains("positiveInteger"));
+				Assert.assertTrue(o.getDatatype(RDFResource.class).toString().contains("positiveInteger"));
 			}
 		}
 

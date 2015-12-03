@@ -25,8 +25,7 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+
 import org.junit.Test;
 
 import eu.optique.api.mapping.GraphMap;
@@ -38,6 +37,10 @@ import eu.optique.api.mapping.RefObjectMap;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.OWLAPIUtil;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFTriple;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * JUnit Test Cases
@@ -55,7 +58,7 @@ public class GraphMap_JoinRefObjectMap_Test {
 		Set<RDFTriple> triples = OWLAPIUtil.readTurtle(fis);
 		Collection<TriplesMap> coll = mm.importMappings(triples);
 		
-		Assert.assertTrue(coll.size()==2);
+		assertTrue(coll.size()==2);
 		
 		Iterator<TriplesMap> it=coll.iterator();
 		while(it.hasNext()){
@@ -110,7 +113,7 @@ public class GraphMap_JoinRefObjectMap_Test {
 					while(romit.hasNext()){
 						RefObjectMap rom=romit.next();
 						
-						Assert.assertTrue(rom.getParentMap(RDFResourceNode.class)!=null);
+						Assert.assertTrue(rom.getParentMap(RDFResource.class)!=null);
 						
 						Iterator<Join> itjoin=rom.getJoinConditions().iterator();
 						

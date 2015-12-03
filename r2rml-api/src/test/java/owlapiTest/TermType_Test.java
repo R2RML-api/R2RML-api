@@ -25,8 +25,9 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFResourceIRI;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.IRI;
 
@@ -103,8 +104,8 @@ public class TermType_Test {
 					
 					Assert.assertTrue(first && second);
 					
-					RDFResourceNode u=o.getTermType(RDFResourceNode.class);
-					Assert.assertEquals(u, new RDFResourceNode(IRI.create(R2RMLVocabulary.TERM_LITERAL)));
+					RDFResource u=o.getTermType(RDFResource.class);
+					Assert.assertEquals(u, new RDFResourceIRI(IRI.create(R2RMLVocabulary.TERM_LITERAL)));
 					
 				}
 			}

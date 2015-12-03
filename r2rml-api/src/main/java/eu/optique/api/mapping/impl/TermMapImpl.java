@@ -132,6 +132,9 @@ public abstract class TermMapImpl implements TermMap {
                 // if it is a literal, we need to explicitly set the term type to rr:Literal
                 
                 // We assume that all the URIs start with "http://"
+
+                // FIXME: in OWLAPI, IRI.toString() looks like "<http://...>"
+
                 if (!constVal.startsWith("http://")){
                     termtype = lc.createResource(R2RMLVocabulary.TERM_LITERAL);
                 }

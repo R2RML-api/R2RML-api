@@ -6,18 +6,24 @@ import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.coode.owlapi.rdf.model.RDFLiteralNode;
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+
+import org.semanticweb.owlapi.io.RDFLiteral;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFResourceBlankNode;
+import org.semanticweb.owlapi.io.RDFResourceIRI;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.rdf.syntax.RDFConsumer;
-import org.semanticweb.owlapi.rdf.syntax.RDFParser;
+
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.rdf.rdfxml.parser.RDFConsumer;
+import org.semanticweb.owlapi.rdf.rdfxml.parser.RDFParser;
+import org.semanticweb.owlapi.rdf.turtle.parser.OWLAPIInternalTurtleParser;
+import org.semanticweb.owlapi.rdf.turtle.parser.TripleHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import uk.ac.manchester.cs.owl.owlapi.turtle.parser.ParseException;
-import uk.ac.manchester.cs.owl.owlapi.turtle.parser.TripleHandler;
-import uk.ac.manchester.cs.owl.owlapi.turtle.parser.TurtleParser;
+import javax.annotation.Nonnull;
+
 
 /**
  * Utility class for parsing and writing OWL API RDFTriples to a stream.
@@ -41,7 +47,7 @@ public class OWLAPIUtil {
 		for (RDFTriple tr : s) {
 			os.write(tr.getSubject().toString().getBytes());
 			os.write(" ".getBytes());
-			os.write(tr.getProperty().toString().getBytes());
+			os.write(tr.getPredicate().toString().getBytes());
 			os.write(" ".getBytes());
 
 			// Strip down to only one < and > on each side, if present.
@@ -65,17 +71,47 @@ public class OWLAPIUtil {
 	 * @param is
 	 *            The InputStream to read from.
 	 * @return The set of RDFTriples that have been read.
-	 * @throws ParseException
 	 */
 	public static Set<RDFTriple> readTurtle(InputStream is)
-			throws ParseException {
+            throws OWLOntologyCreationException, IOException {
 
-		Set<RDFTriple> s = new HashSet<RDFTriple>();
 
-		TurtleParser tp = new TurtleParser(is, new RDFConsAdapter(s), IRI.create("").toString());
-		tp.parseDocument();
+//        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+//
+//        OWLOntology ontology = manager.createOntology();
+//
+//        TurtleOntologyParserFactory f = new TurtleOntologyParserFactory();
+//        OWLParser parser = f.createParser();
+//
+//        parser.parse(new StreamDocumentSource(is), ontology, new OWLOntologyLoaderConfiguration());
+//
+//
+//        RDFTranslator rdfTranslator = new RDFTranslator(manager,ontology,false,
+//                new OWLAnonymousIndividualsWithMultipleOccurrences()
+//        );
+//
+//        rdfTranslator.visit(ontology);
+//
+//        for (OWLAxiom axiom : ontology.getAxioms()) {
+//            axiom.accept(rdfTranslator);
+//        }
+//
+//
+//        ontology.accept(rdfTranslator);
+//
+//        Set<RDFTriple> s = rdfTranslator.getGraph().getAllTriples();
+//		TurtleParser tp = new TurtleParser(is, new RDFConsAdapter(s), IRI.create("").toString());
+//		tp.parseDocument();
 
-		return s;
+        Set<RDFTriple> s = new HashSet<>();
+
+        IRI base = IRI.create("http://example.com/base/");
+
+        OWLAPIInternalTurtleParser tp = new OWLAPIInternalTurtleParser(is, new RDFConsAdapter(s), base);
+        tp.parse();
+
+        return s;
+
 
 	}
 
@@ -87,11 +123,14 @@ public class OWLAPIUtil {
 	 * @return The set of RDFTriples that have been read.
 	 * @throws SAXException
 	 * @throws IOException
+     *
+     * @deprecated only TURTLE is the standard for the syntax of R2RML mappings
 	 */
+    @Deprecated
 	public static Set<RDFTriple> readRDFXML(InputSource is)
 			throws SAXException, IOException {
 
-		Set<RDFTriple> s = new HashSet<RDFTriple>();
+		Set<RDFTriple> s = new HashSet<>();
 
 		RDFParser r = new RDFParser();
 		r.parse(is, new RDFConsAdapter(s));
@@ -108,74 +147,103 @@ public class OWLAPIUtil {
 			read = s;
 		}
 
-		@Override
-		public void addModelAttribte(String key, String value)
-				throws SAXException {
+        @Override
+        public void startModel(@Nonnull IRI physicalURI) {
+            // Do nothing.
+        }
+
+        @Override
+		public void endModel() {
 
 			// Do nothing.
 
 		}
 
 		@Override
-		public void endModel() throws SAXException {
+		public void includeModel(String logicalURI, String physicalURI) {
 
 			// Do nothing.
 
 		}
 
-		@Override
-		public void includeModel(String logicalURI, String physicalURI)
-				throws SAXException {
+        @Nonnull
+        @Override
+        public IRI remapIRI(@Nonnull IRI i) {
+            return null;
+        }
 
-			// Do nothing.
+        @Nonnull
+        @Override
+        public String remapOnlyIfRemapped(@Nonnull String i) {
+            return null;
+        }
 
-		}
+        @Override
+        public void addPrefix(String abbreviation, String value) {
 
-		@Override
-		public void logicalURI(String logicalURI) throws SAXException {
+        }
 
-			// Do nothing.
-
-		}
-
-		@Override
-		public void startModel(String physicalURI) throws SAXException {
-
-			// Do nothing.
-
-		}
 
 		@Override
 		public void statementWithLiteralValue(String subject, String predicate,
-				String object, String language, String datatype)
-				throws SAXException {
+				String object, String language, String datatype) {
 
-			RDFResourceNode s = new RDFResourceNode(IRI.create(subject));
-			RDFResourceNode p = new RDFResourceNode(IRI.create(predicate));
-			RDFLiteralNode o = new RDFLiteralNode(object, (IRI) null);
+			RDFResource s = getRDFResourceFromString(subject);
+			RDFResourceIRI p = new RDFResourceIRI(IRI.create(predicate));
+
+            IRI datatypeIRI = null;
+            if(datatype != null){
+                datatypeIRI = IRI.create(datatype);
+            }
+
+			RDFLiteral o = new RDFLiteral(object, language, datatypeIRI);
 
 			RDFTriple triple = new RDFTriple(s, p, o);
 			read.add(triple);
 
 		}
 
-		@Override
+        private RDFResource getRDFResourceFromString(String subject) {
+            if(subject.startsWith("_:")){
+                return new RDFResourceBlankNode(IRI.create(subject), true, true);
+            }else {
+                return new RDFResourceIRI(IRI.create(subject));
+            }
+        }
+
+        @Override
+        public void statementWithLiteralValue(@Nonnull IRI subject, @Nonnull IRI predicate, @Nonnull String object, String language, IRI datatype) {
+            RDFResource s = new RDFResourceIRI(subject);
+            RDFResourceIRI p = new RDFResourceIRI(predicate);
+            RDFLiteral o = new RDFLiteral(object, language, datatype);
+
+            RDFTriple triple = new RDFTriple(s, p, o);
+            read.add(triple);
+        }
+
+        @Override
+        public void logicalURI(@Nonnull IRI logicalURI) {
+
+        }
+
+        @Override
 		public void statementWithResourceValue(String subject,
-				String predicate, String object) throws SAXException {
+				String predicate, String object) {
 
-			RDFResourceNode s = new RDFResourceNode(IRI.create(subject));
-			RDFResourceNode p = new RDFResourceNode(IRI.create(predicate));
-			RDFResourceNode o = new RDFResourceNode(IRI.create(object));
+			RDFResource s = getRDFResourceFromString(subject);
+			RDFResourceIRI p = new RDFResourceIRI(IRI.create(predicate));
+			RDFResource o = getRDFResourceFromString(object);
 
 			RDFTriple triple = new RDFTriple(s, p, o);
 			read.add(triple);
 
 		}
 
-		@Override
-		public void handleBaseDirective(String base) {
-			// Do nothing
-		}
+        @Override
+        public void statementWithResourceValue(@Nonnull IRI subject, @Nonnull IRI predicate, @Nonnull IRI object) {
+
+        }
+
 
 		@Override
 		public void handleComment(String comment) {
@@ -192,56 +260,33 @@ public class OWLAPIUtil {
 			// Do nothing
 		}
 
-		@Override
+        @Override
+        public void handleBaseDirective(IRI base) {
+
+        }
+
+        @Override
 		public void handleTriple(IRI subject, IRI predicate, IRI object) {
-
-			try {
-				statementWithResourceValue(subject.toString(),
-						predicate.toString(), object.toString());
-			} catch (SAXException e) {
-				// Will never happen.
-				e.printStackTrace();
-			}
-
-		}
+            statementWithResourceValue(subject.toString(), predicate.toString(), object.toString());
+        }
 
 		@Override
 		public void handleTriple(IRI subject, IRI predicate, String object) {
-			try {
-				statementWithLiteralValue(subject.toString(),
-						predicate.toString(), object, null, null);
-			} catch (SAXException e) {
-				// Will never happen.
-				e.printStackTrace();
-			}
+            statementWithLiteralValue(subject.toString(), predicate.toString(), object, /*lang*/ "", null);
 
-		}
+        }
 
 		@Override
-		public void handleTriple(IRI subject, IRI predicate, String object,
-				String lang) {
-			try {
-				statementWithLiteralValue(subject.toString(),
-						predicate.toString(), object, lang, null);
-			} catch (SAXException e) {
-				// Will never happen.
-				e.printStackTrace();
-			}
+		public void handleTriple(IRI subject, IRI predicate, String object, String lang) {
+            statementWithLiteralValue(subject.toString(), predicate.toString(), object, lang, null);
 
-		}
+        }
 
 		@Override
 		public void handleTriple(IRI subject, IRI predicate, String object,
 				IRI datatype) {
-			try {
-				statementWithLiteralValue(subject.toString(),
-						predicate.toString(), object, null, datatype.toString());
-			} catch (SAXException e) {
-				// Will never happen.
-				e.printStackTrace();
-			}
-
-		}
+            statementWithLiteralValue(subject.toString(), predicate.toString(), object, /*lang*/ "", datatype.toString());
+        }
 
 	}
 

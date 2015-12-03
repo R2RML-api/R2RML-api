@@ -25,7 +25,7 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFTriple;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
 
 import eu.optique.api.mapping.PredicateMap;

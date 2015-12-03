@@ -25,9 +25,11 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+
+import org.junit.Ignore;
 import org.junit.Test;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.xml.sax.InputSource;
 
 import eu.optique.api.mapping.PredicateObjectMap;
@@ -44,8 +46,10 @@ import eu.optique.api.mapping.impl.OWLAPIUtil;
  * 
  * @author Riccardo Mancini
  */
+
 public class RDFSyntax2_Test {
-	
+
+    @Ignore("RDF/XML is not officially supported by W3C R2RML mapping specification")
 	@Test
 	public void test() throws Exception{
 		
@@ -88,7 +92,7 @@ public class RDFSyntax2_Test {
 						Iterator<RefObjectMap> gmit=pom.getRefObjectMaps().iterator();
 						while(gmit.hasNext()){
 							RefObjectMap rom=gmit.next();
-							Assert.assertTrue(rom.getParentMap(RDFResourceNode.class)!=null);
+							Assert.assertTrue(rom.getParentMap(RDFResource.class)!=null);
 						}	
 					}
 					
