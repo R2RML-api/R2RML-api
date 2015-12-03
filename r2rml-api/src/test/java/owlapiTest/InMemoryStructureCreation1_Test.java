@@ -24,8 +24,9 @@ import java.util.LinkedList;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
+import org.semanticweb.owlapi.io.RDFResource;
 import org.junit.Test;
+import org.semanticweb.owlapi.io.RDFResourceIRI;
 import org.semanticweb.owlapi.model.IRI;
 
 import eu.optique.api.mapping.LogicalTable;
@@ -61,8 +62,8 @@ public class InMemoryStructureCreation1_Test {
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//Associated Classes
-		sm.addClass(new RDFResourceNode(IRI.create("http://xmlns.com/foaf/0.1/", "Person")));
-		sm.addClass(new RDFResourceNode(IRI.create("http://example.com/", "Student")));
+		sm.addClass(new RDFResourceIRI(IRI.create("http://xmlns.com/foaf/0.1/", "Person")));
+		sm.addClass(new RDFResourceIRI(IRI.create("http://example.com/", "Student")));
 					
 		//PredicateObjectMap
 		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");
@@ -73,7 +74,7 @@ public class InMemoryStructureCreation1_Test {
 		//Other PredicateObjectMap with DataType
 		PredicateMap pred1 = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role1");
 		ObjectMap obm1 = mfact.createObjectMap(TermMapType.COLUMN_VALUED, "ROLESS");
-		obm1.setDatatype(new RDFResourceNode(IRI.create("http://www.w3.org/2001/XMLSchema#", "positiveInteger")));
+		obm1.setDatatype(new RDFResourceIRI(IRI.create("http://www.w3.org/2001/XMLSchema#", "positiveInteger")));
 		PredicateObjectMap pom11 = mfact.createPredicateObjectMap(pred1, obm1);
 		
 		//TriplesMap
@@ -90,7 +91,7 @@ public class InMemoryStructureCreation1_Test {
 			TriplesMap current=it.next();
 			
 			int cont=0;
-			Iterator<RDFResourceNode> iter=current.getSubjectMap().getClasses(RDFResourceNode.class).iterator();
+			Iterator<RDFResource> iter=current.getSubjectMap().getClasses(RDFResource.class).iterator();
 			while(iter.hasNext()){
 				iter.next();
 				cont++;
@@ -120,11 +121,11 @@ public class InMemoryStructureCreation1_Test {
 				while(omit.hasNext()){
 					ObjectMap o=omit.next();
 					
-					if(o.getDatatype(RDFResourceNode.class)==null){
+					if(o.getDatatype(RDFResource.class)==null){
 						Assert.assertTrue(o.getTemplate().getColumnName(0).contains("ROLE"));
 							
 					}else{
-						Assert.assertTrue(o.getDatatype(RDFResourceNode.class).toString().contains("positiveInteger"));
+						Assert.assertTrue(o.getDatatype(RDFResource.class).toString().contains("positiveInteger"));
 					}
 				}
 			}

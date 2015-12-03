@@ -25,8 +25,9 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFResourceIRI;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.IRI;
 
@@ -67,11 +68,11 @@ public class TermType1_Test {
 			Template t=s.getTemplate();
 			Assert.assertTrue(t.getColumnName(0).contains("fname"));
 			
-			RDFResourceNode u=s.getTermType(RDFResourceNode.class);
-			Assert.assertEquals(u, new RDFResourceNode(IRI.create(R2RMLVocabulary.TERM_BLANK_NODE)));
+			RDFResource u=s.getTermType(RDFResource.class);
+			Assert.assertEquals(u, new RDFResourceIRI(IRI.create(R2RMLVocabulary.TERM_BLANK_NODE)));
 		
 			
-			Iterator<RDFResourceNode> ituri=s.getClasses(RDFResourceNode.class).iterator();
+			Iterator<RDFResource> ituri=s.getClasses(RDFResource.class).iterator();
 			int cont=0;
 			while(ituri.hasNext()){
 				ituri.next();

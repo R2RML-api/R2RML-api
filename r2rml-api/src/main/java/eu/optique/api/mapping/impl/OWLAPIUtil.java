@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.RDFLiteral;
 import org.semanticweb.owlapi.io.RDFResource;
 import org.semanticweb.owlapi.io.RDFResourceIRI;
@@ -15,9 +16,17 @@ import org.semanticweb.owlapi.model.IRI;
 
 //import org.semanticweb.owlapi.rdf.turtle.parser.TurleParser;
 
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.rdf.model.RDFTranslator;
 import org.semanticweb.owlapi.rdf.rdfxml.parser.RDFConsumer;
 import org.semanticweb.owlapi.rdf.rdfxml.parser.RDFParser;
 import org.semanticweb.owlapi.rdf.turtle.parser.TripleHandler;
+import org.semanticweb.owlapi.util.AlwaysOutputId;
+import org.semanticweb.owlapi.util.IndividualAppearance;
+import org.semanticweb.owlapi.util.StructureWalker;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -70,15 +79,32 @@ public class OWLAPIUtil {
 	 * @param is
 	 *            The InputStream to read from.
 	 * @return The set of RDFTriples that have been read.
-	 * @throws ParseException
 	 */
 	public static Set<RDFTriple> readTurtle(InputStream is)
-			throws ParseException {
+            throws  OWLOntologyCreationException {
 
-		Set<RDFTriple> s = new HashSet<RDFTriple>();
 
-		TurtleParser tp = new TurtleParser(is, new RDFConsAdapter(s), IRI.create("").toString());
-		tp.parseDocument();
+        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+
+        OWLOntology owlOntology = manager.loadOntologyFromOntologyDocument(is);
+
+        RDFTranslator rdfTranslator = new RDFTranslator(manager,owlOntology,true, new AlwaysOutputId());
+
+        rdfTranslator.visit(owlOntology);
+
+        for (OWLAxiom axiom : owlOntology.getAxioms()) {
+            axiom.accept(rdfTranslator);
+
+            //rdfTranslator.visit(axiom);
+        }
+
+
+        owlOntology.accept(rdfTranslator);
+
+        Set<RDFTriple> s = rdfTranslator.getGraph().getAllTriples();
+
+//		TurtleParser tp = new TurtleParser(is, new RDFConsAdapter(s), IRI.create("").toString());
+//		tp.parseDocument();
 
 		return s;
 

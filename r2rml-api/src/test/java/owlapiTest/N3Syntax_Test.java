@@ -25,8 +25,7 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+
 import org.junit.Test;
 
 import eu.optique.api.mapping.LogicalTable;
@@ -40,6 +39,8 @@ import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.OWLAPIUtil;
 import eu.optique.api.mapping.impl.SQLTableImpl;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFTriple;
 
 /**
  * JUnit Test Cases
@@ -69,9 +70,9 @@ public class N3Syntax_Test
 			Assert.assertTrue(t.getColumnName(0).contains("EMPNO"));
 		
 			int cont=0;
-			Iterator<RDFResourceNode> classesit=s.getClasses(RDFResourceNode.class).iterator();
+			Iterator<RDFResource> classesit=s.getClasses(RDFResource.class).iterator();
 			while(classesit.hasNext()){
-				RDFResourceNode u= classesit.next();
+				RDFResource u= classesit.next();
 				Assert.assertTrue(u.toString().contains("Employee"));
 				cont++;
 			}

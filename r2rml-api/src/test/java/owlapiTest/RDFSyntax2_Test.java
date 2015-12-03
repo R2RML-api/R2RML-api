@@ -25,9 +25,10 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+
 import org.junit.Test;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.xml.sax.InputSource;
 
 import eu.optique.api.mapping.PredicateObjectMap;
@@ -88,7 +89,7 @@ public class RDFSyntax2_Test {
 						Iterator<RefObjectMap> gmit=pom.getRefObjectMaps().iterator();
 						while(gmit.hasNext()){
 							RefObjectMap rom=gmit.next();
-							Assert.assertTrue(rom.getParentMap(RDFResourceNode.class)!=null);
+							Assert.assertTrue(rom.getParentMap(RDFResource.class)!=null);
 						}	
 					}
 					

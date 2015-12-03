@@ -25,8 +25,8 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
-import org.coode.owlapi.rdf.model.RDFResourceNode;
-import org.coode.owlapi.rdf.model.RDFTriple;
+import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
 
 import eu.optique.api.mapping.LogicalTable;
@@ -64,9 +64,9 @@ public class SQLVersion_Test
 				R2RMLViewImpl vi=(R2RMLViewImpl)t;
 
 				int cont=0;
-				Iterator<RDFResourceNode> iter=vi.getSQLVersions(RDFResourceNode.class).iterator();
+				Iterator<RDFResource> iter=vi.getSQLVersions(RDFResource.class).iterator();
 				while(iter.hasNext()){
-					RDFResourceNode s=iter.next();
+					RDFResource s=iter.next();
 					Assert.assertTrue(s.toString().contains("SQL2008"));
 					cont++;
 				}
