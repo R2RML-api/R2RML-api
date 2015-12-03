@@ -31,6 +31,13 @@
         <license.roots>src/main/java,src/test/java</license.roots>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>bz-repo</id>
+            <url>http://obdavm.inf.unibz.it:8080/nexus/content/repositories/thirdparty</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <plugins>
             <plugin>
