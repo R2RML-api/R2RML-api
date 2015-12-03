@@ -18,9 +18,21 @@
             <version>${owlapi.version}</version>
         </dependency>
         <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-apibinding</artifactId>
+            <version>${owlapi.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>eu.optique-project</groupId>
             <artifactId>r2rml-api</artifactId>
             <version>0.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

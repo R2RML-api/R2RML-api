@@ -17,18 +17,7 @@
             <version>2.7.11</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>net.sourceforge.owlapi</groupId>
-            <artifactId>owlapi-api</artifactId>
-            <version>${owlapi.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.owlapi</groupId>
-            <artifactId>owlapi-apibinding</artifactId>
-            <version>${owlapi.version}</version>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>jena-core</artifactId>

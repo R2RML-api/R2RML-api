@@ -1,0 +1,27 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ex: <http://example.com/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@base <http://example.com/base/> .
+
+<TriplesMap1>
+    rr:logicalTable [ rr:tableName "EMP2DEPT" ];
+    rr:subjectMap [
+        rr:template "http://data.example.com/employee/{EMPNO}";
+    ];
+    rr:predicateObjectMap [
+      rr:predicate ex:department;
+      rr:objectMap [ rr:template "http://data.example.com/department/{DEPTNO}" ];
+    ].    
+    
+<TriplesMap2>
+    rr:logicalTable [ rr:tableName "EMP2DEPT" ];
+    rr:subjectMap [
+        rr:template "http://data.example.com/employee/{EMPNO}";
+    ];
+    rr:predicateObjectMap [
+      rr:predicate ex:department;
+      rr:objectMap [ rr:template "http://data.example.com/department/{DEPTNO}" ];
+    ].   
+    
+    

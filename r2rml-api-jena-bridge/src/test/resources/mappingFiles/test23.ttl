@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:activity="http://activity.com/" xmlns:rr="http://www.w3.org/ns/r2rml#" xmlns:ex="http://example.com/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+	<rr:TriplesMap rdf:about="http://example.com/base/TriplesMap1">
+		<rr:logicalTable>
+			<rdf:Description>
+				<rr:tableName>&quot;Student&quot;</rr:tableName>
+			</rdf:Description>
+		</rr:logicalTable>
+		<rr:subjectMap>
+			<rdf:Description>
+				<rr:template>http://example.com/Student/{&quot;ID&quot;}/{&quot;Name&quot;}</rr:template>
+			</rdf:Description>
+		</rr:subjectMap>
+		<rr:predicateObjectMap>
+			<rdf:Description>
+				<rr:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+				<rr:object rdf:resource="http://xmlns.com/foaf/0.1/Person" />
+			</rdf:Description>
+		</rr:predicateObjectMap>
+		<rr:predicateObjectMap>
+			<rdf:Description>
+				<rr:predicate rdf:resource="http://example.com/id" />
+				<rr:objectMap>
+					<rdf:Description>
+						<rr:column>&quot;ID&quot;</rr:column>
+					</rdf:Description>
+				</rr:objectMap>
+			</rdf:Description>
+		</rr:predicateObjectMap>
+		<rr:predicateObjectMap>
+			<rdf:Description>
+				<rr:predicate rdf:resource="http://xmlns.com/foaf/0.1/name" />
+				<rr:objectMap>
+					<rdf:Description>
+						<rr:column>&quot;Name&quot;</rr:column>
+					</rdf:Description>
+				</rr:objectMap>
+			</rdf:Description>
+		</rr:predicateObjectMap>
+		<rr:predicateObjectMap>
+			<rdf:Description>
+				<rr:predicate rdf:resource="http://example.com/Sport" />
+				<rr:objectMap>
+					<rr:RefObjectMap rdf:about="http://example.com/base/RefObjectMap1">
+						<rr:parentTriplesMap>
+							<rr:TriplesMap rdf:about="http://example.com/base/TriplesMap2">
+								<rr:logicalTable>
+									<rdf:Description>
+										<rr:tableName>&quot;Student&quot;</rr:tableName>
+									</rdf:Description>
+								</rr:logicalTable>
+								<rr:subjectMap>
+									<rdf:Description>
+										<rr:template>http://example.com/{&quot;Sport&quot;}</rr:template>
+									</rdf:Description>
+								</rr:subjectMap>
+								<rr:predicateObjectMap>
+									<rdf:Description>
+										<rr:predicate rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#type" />
+										<rr:object rdf:resource="http://activity.com/Sport" />
+									</rdf:Description>
+								</rr:predicateObjectMap>
+							</rr:TriplesMap>
+						</rr:parentTriplesMap>
+					</rr:RefObjectMap>
+				</rr:objectMap>
+			</rdf:Description>
+		</rr:predicateObjectMap>
+	</rr:TriplesMap>
+</rdf:RDF>
