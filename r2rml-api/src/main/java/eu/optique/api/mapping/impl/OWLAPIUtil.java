@@ -7,26 +7,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.RDFLiteral;
 import org.semanticweb.owlapi.io.RDFResource;
+import org.semanticweb.owlapi.io.RDFResourceBlankNode;
 import org.semanticweb.owlapi.io.RDFResourceIRI;
 import org.semanticweb.owlapi.io.RDFTriple;
 import org.semanticweb.owlapi.model.IRI;
 
-//import org.semanticweb.owlapi.rdf.turtle.parser.TurleParser;
-
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
-import org.semanticweb.owlapi.rdf.model.RDFTranslator;
 import org.semanticweb.owlapi.rdf.rdfxml.parser.RDFConsumer;
 import org.semanticweb.owlapi.rdf.rdfxml.parser.RDFParser;
+import org.semanticweb.owlapi.rdf.turtle.parser.OWLAPIInternalTurtleParser;
 import org.semanticweb.owlapi.rdf.turtle.parser.TripleHandler;
-import org.semanticweb.owlapi.util.AlwaysOutputId;
-import org.semanticweb.owlapi.util.IndividualAppearance;
-import org.semanticweb.owlapi.util.StructureWalker;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -81,32 +73,45 @@ public class OWLAPIUtil {
 	 * @return The set of RDFTriples that have been read.
 	 */
 	public static Set<RDFTriple> readTurtle(InputStream is)
-            throws  OWLOntologyCreationException {
+            throws OWLOntologyCreationException, IOException {
 
 
-        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-
-        OWLOntology owlOntology = manager.loadOntologyFromOntologyDocument(is);
-
-        RDFTranslator rdfTranslator = new RDFTranslator(manager,owlOntology,true, new AlwaysOutputId());
-
-        rdfTranslator.visit(owlOntology);
-
-        for (OWLAxiom axiom : owlOntology.getAxioms()) {
-            axiom.accept(rdfTranslator);
-
-            //rdfTranslator.visit(axiom);
-        }
-
-
-        owlOntology.accept(rdfTranslator);
-
-        Set<RDFTriple> s = rdfTranslator.getGraph().getAllTriples();
-
+//        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+//
+//        OWLOntology ontology = manager.createOntology();
+//
+//        TurtleOntologyParserFactory f = new TurtleOntologyParserFactory();
+//        OWLParser parser = f.createParser();
+//
+//        parser.parse(new StreamDocumentSource(is), ontology, new OWLOntologyLoaderConfiguration());
+//
+//
+//        RDFTranslator rdfTranslator = new RDFTranslator(manager,ontology,false,
+//                new OWLAnonymousIndividualsWithMultipleOccurrences()
+//        );
+//
+//        rdfTranslator.visit(ontology);
+//
+//        for (OWLAxiom axiom : ontology.getAxioms()) {
+//            axiom.accept(rdfTranslator);
+//        }
+//
+//
+//        ontology.accept(rdfTranslator);
+//
+//        Set<RDFTriple> s = rdfTranslator.getGraph().getAllTriples();
 //		TurtleParser tp = new TurtleParser(is, new RDFConsAdapter(s), IRI.create("").toString());
 //		tp.parseDocument();
 
-		return s;
+        Set<RDFTriple> s = new HashSet<>();
+
+        IRI base = IRI.create("http://example.com/base/");
+
+        OWLAPIInternalTurtleParser tp = new OWLAPIInternalTurtleParser(is, new RDFConsAdapter(s), base);
+        tp.parse();
+
+        return s;
+
 
 	}
 
@@ -118,7 +123,10 @@ public class OWLAPIUtil {
 	 * @return The set of RDFTriples that have been read.
 	 * @throws SAXException
 	 * @throws IOException
+     *
+     * @deprecated only TURTLE is the standard for the syntax of R2RML mappings
 	 */
+    @Deprecated
 	public static Set<RDFTriple> readRDFXML(InputSource is)
 			throws SAXException, IOException {
 
@@ -180,14 +188,28 @@ public class OWLAPIUtil {
 		public void statementWithLiteralValue(String subject, String predicate,
 				String object, String language, String datatype) {
 
-			RDFResource s = new RDFResourceIRI(IRI.create(subject));
+			RDFResource s = getRDFResourceFromString(subject);
 			RDFResourceIRI p = new RDFResourceIRI(IRI.create(predicate));
-			RDFLiteral o = new RDFLiteral(object, language, IRI.create(datatype));
+
+            IRI datatypeIRI = null;
+            if(datatype != null){
+                datatypeIRI = IRI.create(datatype);
+            }
+
+			RDFLiteral o = new RDFLiteral(object, language, datatypeIRI);
 
 			RDFTriple triple = new RDFTriple(s, p, o);
 			read.add(triple);
 
 		}
+
+        private RDFResource getRDFResourceFromString(String subject) {
+            if(subject.startsWith("_:")){
+                return new RDFResourceBlankNode(IRI.create(subject), true, true);
+            }else {
+                return new RDFResourceIRI(IRI.create(subject));
+            }
+        }
 
         @Override
         public void statementWithLiteralValue(@Nonnull IRI subject, @Nonnull IRI predicate, @Nonnull String object, String language, IRI datatype) {
@@ -208,9 +230,9 @@ public class OWLAPIUtil {
 		public void statementWithResourceValue(String subject,
 				String predicate, String object) {
 
-			RDFResource s = new RDFResourceIRI(IRI.create(subject));
+			RDFResource s = getRDFResourceFromString(subject);
 			RDFResourceIRI p = new RDFResourceIRI(IRI.create(predicate));
-			RDFResource o = new RDFResourceIRI(IRI.create(object));
+			RDFResource o = getRDFResourceFromString(object);
 
 			RDFTriple triple = new RDFTriple(s, p, o);
 			read.add(triple);
@@ -250,7 +272,7 @@ public class OWLAPIUtil {
 
 		@Override
 		public void handleTriple(IRI subject, IRI predicate, String object) {
-            statementWithLiteralValue(subject.toString(), predicate.toString(), object, null, null);
+            statementWithLiteralValue(subject.toString(), predicate.toString(), object, /*lang*/ "", null);
 
         }
 
@@ -263,7 +285,7 @@ public class OWLAPIUtil {
 		@Override
 		public void handleTriple(IRI subject, IRI predicate, String object,
 				IRI datatype) {
-            statementWithLiteralValue(subject.toString(), predicate.toString(), object, null, datatype.toString());
+            statementWithLiteralValue(subject.toString(), predicate.toString(), object, /*lang*/ "", datatype.toString());
         }
 
 	}

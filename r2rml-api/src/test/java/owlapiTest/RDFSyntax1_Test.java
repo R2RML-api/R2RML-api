@@ -25,6 +25,7 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.semanticweb.owlapi.io.RDFResource;
 import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
@@ -46,7 +47,8 @@ import eu.optique.api.mapping.impl.OWLAPIUtil;
  * @author Riccardo Mancini
  */
 public class RDFSyntax1_Test {
-	
+
+    @Ignore("RDF/XML is not officially supported by W3C R2RML mapping specification")
 	@Test
 	public void test() throws Exception{
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test22.ttl");
