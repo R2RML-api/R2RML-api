@@ -249,8 +249,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		Collection<Object> obj = lcfg.getObjects(graph, node, resourceType);
 		if (obj.size() > 0) {
 			for (Object val : obj) {
-                // FIXME: val.toString() is unreliable
-				resources.add(val.toString());
+				resources.add(lcfg.toUnquotedString(val));
 			}
 			return resources;
 		}

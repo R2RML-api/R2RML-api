@@ -165,7 +165,20 @@ public class OWLAPIConfiguration implements LibConfiguration {
 		return graph;
 	}
 
-	@Override
+    @Override
+    public String toUnquotedString(Object iri) {
+        /**
+         * We need special treatment of IRI in OWLAPI because RDFResourceIRI.toString() generates quoted String
+         * <http://...>
+         */
+        if(iri instanceof RDFResourceIRI){
+            return ((RDFResourceIRI)iri).getIRI().toString();
+        } else {
+            return iri.toString();
+        }
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

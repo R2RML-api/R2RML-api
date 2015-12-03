@@ -134,4 +134,11 @@ public interface LibConfiguration {
 	 */
 	public Class<?> getGraphClass();
 
+    /**
+     * the unquoted String representation of the IRI
+     *
+     * @param iri an IRI object
+     * @return string
+     */
+    String toUnquotedString(Object iri);
 }

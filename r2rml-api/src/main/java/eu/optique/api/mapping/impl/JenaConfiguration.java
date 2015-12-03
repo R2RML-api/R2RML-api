@@ -145,7 +145,12 @@ public class JenaConfiguration implements LibConfiguration {
 		return graph;
 	}
 
-	@Override
+    @Override
+    public String toUnquotedString(Object iri) {
+        return iri.toString();
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

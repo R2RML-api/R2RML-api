@@ -5,7 +5,8 @@ import org.semanticweb.owlapi.model.IRI;
 import java.io.InputStream;
 
 /**
- * In OWLAPI v4, the scope of TurtleParser has been changed to package, we here use the trick to use it
+ * In OWLAPI v4, the scope of TurtleParser has been changed to package.
+ * We here use this hacky class to access it
  *
  */
 public class OWLAPIInternalTurtleParser extends TurtleParser {
