@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/R2RML-api/R2RML-api.svg)](https://travis-ci.org/R2RML-api)
+
+
+
 R2RML-api
 =========
 
