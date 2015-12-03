@@ -4,7 +4,7 @@
     <groupId>eu.optique-project</groupId>
     <artifactId>r2rml</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.4</version>
+    <version>0.2</version>
     <name>Optique R2RML API</name>
     <licenses>
         <license>
@@ -51,6 +51,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>

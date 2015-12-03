@@ -3,13 +3,13 @@
     <parent>
         <artifactId>r2rml</artifactId>
         <groupId>eu.optique-project</groupId>
-        <version>0.1.4</version>
+        <version>0.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>r2rml-api-sesame-bridge</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.4</version>
+    <version>0.2</version>
     <properties>
         <sesame.version>2.7.11</sesame.version>
     </properties>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>eu.optique-project</groupId>
             <artifactId>r2rml-api</artifactId>
-            <version>0.1.4</version>
+            <version>0.2</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
