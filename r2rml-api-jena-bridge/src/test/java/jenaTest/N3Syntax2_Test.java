@@ -86,7 +86,7 @@ public class N3Syntax2_Test {
 						Iterator<RefObjectMap> gmit=pom.getRefObjectMaps().iterator();
 						while(gmit.hasNext()){
 							RefObjectMap rom=gmit.next();
-							Assert.assertTrue(rom.getParentMap(Resource.class)!=null);
+							Assert.assertTrue(rom.getParentMap()!=null);
 						}	
 					}
 					

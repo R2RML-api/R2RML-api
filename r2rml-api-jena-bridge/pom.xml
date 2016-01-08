@@ -13,7 +13,7 @@
     <version>0.2</version>
     <name>Optique R2RML API - Jena bridge</name>
     <properties>
-        <jena.version>2.11.1</jena.version>
+        <jena.version>2.13.0</jena.version>
     </properties>
     <dependencies>
         <dependency>
