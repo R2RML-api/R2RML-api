@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>R2rml-api by R2RML-api</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>R2rml-api</h1>
+        <p>R2RML API</p>
+        <p class="view"><a href="https://github.com/R2RML-api/R2RML-api">View the Project on GitHub <small>R2RML-api/R2RML-api</small></a></p>
+        <ul>
+          <li><a href="https://github.com/R2RML-api/R2RML-api/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/R2RML-api/R2RML-api/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/R2RML-api/R2RML-api">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><a href="https://travis-ci.org/R2RML-api"><img src="https://travis-ci.org/R2RML-api/R2RML-api.svg?branch=master" alt="Build Status"></a></p>
+
+<h1>
+<a id="r2rml-api" class="anchor" href="#r2rml-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>R2RML-api</h1>
+
+<h2>
+<a id="how-to-use-r2rml-api-as-a-maven-dependency" class="anchor" href="#how-to-use-r2rml-api-as-a-maven-dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use R2RML-api as a Maven dependency</h2>
+
+<ul>
+<li>put the following fragments into your <code>pom.xml</code>
+</li>
+</ul>
+
+<div class="highlight highlight-text-xml"><pre>    &lt;/<span class="pl-ent">repositories</span>&gt;
+        &lt;<span class="pl-ent">repository</span>&gt;
+            <span class="pl-c">&lt;!-- for R2RML api --&gt;</span>
+            &lt;<span class="pl-ent">id</span>&gt;bolzano-nexus-public&lt;/<span class="pl-ent">id</span>&gt;
+            &lt;<span class="pl-ent">url</span>&gt;http://obdavm.inf.unibz.it:8080/nexus/content/groups/public/&lt;/<span class="pl-ent">url</span>&gt;
+            &lt;<span class="pl-ent">releases</span>&gt;
+                &lt;<span class="pl-ent">enabled</span>&gt;true&lt;/<span class="pl-ent">enabled</span>&gt;
+            &lt;/<span class="pl-ent">releases</span>&gt;
+            &lt;<span class="pl-ent">snapshots</span>&gt;
+                &lt;<span class="pl-ent">enabled</span>&gt;true&lt;/<span class="pl-ent">enabled</span>&gt;
+            &lt;/<span class="pl-ent">snapshots</span>&gt;
+        &lt;/<span class="pl-ent">repository</span>&gt;
+    &lt;/<span class="pl-ent">repositories</span>&gt;
+
+    &lt;<span class="pl-ent">dependencies</span>&gt;
+        <span class="pl-c">&lt;!-- Optique R2RML API --&gt;</span>
+        &lt;<span class="pl-ent">dependency</span>&gt;
+            &lt;<span class="pl-ent">groupId</span>&gt;eu.optique-project&lt;/<span class="pl-ent">groupId</span>&gt;
+            &lt;<span class="pl-ent">artifactId</span>&gt;r2rml-api&lt;/<span class="pl-ent">artifactId</span>&gt;
+            &lt;<span class="pl-ent">version</span>&gt;0.2&lt;/<span class="pl-ent">version</span>&gt;
+        &lt;/<span class="pl-ent">dependency</span>&gt;
+
+        &lt;<span class="pl-ent">dependency</span>&gt;
+            &lt;<span class="pl-ent">groupId</span>&gt;eu.optique-project&lt;/<span class="pl-ent">groupId</span>&gt;
+            &lt;<span class="pl-ent">artifactId</span>&gt;r2rml-api-sesame-bridge&lt;/<span class="pl-ent">artifactId</span>&gt;
+            &lt;<span class="pl-ent">version</span>&gt;0.2&lt;/<span class="pl-ent">version</span>&gt;
+        &lt;/<span class="pl-ent">dependency</span>&gt;
+
+    &lt;/<span class="pl-ent">dependencies</span>&gt;</pre></div>
+
+<h2>
+<a id="reference" class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h2>
+
+<p>[1] "An R2RML Mapping Management API in Java", Marius Strandhaug, Master’s Thesis Spring 2014, University of Oslo.</p>
+
+<p>[2] The javadoc documentation of the API v0.1 can be found by following this URL: <a href="http://folk.uio.no/marstran/doc/">http://folk.uio.no/marstran/doc/</a>.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/R2RML-api">R2RML-api</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
