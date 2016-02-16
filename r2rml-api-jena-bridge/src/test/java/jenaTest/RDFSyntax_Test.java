@@ -50,7 +50,7 @@ public class RDFSyntax_Test
 {
 	@Test
 	public void test1() throws Exception {
-		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test21.ttl");
+		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test21.rdf");
 		
 		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
