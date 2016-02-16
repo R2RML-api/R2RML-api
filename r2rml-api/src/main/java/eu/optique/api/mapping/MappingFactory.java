@@ -8,6 +8,7 @@ import eu.optique.api.mapping.TermMap.TermMapType;
  * Mapping factory that creates the components of R2RML mappings.
  * 
  * @author Marius Strandhaug
+ * @author Martin G. Skjæveland
  */
 public interface MappingFactory {
 
@@ -213,11 +214,10 @@ public interface MappingFactory {
 	 * Create a new RefObjectMap with the given resource for the parent triples
 	 * map.
 	 * 
-	 * @param parentMap
-	 *            The resource for the parent triples map for the RefObjectMap.
+	 * @param parentMap The parent triples map for the RefObjectMap.
 	 * @return The created RefObjectMap.
 	 */
-	public RefObjectMap createRefObjectMap(Object parentMap);
+	public RefObjectMap createRefObjectMap(TriplesMap parentMap);
 
 	/**
 	 * Create a new Join with the given child and parent columns.

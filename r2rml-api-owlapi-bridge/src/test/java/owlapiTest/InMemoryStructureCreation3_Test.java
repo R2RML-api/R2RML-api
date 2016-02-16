@@ -79,8 +79,7 @@ public class InMemoryStructureCreation3_Test{
 		tm.addPredicateObjectMap(pom);
 		
 		//RefObjectMap with join condition
-		RefObjectMap romi = mfact.createRefObjectMap(new RDFResourceIRI(
-														IRI.create("http://example.com/graph/sports#","TermMap1")));
+		RefObjectMap romi = mfact.createRefObjectMap(tm);
 		romi.addJoinCondition(mfact.createJoinCondition("\"Sport\"", "\"ID\""));
 		pom.addRefObjectMap(romi);
 		
@@ -108,7 +107,7 @@ public class InMemoryStructureCreation3_Test{
 			while(romit.hasNext()){
 				RefObjectMap rom=romit.next();
 				
-				Assert.assertTrue(rom.getParentMap(RDFResource.class)!=null);
+				Assert.assertTrue(rom.getParentMap()!=null);
 				
 				Iterator<Join> itjoin=rom.getJoinConditions().iterator();
 				

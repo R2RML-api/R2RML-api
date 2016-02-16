@@ -25,22 +25,20 @@ import java.util.List;
  * R2RML Referencing Object Map
  * 
  * @author Marius Strandhaug
+ * @author Martin G. Skjæveland
  */
 public interface RefObjectMap extends SerializeR2RML, ManageResource {
 
 	/**
-	 * Sets the resource for the parent triples map of this RefObjectMap. A
-	 * RefObjectMap must have exactly one parent triples map resource. This
-	 * method will overwrite any previously set parent triples map resources.
-	 * The tm parameter must be an instance of the library's resource class.
+	 * Sets the parent triples map of this RefObjectMap. A
+	 * RefObjectMap must have exactly one parent triples map. This
+	 * method will overwrite any previously set parent triples map.
 	 * 
 	 * @param tm
-	 *            The resource for the triples map that will be set as the
+	 *            The triples map that will be set as the
 	 *            parent triples map.
-	 * @throws NullPointerException
-	 *             If tm is null.
 	 */
-	public void setParentMap(Object tm);
+	public void setParentMap(TriplesMap tm);
 
 	/**
 	 * Adds the logical table of the parent triples map to this RefObjectMap.
@@ -124,14 +122,11 @@ public interface RefObjectMap extends SerializeR2RML, ManageResource {
 	public List<Join> getJoinConditions();
 
 	/**
-	 * Get the resource for the parent triples map of this RefObjectMap.
-	 * 
-	 * @param resourceClass
-	 *            Must be equal to (or a superclass of) the library's resource
-	 *            class.
+	 * Get the parent triples map of this RefObjectMap.
+	 *
 	 * @return The parent triples map.
 	 */
-	public <R> R getParentMap(Class<R> resourceClass);
+	public TriplesMap getParentMap();
 
 	/**
 	 * Removes the given join condition from this RefObjectMap. The subsequent
@@ -141,5 +136,7 @@ public interface RefObjectMap extends SerializeR2RML, ManageResource {
 	 *            The join condition that will be removed.
 	 */
 	public void removeJoinCondition(Join j);
+
+	
 
 }

@@ -20,6 +20,7 @@
 package eu.optique.api.mapping.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +37,7 @@ import eu.optique.api.mapping.TermMap.TermMapType;
  * An implementation of a TriplesMap.
  * 
  * @author Marius Strandhaug
+ * @author Martin G. Skjæveland
  */
 public class TriplesMapImpl implements TriplesMap {
 
@@ -84,6 +86,11 @@ public class TriplesMapImpl implements TriplesMap {
 	@Override
 	public void addPredicateObjectMap(PredicateObjectMap pom) {
 		pomList.add(pom);
+	}
+	
+	@Override
+	public void addPredicateObjectMaps(Collection<PredicateObjectMap> poms) {
+		pomList.addAll(poms);
 	}
 
 	@Override

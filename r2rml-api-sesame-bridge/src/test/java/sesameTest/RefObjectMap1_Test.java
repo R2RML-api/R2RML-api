@@ -74,7 +74,7 @@ public class RefObjectMap1_Test
 				while(romit.hasNext()){
 					RefObjectMap rom=romit.next();
 					
-					Assert.assertTrue(rom.getParentMap(Resource.class)!=null);
+					Assert.assertTrue(rom.getParentMap()!=null);
 				}
 			}
 		}

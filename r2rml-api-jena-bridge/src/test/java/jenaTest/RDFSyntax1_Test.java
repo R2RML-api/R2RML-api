@@ -48,7 +48,7 @@ public class RDFSyntax1_Test {
 	
 	@Test
 	public void test() throws Exception{
-		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test22.ttl");
+		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test22.rdf");
 		
 		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
@@ -111,7 +111,7 @@ public class RDFSyntax1_Test {
 					while(romit.hasNext()){
 						RefObjectMap rom=romit.next();
 						
-						Assert.assertTrue(rom.getParentMap(Resource.class)!=null);
+						Assert.assertTrue(rom.getParentMap()!=null);
 						
 						Iterator<Join> itjoin=rom.getJoinConditions().iterator();
 						

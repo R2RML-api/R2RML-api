@@ -115,7 +115,7 @@ public class RDFSyntax1_Test {
 					while(romit.hasNext()){
 						RefObjectMap rom=romit.next();
 						
-						Assert.assertTrue(rom.getParentMap(RDFResource.class)!=null);
+						Assert.assertTrue(rom.getParentMap()!=null);
 						
 						Iterator<Join> itjoin=rom.getJoinConditions().iterator();
 						

@@ -23,6 +23,7 @@ import eu.optique.api.mapping.TermMap.TermMapType;
  * Implementation of the Mapping Factory interface.
  * 
  * @author Marius Strandhaug
+ * @author Martin G. Skjæveland
  */
 public class MappingFactoryImpl implements MappingFactory {
 
@@ -129,9 +130,8 @@ public class MappingFactoryImpl implements MappingFactory {
 	public ObjectMap createObjectMap(TermMapType type, String columnOrConst) {
 		return new ObjectMapImpl(lc, type, columnOrConst);
 	}
-
-	@Override
-	public RefObjectMap createRefObjectMap(Object parentMap) {
+	
+	public RefObjectMap createRefObjectMap(TriplesMap parentMap) {
 		return new RefObjectMapImpl(lc, parentMap);
 	}
 

@@ -19,12 +19,14 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
  * R2RML Triples Map
  * 
  * @author Marius Strandhaug
+ * @author Martin G. Skjæveland
  */
 public interface TriplesMap extends SerializeR2RML, ManageResource {
 
@@ -55,6 +57,16 @@ public interface TriplesMap extends SerializeR2RML, ManageResource {
 	 *            The PredicateObjectMap that will be added.
 	 */
 	public void addPredicateObjectMap(PredicateObjectMap pom);
+	
+	/**
+	 * Adds a collection of PredicateObjectMaps to this TriplesMap. The PredicateObjectMap will
+	 * be added to the end of the PredicateObjectMap list. A TriplesMap can have
+	 * any number of PredicateObjectMaps.
+	 * 
+	 * @param poms
+	 *            The PredicateObjectMaps that will be added.
+	 */
+	public void addPredicateObjectMaps(Collection<PredicateObjectMap> poms);
 
 	/**
 	 * Get the LogicalTable associated with this TriplesMap.
@@ -98,5 +110,7 @@ public interface TriplesMap extends SerializeR2RML, ManageResource {
 	 *            The PredicateObjectMap to be removed.
 	 */
 	public void removePredicateObjectMap(PredicateObjectMap pom);
+
+	
 
 }
