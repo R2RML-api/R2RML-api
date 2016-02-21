@@ -10,21 +10,7 @@ R2RML-api
 * put the following fragments into your `pom.xml`
 
 ```xml        
-    </repositories>
-        <repository>
-			<!-- for R2RML api -->
-			<id>bolzano-nexus-public</id>
-			<url>http://obdavm.inf.unibz.it:8080/nexus/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	
-	<dependencies>
+    <dependencies>
 		<!-- Optique R2RML API -->
 		<dependency>
 			<groupId>eu.optique-project</groupId>
