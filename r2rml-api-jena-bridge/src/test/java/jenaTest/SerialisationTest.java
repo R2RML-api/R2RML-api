@@ -30,9 +30,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.mindswap.pellet.jena.PelletReasonerFactory;
+// import org.mindswap.pellet.jena.PelletReasonerFactory;
 
 import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -66,7 +67,8 @@ public class SerialisationTest {
 	}
 
 	public OntModel getOntModel (Model model) {
-		OntModel ontmodel = ModelFactory.createOntologyModel(PelletReasonerFactory.THE_SPEC);
+		//OntModel ontmodel = ModelFactory.createOntologyModel(PelletReasonerFactory.THE_SPEC);
+		OntModel ontmodel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM_RULE_INF);
 		ontmodel.read(r2rmlURL);
 		ontmodel.add(model);
 		return ontmodel;
