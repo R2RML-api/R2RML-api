@@ -24,9 +24,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
-import com.hp.hpl.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.Statement;
 
 import eu.optique.api.mapping.MappingFactory;
 import eu.optique.api.mapping.R2RMLMappingManager;
