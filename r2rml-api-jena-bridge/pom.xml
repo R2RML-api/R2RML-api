@@ -7,7 +7,6 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.optique-project</groupId>
 	<artifactId>r2rml-api-jena-bridge</artifactId>
 	<packaging>jar</packaging>
 	<version>0.3.0-SNAPSHOT</version>
