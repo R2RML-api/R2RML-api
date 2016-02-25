@@ -58,7 +58,7 @@ public class TermType_Test {
 		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
-		m = m.read(fis,"testMapping", "TURTLE");
+		m = m.read(fis, "http://example.com#testMapping", "TURTLE");
 		Collection<TriplesMap> coll = mm.importMappings(m);
 		
 		Assert.assertTrue(coll.size()==1);
@@ -100,10 +100,8 @@ public class TermType_Test {
 				while(omit.hasNext()){
 					ObjectMap o=omit.next();
 					
-					boolean first=o.getTemplate().getColumnName(0).equals("\"FirstName\"");
-					boolean second=o.getTemplate().getColumnName(1).equals("\"LastName\"");
-					
-					Assert.assertTrue(first && second);
+					Assert.assertEquals("\"FirstName\"", o.getTemplate().getColumnName(0));
+					Assert.assertEquals("\"LastName\"", o.getTemplate().getColumnName(1));
 					
 					Resource u=o.getTermType(Resource.class);
 					Assert.assertEquals(u, ResourceFactory.createResource(R2RMLVocabulary.TERM_LITERAL));

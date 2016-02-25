@@ -99,10 +99,8 @@ public class TermType_Test {
 				while(omit.hasNext()){
 					ObjectMap o=omit.next();
 					
-					boolean first=o.getTemplate().getColumnName(0).equals("\"FirstName\"");
-					boolean second=o.getTemplate().getColumnName(1).equals("\"LastName\"");
-					
-					Assert.assertTrue(first && second);
+					Assert.assertEquals("\"FirstName\"", o.getTemplate().getColumnName(0));
+					Assert.assertEquals("\"LastName\"", o.getTemplate().getColumnName(1));
 					
 					RDFResource u=o.getTermType(RDFResource.class);
 					Assert.assertEquals(u, new RDFResourceIRI(IRI.create(R2RMLVocabulary.TERM_LITERAL)));

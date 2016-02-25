@@ -26,8 +26,6 @@ import org.junit.Assert;
 
 import org.junit.Test;
 
-import org.apache.jena.rdf.model.ResourceFactory;
-
 import eu.optique.api.mapping.GraphMap;
 import eu.optique.api.mapping.Join;
 import eu.optique.api.mapping.LogicalTable;
