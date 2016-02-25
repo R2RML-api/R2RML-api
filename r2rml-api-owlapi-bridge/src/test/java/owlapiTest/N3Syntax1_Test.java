@@ -25,7 +25,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 
-import org.semanticweb.owlapi.io.RDFResource;
 import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;
 
