@@ -24,9 +24,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.openrdf.model.Model;
 import org.openrdf.model.impl.LinkedHashModel;
@@ -38,9 +36,9 @@ import org.openrdf.rio.helpers.StatementCollector;
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.R2RMLMappingManager;
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TriplesMap;
+import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases

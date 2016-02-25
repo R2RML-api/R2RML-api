@@ -21,7 +21,7 @@ package jenaTest;
 import java.io.InputStream;
 import java.util.Collection;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 

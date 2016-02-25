@@ -20,9 +20,7 @@ package sesameTest;
 
 import java.util.Set;
 
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
@@ -32,10 +30,10 @@ import org.openrdf.model.impl.ValueFactoryImpl;
 
 import eu.optique.api.mapping.MappingFactory;
 import eu.optique.api.mapping.R2RMLMappingManager;
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.impl.R2RMLVocabulary;
+import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 
 public class SerializeSubMapTest {
 

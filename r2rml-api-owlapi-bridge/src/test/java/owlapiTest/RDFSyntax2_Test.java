@@ -23,22 +23,19 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import junit.framework.Assert;
-
-
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.semanticweb.owlapi.io.RDFResource;
 import org.semanticweb.owlapi.io.RDFTriple;
 import org.xml.sax.InputSource;
 
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.R2RMLMappingManager;
-import eu.optique.api.mapping.impl.owlapi.OWLAPIR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.RefObjectMap;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TriplesMap;
+import eu.optique.api.mapping.impl.owlapi.OWLAPIR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.impl.owlapi.OWLAPIUtil;
 
 /**

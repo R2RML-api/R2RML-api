@@ -22,13 +22,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
-import org.semanticweb.owlapi.io.RDFResource;
 import org.junit.Test;
-import org.semanticweb.owlapi.io.RDFResourceIRI;
-import org.semanticweb.owlapi.model.IRI;
-
 import eu.optique.api.mapping.GraphMap;
 import eu.optique.api.mapping.Join;
 import eu.optique.api.mapping.LogicalTable;

@@ -22,14 +22,12 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
-
 import eu.optique.api.mapping.GraphMap;
 import eu.optique.api.mapping.Join;
 import eu.optique.api.mapping.PredicateObjectMap;
