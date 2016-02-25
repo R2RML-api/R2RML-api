@@ -28,8 +28,6 @@ import org.junit.Test;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
-
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManagerFactory;
