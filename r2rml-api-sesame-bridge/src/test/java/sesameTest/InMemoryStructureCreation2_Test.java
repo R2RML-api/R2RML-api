@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 import org.openrdf.model.URI;

@@ -25,7 +25,7 @@ import java.io.FileOutputStream;
 import java.util.Collection;
 
 import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 import org.openrdf.model.Model;
