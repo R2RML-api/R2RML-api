@@ -6,15 +6,16 @@ import java.util.Collection;
  * The library configuration that is used by the API to handle RDF. This
  * interface can be implemented in order to extend the support for other
  * libraries.
- * 
+ *
  * @author Marius Strandhaug
+ * @author xiao
  */
 public interface LibConfiguration {
 
 	/**
 	 * Creates a resource with the given URI. Returns an object of the class
 	 * returned by the method getResourceClass().
-	 * 
+	 *
 	 * @param URI
 	 *            - The URI of the created resource.
 	 * @return A resource.
@@ -24,7 +25,7 @@ public interface LibConfiguration {
 	/**
 	 * Creates a blank node resource. Returns an object of the class returned by
 	 * the method getResourceClass().
-	 * 
+	 *
 	 * @return A resource.
 	 */
 	public Object createBNode();
@@ -33,7 +34,7 @@ public interface LibConfiguration {
 	 * Creates a triple from the given subject, predicate and object. The
 	 * subject, predicate and object must all be of the class returned by the
 	 * method getResourceClass().
-	 * 
+	 *
 	 * @param subject
 	 *            - The subject of the triple.
 	 * @param predicate
@@ -48,7 +49,7 @@ public interface LibConfiguration {
 	 * Creates a literal triple from the given subject, predicate and literal
 	 * object. The subject and predicate must both be of the class returned by
 	 * the method getResourceClass().
-	 * 
+	 *
 	 * @param subject
 	 *            - The subject of the triple.
 	 * @param predicate
@@ -64,7 +65,7 @@ public interface LibConfiguration {
 	 * Create a graph containing triples generated from the given collection of
 	 * TriplesMaps. The returned graph will be the class returned by the method
 	 * getGraphClass().
-	 * 
+	 *
 	 * @param maps
 	 *            - The TriplesMaps that will be serialized.
 	 * @return A graph with the given TriplesMaps.
@@ -74,7 +75,7 @@ public interface LibConfiguration {
 	/**
 	 * Returns the URI of the rdf:type predicate. The URI will be of the class
 	 * returned by the method getResourceClass().
-	 * 
+	 *
 	 * @return Resource with the URI of rdf:type.
 	 */
 	public Object getRDFType();
@@ -84,7 +85,7 @@ public interface LibConfiguration {
 	 * object. Null-values are considered as wildcards. The objects in the
 	 * returned collection are of the class returned by the method
 	 * getResourceClass().
-	 * 
+	 *
 	 * @param graph
 	 *            - The graph to get triples from.
 	 * @param pred
@@ -100,7 +101,7 @@ public interface LibConfiguration {
 	 * predicate. Null-values are considered as wildcards. The objects in the
 	 * returned collection are of the class returned by the method
 	 * getResourceClass().
-	 * 
+	 *
 	 * @param graph
 	 *            - The graph to get triples from.
 	 * @param subj
@@ -114,7 +115,7 @@ public interface LibConfiguration {
 	/**
 	 * Returns the resource class. A resource can either be named, or it can be
 	 * a blank node.
-	 * 
+	 *
 	 * @return The resource class.
 	 */
 	public Class<?> getResourceClass();
@@ -122,23 +123,34 @@ public interface LibConfiguration {
 	/**
 	 * Returns the triple class. A triple consists of a subject, predicate and
 	 * an object.
-	 * 
+	 *
 	 * @return The triple class.
 	 */
 	public Class<?> getTripleClass();
 
 	/**
 	 * Returns the graph class. A graph consists of a set of triples.
-	 * 
+	 *
 	 * @return The graph class.
 	 */
 	public Class<?> getGraphClass();
 
     /**
-     * the unquoted String representation of the IRI
      *
-     * @param iri an IRI object
+     * Gets the lexical form (no quotation or escape) of a node
+     * <ul>
+     * <li>
+     *     For IRIs, return the UNQUOTED String representation.
+     * </li>
+     * <li>
+     *     For Literals, return the UNESCAPED string representation of the value.
+     * </li>
+     * </ul>
+     *
+     * NOTE: Avoid using toString() methods in general, since they are not reliable.
+     *
+     * @param node an IRI, Literal, or BNode
      * @return string
      */
-    String toUnquotedString(Object iri);
+    String getLexicalForm(Object node);
 }

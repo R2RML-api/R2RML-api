@@ -147,8 +147,12 @@ public class JenaConfiguration implements LibConfiguration {
 	}
 
     @Override
-    public String toUnquotedString(Object iri) {
-        return iri.toString();
+    public String getLexicalForm(Object node) {
+        if(node instanceof Literal){
+            return ((Literal) node).getLexicalForm();
+        } else {
+            return node.toString();
+        }
     }
 
     @Override
