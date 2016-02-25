@@ -22,12 +22,9 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 import org.junit.Assert;
-
 import org.junit.Test;
 import org.openrdf.model.Model;
-import org.openrdf.model.Resource;
 import org.openrdf.model.impl.LinkedHashModel;
 import org.openrdf.rio.RDFFormat;
 import org.openrdf.rio.RDFParser;
@@ -38,10 +35,10 @@ import eu.optique.api.mapping.GraphMap;
 import eu.optique.api.mapping.Join;
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.R2RMLMappingManager;
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.RefObjectMap;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TriplesMap;
+import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases

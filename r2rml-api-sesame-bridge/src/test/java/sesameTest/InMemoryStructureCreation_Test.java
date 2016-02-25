@@ -22,9 +22,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 import org.junit.Assert;
-
 import org.junit.Test;
 
 import eu.optique.api.mapping.LogicalTable;
@@ -33,11 +31,11 @@ import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.R2RMLMappingManager;
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
-import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.TermMap.TermMapType;
+import eu.optique.api.mapping.TriplesMap;
+import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
