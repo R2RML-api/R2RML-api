@@ -4,15 +4,15 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDF;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.vocabulary.RDF;
 
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.TriplesMap;
@@ -21,9 +21,9 @@ import eu.optique.api.mapping.impl.R2RMLVocabulary;
 /**
  * The library configuration for the Jena API.
  * 
- * Uses com.hp.hpl.jena.rdf.model.Resource as the resource class,
- * com.hp.hpl.jena.rdf.model.Statement as the triple class and
- * com.hp.hpl.jena.rdf.model.Model as the graph class.
+ * Uses org.apache.jena.rdf.model.Resource as the resource class,
+ * org.apache.jena.rdf.model.Statement as the triple class and
+ * org.apache.jena.rdf.model.Model as the graph class.
  * 
  * @author Marius Strandhaug
  */
@@ -36,14 +36,14 @@ public class JenaConfiguration implements LibConfiguration {
 	@Override
 	public Resource createResource(String URI) {
 
-		return com.hp.hpl.jena.rdf.model.ResourceFactory.createResource(URI);
+		return org.apache.jena.rdf.model.ResourceFactory.createResource(URI);
 
 	}
 
 	@Override
 	public Resource createBNode() {
 
-		return com.hp.hpl.jena.rdf.model.ResourceFactory.createResource();
+		return org.apache.jena.rdf.model.ResourceFactory.createResource();
 
 	}
 
@@ -51,11 +51,11 @@ public class JenaConfiguration implements LibConfiguration {
 	public Statement createTriple(Object subject, Object predicate,
 			Object object) {
 		Resource s = (Resource) subject;
-		Property p = com.hp.hpl.jena.rdf.model.ResourceFactory
+		Property p = org.apache.jena.rdf.model.ResourceFactory
 				.createProperty(((Resource) predicate).getURI());
 		Resource o = (Resource) object;
 
-		return com.hp.hpl.jena.rdf.model.ResourceFactory.createStatement(s, p,
+		return org.apache.jena.rdf.model.ResourceFactory.createStatement(s, p,
 				o);
 
 	}
@@ -64,11 +64,11 @@ public class JenaConfiguration implements LibConfiguration {
 	public Statement createLiteralTriple(Object subject, Object predicate,
 			String litObject) {
 
-		Property p = com.hp.hpl.jena.rdf.model.ResourceFactory
+		Property p = org.apache.jena.rdf.model.ResourceFactory
 				.createProperty(((Resource) predicate).getURI());
-		Literal l = com.hp.hpl.jena.rdf.model.ResourceFactory
+		Literal l = org.apache.jena.rdf.model.ResourceFactory
 				.createPlainLiteral(litObject);
-		return com.hp.hpl.jena.rdf.model.ResourceFactory.createStatement(
+		return org.apache.jena.rdf.model.ResourceFactory.createStatement(
 				(Resource) subject, p, l);
 
 	}
@@ -99,7 +99,7 @@ public class JenaConfiguration implements LibConfiguration {
 	public Collection<Object> getSubjects(Object graph, Object pred, Object obj) {
 
 		Model m = (Model) graph;
-		Property p = com.hp.hpl.jena.rdf.model.ResourceFactory
+		Property p = org.apache.jena.rdf.model.ResourceFactory
 				.createProperty(((Resource) pred).getURI());
 
 		Collection<Object> c = new HashSet<Object>();
@@ -117,7 +117,7 @@ public class JenaConfiguration implements LibConfiguration {
 
 		Model m = (Model) graph;
 
-		Property p = com.hp.hpl.jena.rdf.model.ResourceFactory
+		Property p = org.apache.jena.rdf.model.ResourceFactory
 				.createProperty(((Resource) pred).getURI());
 
 		Collection<Object> c = new HashSet<Object>();
@@ -147,8 +147,12 @@ public class JenaConfiguration implements LibConfiguration {
 	}
 
     @Override
-    public String toUnquotedString(Object iri) {
-        return iri.toString();
+    public String getLexicalForm(Object node) {
+        if(node instanceof Literal){
+            return ((Literal) node).getLexicalForm();
+        } else {
+            return node.toString();
+        }
     }
 
     @Override

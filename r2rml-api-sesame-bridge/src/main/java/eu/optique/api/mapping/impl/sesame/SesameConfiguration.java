@@ -26,6 +26,7 @@ import eu.optique.api.mapping.TriplesMap;
  * as the graph class.
  * 
  * @author Marius Strandhaug
+ * @author xiao
  */
 public class SesameConfiguration implements LibConfiguration {
 
@@ -136,8 +137,8 @@ public class SesameConfiguration implements LibConfiguration {
 	}
 
     @Override
-    public String toUnquotedString(Object iri) {
-        return iri.toString();
+    public String getLexicalForm(Object node) {
+        return node.toString();
     }
 
     @Override

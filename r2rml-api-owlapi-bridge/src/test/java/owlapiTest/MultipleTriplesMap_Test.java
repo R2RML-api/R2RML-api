@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Set;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.semanticweb.owlapi.io.RDFTriple;
 import org.junit.Test;

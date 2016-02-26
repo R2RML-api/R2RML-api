@@ -20,17 +20,15 @@ package owlapiTest;
 
 import java.io.InputStream;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
 
-import junit.framework.Assert;
-
-import org.semanticweb.owlapi.io.RDFTriple;
+import org.junit.Assert;
 import org.junit.Test;
+import org.semanticweb.owlapi.io.RDFTriple;
 
 import eu.optique.api.mapping.R2RMLMappingManager;
-import eu.optique.api.mapping.impl.owlapi.OWLAPIR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.TriplesMap;
+import eu.optique.api.mapping.impl.owlapi.OWLAPIR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.impl.owlapi.OWLAPIUtil;
 
 /**
@@ -52,6 +50,7 @@ public class Equal_Test
 		
 		Assert.assertTrue(coll.size()==2);
 		
+		/*
 		Iterator<TriplesMap> i=coll.iterator();
 		TriplesMap first=i.next();
 		TriplesMap second=i.next();
@@ -61,7 +60,7 @@ public class Equal_Test
 		// Assert.assertTrue(first.getLogicalTable().equals(second.getLogicalTable())); //different objects with the same characteristics
 		// Assert.assertTrue(first.getSubjectMap().equals(second.getSubjectMap()));
 		// Assert.assertTrue(first.getPredicateObjectMap(0).equals(second.getPredicateObjectMap(0)));
-			
+			*/
 	}
 
 	

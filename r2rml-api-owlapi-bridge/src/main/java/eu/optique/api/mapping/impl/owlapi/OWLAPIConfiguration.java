@@ -26,6 +26,7 @@ import eu.optique.api.mapping.TriplesMap;
  * java.util.Set<org.coode.owlapi.rdf.model.RDFTriple> as the graph class.
  * 
  * @author Marius Strandhaug
+ * @author xiao
  */
 public class OWLAPIConfiguration implements LibConfiguration {
 
@@ -166,15 +167,15 @@ public class OWLAPIConfiguration implements LibConfiguration {
 	}
 
     @Override
-    public String toUnquotedString(Object iri) {
+    public String getLexicalForm(Object node) {
         /**
          * We need special treatment of IRI in OWLAPI because RDFResourceIRI.toString() generates quoted String
          * <http://...>
          */
-        if(iri instanceof RDFResourceIRI){
-            return ((RDFResourceIRI)iri).getIRI().toString();
+        if(node instanceof RDFResourceIRI){
+            return ((RDFResourceIRI)node).getIRI().toString();
         } else {
-            return iri.toString();
+            return node.toString();
         }
     }
 

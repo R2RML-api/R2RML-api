@@ -22,14 +22,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
-import org.openrdf.model.Resource;
-import org.openrdf.model.ValueFactory;
-import org.openrdf.model.impl.ValueFactoryImpl;
-
 import eu.optique.api.mapping.GraphMap;
 import eu.optique.api.mapping.Join;
 import eu.optique.api.mapping.LogicalTable;
@@ -38,12 +32,12 @@ import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.R2RMLMappingManager;
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.RefObjectMap;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
-import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.TermMap.TermMapType;
+import eu.optique.api.mapping.TriplesMap;
+import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
@@ -57,7 +51,7 @@ public class InMemoryStructureCreation3_Test{
 
 		R2RMLMappingManager mm = new SesameR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
-		ValueFactory myFactory = ValueFactoryImpl.getInstance();
+		//ValueFactory myFactory = ValueFactoryImpl.getInstance();
 
 		//Table
 		LogicalTable lt = mfact.createR2RMLView("SELECT * FROM TABLE");
@@ -80,7 +74,7 @@ public class InMemoryStructureCreation3_Test{
 		tm.addPredicateObjectMap(pom);
 		
 		//RefObjectMap with join condition
-		RefObjectMap romi = mfact.createRefObjectMap(myFactory.createURI("http://example.com/graph/sports#","TermMap1"));
+		RefObjectMap romi = mfact.createRefObjectMap(tm);
 		romi.addJoinCondition(mfact.createJoinCondition("\"Sport\"", "\"ID\""));
 		pom.addRefObjectMap(romi);
 		
@@ -108,7 +102,7 @@ public class InMemoryStructureCreation3_Test{
 			while(romit.hasNext()){
 				RefObjectMap rom=romit.next();
 				
-				Assert.assertTrue(rom.getParentMap(Resource.class)!=null);
+				Assert.assertTrue(rom.getParentMap()!=null);
 				
 				Iterator<Join> itjoin=rom.getJoinConditions().iterator();
 				

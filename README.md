@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/R2RML-api/R2RML-api.svg)](https://travis-ci.org/R2RML-api)
+[![Build Status](https://travis-ci.org/R2RML-api/R2RML-api.svg?branch=master)](https://travis-ci.org/R2RML-api)
 
 
 

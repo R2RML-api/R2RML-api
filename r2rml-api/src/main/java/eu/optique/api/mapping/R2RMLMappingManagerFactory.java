@@ -19,10 +19,6 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
-import java.util.HashMap;
-
-import eu.optique.api.mapping.impl.R2RMLMappingManagerImpl;
-
 /**
  * Factory creating a new instance of the MappingManager service.
  * 

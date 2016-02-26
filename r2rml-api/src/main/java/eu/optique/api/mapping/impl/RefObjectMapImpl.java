@@ -30,15 +30,17 @@ import eu.optique.api.mapping.Join;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.RefObjectMap;
+import eu.optique.api.mapping.TriplesMap;
 
 /**
  * An implementation of a RefObjectMap.
  * 
  * @author Marius Strandhaug
+ * @author Martin G. Skjæveland
  */
 public class RefObjectMapImpl implements RefObjectMap {
 
-	Object parent;
+	TriplesMap parent;
 
 	LogicalTable parentLogicalTable;
 	LogicalTable childLogicalTable;
@@ -48,7 +50,7 @@ public class RefObjectMapImpl implements RefObjectMap {
 	Object res;
 	final LibConfiguration lc;
 
-	public RefObjectMapImpl(LibConfiguration c, Object parentMap) {
+	public RefObjectMapImpl(LibConfiguration c, TriplesMap parentMap) {
 
 		if (c == null) {
 			throw new NullPointerException("LibConfiguration was null.");
@@ -63,21 +65,10 @@ public class RefObjectMapImpl implements RefObjectMap {
 	}
 
 	@Override
-	public void setParentMap(Object tm) {
-		if (tm != null && !lc.getResourceClass().isInstance(tm)) {
-			throw new IllegalArgumentException("Parameter tm is of type "
-					+ tm.getClass() + ". Should be an instance of "
-					+ lc.getResourceClass() + ".");
-		}
-
-		if (tm != null) {
-			parent = tm;
-		} else {
-			throw new NullPointerException(
-					"A RefObjectMap must have a parent triples map resource.");
-		}
+	public void setParentMap(TriplesMap tm) {
+		parent = tm;
 	}
-
+	
 	@Override
 	public void setParentLogicalTable(LogicalTable lt) {
 		parentLogicalTable = lt;
@@ -147,8 +138,8 @@ public class RefObjectMapImpl implements RefObjectMap {
 	}
 
 	@Override
-	public <R> R getParentMap(Class<R> resourceClass) {
-		return resourceClass.cast(parent);
+	public TriplesMap getParentMap() {
+		return parent;
 	}
 
 	@Override
@@ -164,7 +155,7 @@ public class RefObjectMapImpl implements RefObjectMap {
 				lc.createResource(R2RMLVocabulary.TYPE_REF_OBJECT_MAP))));
 		stmtSet.add(tripleClass.cast(lc.createTriple(res,
 				lc.createResource(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP),
-				parent)));
+				parent.getResource(lc.getResourceClass()))));
 
 		for (Join j : joinList) {
 			stmtSet.add(tripleClass.cast(lc.createTriple(res,

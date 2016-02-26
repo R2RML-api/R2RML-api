@@ -25,7 +25,7 @@ import java.io.FileOutputStream;
 import java.util.Collection;
 import java.util.Set;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Ignore;
 import org.semanticweb.owlapi.io.RDFTriple;

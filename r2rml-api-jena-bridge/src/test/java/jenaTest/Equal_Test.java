@@ -20,14 +20,12 @@ package jenaTest;
 
 import java.io.InputStream;
 import java.util.Collection;
-import java.util.Iterator;
-
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManagerFactory;
@@ -53,16 +51,18 @@ public class Equal_Test
 		
 		Assert.assertTrue(coll.size()==2);
 		
+		/*
+		// These tests are invalid, they compare object identities instead of content
+		//the equals method should not take into account the resource element!
+		
 		Iterator<TriplesMap> i=coll.iterator();
 		TriplesMap first=i.next();
 		TriplesMap second=i.next();
-		
-                // These tests are invalid, they compare object identities instead of content
-		// //the equals method should not take into account the resource element!
+		        
 		// Assert.assertTrue(first.getLogicalTable().equals(second.getLogicalTable())); //different objects with the same characteristics
 		// Assert.assertTrue(first.getSubjectMap().equals(second.getSubjectMap()));
 		// Assert.assertTrue(first.getPredicateObjectMap(0).equals(second.getPredicateObjectMap(0)));
-			
+		 */
 	}
 
 	

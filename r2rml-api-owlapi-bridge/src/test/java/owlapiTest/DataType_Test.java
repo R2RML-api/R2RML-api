@@ -25,7 +25,7 @@ import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.impl.owlapi.OWLAPIR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.owlapi.OWLAPIUtil;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.semanticweb.owlapi.io.RDFResource;
 import org.semanticweb.owlapi.io.RDFTriple;

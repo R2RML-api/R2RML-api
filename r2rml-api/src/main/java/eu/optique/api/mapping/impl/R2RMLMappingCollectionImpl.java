@@ -21,9 +21,11 @@ package eu.optique.api.mapping.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import eu.optique.api.mapping.GraphMap;
@@ -47,18 +49,19 @@ import eu.optique.api.mapping.TermMap.TermMapType;
  * given graph.
  * 
  * @author Timea Bagosi
+ * @author Martin G. Skjæveland
  * 
  */
 public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 
-	// the set of generated mappings
-	private Collection<TriplesMap> triplesMaps;
+	// the set of generated mappings, using the subject node as key.
+	private Map<Object, TriplesMap> triplesMaps;
 
 	// the value factory to create URIs
 	private LibConfiguration lcfg;
 	private MappingFactory mfact;
 
-	// the sesame rdf graph to read the mappings from
+	// the rdf graph to read the mappings from
 	private Object graph = null;
 
 	/**
@@ -82,12 +85,14 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 
 	@Override
 	public void addTriplesMap(TriplesMap mapping) {
-		triplesMaps.add(mapping);
+		triplesMaps.put(mapping.getResource(lcfg.getResourceClass()), mapping);
 	}
 
 	@Override
 	public void addTriplesMaps(Collection<TriplesMap> mappings) {
-		triplesMaps.addAll(mappings);
+		for (TriplesMap map : mappings) {
+			addTriplesMap(map);
+		}
 	}
 
 	@Override
@@ -96,12 +101,21 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			throw new NullPointerException(
 					"The RDF Graph supported for the mapping manager must not be null.");
 		this.graph = graph;
+		
+		// Read all tripleMaps, ignoring predicate-object maps.
 		triplesMaps = readTriplesMaps();
+		
+		// Add predicate-object maps to the tripleMaps.
+		// This is done after all triplesmaps are created to ensure that RefObjectMap parent 
+		// references do not refer to nonexistent (and possibly do-be-created) triplesmaps.
+		for (Object node : triplesMaps.keySet()) {
+			triplesMaps.get(node).addPredicateObjectMaps(readPredicateObjectMaps(node));
+		}
 	}
 
 	@Override
 	public Collection<TriplesMap> getTriplesMaps() {
-		return triplesMaps;
+		return triplesMaps.values();
 	}
 
 	/**
@@ -112,19 +126,19 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	 * @throws InvalidR2RMLMappingException
 	 *             if found something invalid/missing
 	 */
-	private Set<TriplesMap> readTriplesMaps()
+	private Map<Object, TriplesMap> readTriplesMaps()
 			throws InvalidR2RMLMappingException {
-		Set<TriplesMap> triples = new HashSet<TriplesMap>();
+		Map<Object, TriplesMap> triples = new HashMap<>();
 		// find triplesmap nodes
 		// it has to have a logical table declaration
 		Collection<Object> triplesMapNodes = lcfg.getSubjects(graph,
 				lcfg.createResource(R2RMLVocabulary.PROP_LOGICAL_TABLE), null);
 
-		// for each triplesmap node populate the triplesmap
+		// for each triplesmap node populate the triplesmap, ignoring property-object maps,
 		// and add it to the set of triplesmaps
-		for (Object node : triplesMapNodes)
-			triples.add(readTriplesMap(node));
-
+		for (Object node : triplesMapNodes) {
+			triples.put(node, readTriplesMap(node));
+		}
 		return triples;
 	}
 
@@ -142,10 +156,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		// create a TriplesMap populating each argument
 		LogicalTable logicalTable = readLogicalTable(node);
 		SubjectMap subjectMap = readSubjectMap(node);
-		List<PredicateObjectMap> predObjMaps = readPredicateObjectMaps(node);
-
-		TriplesMap triplesMap = mfact.createTriplesMap(logicalTable,
-				subjectMap, predObjMaps);
+		TriplesMap triplesMap = mfact.createTriplesMap(logicalTable, subjectMap);
 		triplesMap.setResource(node);
 		return triplesMap;
 	}
@@ -169,7 +180,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		// must be exactly one logicaltable node
 		if (logicalTableNode.size() != 1) {
 			throw new InvalidR2RMLMappingException(
-					"Invalid mapping: TriplesMap node without LogicalTable node!");
+					"Invalid mapping: TriplesMap " + node + " has no LogicalTable.");
 		} else {
 
 			Object logicalTable = logicalTableNode.toArray()[0];
@@ -189,7 +200,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			if (query != null) {
 				if (isSQLTable) {
 					throw new InvalidR2RMLMappingException(
-							"Invalid mapping: Logical table has both a tablename and a SQL query!");
+							"Invalid mapping: Logical table in TripleMap " + node + " has both a tablename and a SQL query.");
 				}
 
 				toReturn = mfact.createR2RMLView(query);
@@ -205,7 +216,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 
 			if (toReturn == null) {
 				throw new InvalidR2RMLMappingException(
-						"Invalid mapping: Logical table has no tablename or SQL query!");
+						"Invalid mapping: Logical table in TripleMap " + node + " has no tablename or SQL query.");
 			}
 
 			toReturn.setResource(logicalTable);
@@ -228,7 +239,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		// look for resourceType declaration
 		Collection<Object> obj = lcfg.getObjects(graph, node, resourceType);
 		if (obj.size() == 1)
-			return obj.iterator().next().toString();
+			return lcfg.getLexicalForm(obj.iterator().next());
 		return null;
 	}
 
@@ -249,7 +260,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		Collection<Object> obj = lcfg.getObjects(graph, node, resourceType);
 		if (obj.size() > 0) {
 			for (Object val : obj) {
-				resources.add(lcfg.toUnquotedString(val));
+				resources.add(lcfg.getLexicalForm(val));
 			}
 			return resources;
 		}
@@ -400,18 +411,18 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	 * Reads and returns the list of PredicateObjectMap-s of a given Resource
 	 * node.
 	 * 
-	 * @param node
+	 * @param tripleMapNode
 	 *            - the Resource node in which to look for PredicateObjectMaps
 	 * @return the created list of PredicateObjectMap objects
 	 * @throws InvalidR2RMLMappingException
 	 *             if there's no predicate or objectMap
 	 */
-	private List<PredicateObjectMap> readPredicateObjectMaps(Object node)
+	private List<PredicateObjectMap> readPredicateObjectMaps(Object tripleMapNode)
 			throws InvalidR2RMLMappingException {
 		List<PredicateObjectMap> predObjs = new ArrayList<PredicateObjectMap>();
 
 		// find predicateobjectmap nodes
-		Collection<Object> predicateObjectNodes = lcfg.getObjects(graph, node,
+		Collection<Object> predicateObjectNodes = lcfg.getObjects(graph, tripleMapNode,
 				lcfg.createResource(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP));
 		// for each predicateobjectmap find predicatemap, objectmap
 		// and add it to the list to be returned
@@ -423,14 +434,14 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			List<ObjectMap> objectMaps = readObjectMaps(predobjNode);
 
 			List<RefObjectMap> refObjectMaps = readRefObjectMaps(predobjNode,
-					node);
+					tripleMapNode);
 
 			if (predicateMaps.isEmpty()) {
 				throw new InvalidR2RMLMappingException(
-						"Invalid mapping: PredicateObjectMap has no PredicateMap!");
+						"Invalid mapping: PredicateObjectMap " + predobjNode + " in TripleMap " + tripleMapNode + " has no PredicateMap.");
 			} else if (objectMaps.isEmpty() && refObjectMaps.isEmpty()) {
 				throw new InvalidR2RMLMappingException(
-						"Invalid mapping: PredicateObjectMap has no ObjectMaps or RefObjectMaps!");
+						"Invalid mapping: PredicateObjectMap " + predobjNode + " in TripleMap " + tripleMapNode + " has no ObjectMaps or RefObjectMaps.");
 			}
 
 			PredicateObjectMap predobjMap = mfact.createPredicateObjectMap(
@@ -670,8 +681,11 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 
 			// create refObjMap object
 			Object parentNode = parentTriplesMap.next();
-
-			RefObjectMap refObjectMap = mfact.createRefObjectMap(parentNode);
+			if (! triplesMaps.containsKey(parentNode)) {
+				throw new InvalidR2RMLMappingException(
+						"Invalid mapping: RefObjectMap in TripleMap " + tmNode + " refers to non-existent TripleMap: " + parentNode);
+			}
+			RefObjectMap refObjectMap = mfact.createRefObjectMap(triplesMaps.get(parentNode));
 			refObjectMap.setResource(objectNode);
 			refObjectMap.setChildLogicalTable(readLogicalTable(tmNode));
 			refObjectMap.setParentLogicalTable(readLogicalTable(parentNode));

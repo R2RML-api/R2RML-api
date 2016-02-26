@@ -23,17 +23,15 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import junit.framework.Assert;
-
-import org.semanticweb.owlapi.io.RDFResource;
-import org.semanticweb.owlapi.io.RDFTriple;
+import org.junit.Assert;
 import org.junit.Test;
+import org.semanticweb.owlapi.io.RDFTriple;
 
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.R2RMLMappingManager;
-import eu.optique.api.mapping.impl.owlapi.OWLAPIR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.RefObjectMap;
 import eu.optique.api.mapping.TriplesMap;
+import eu.optique.api.mapping.impl.owlapi.OWLAPIR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.impl.owlapi.OWLAPIUtil;
 
 /**
@@ -65,7 +63,7 @@ public class RefObjectMap1_Test
 				while(romit.hasNext()){
 					RefObjectMap rom=romit.next();
 					
-					Assert.assertTrue(rom.getParentMap(RDFResource.class)!=null);
+					Assert.assertTrue(rom.getParentMap()!=null);
 				}
 			}
 		}
