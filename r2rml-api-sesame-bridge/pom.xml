@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <version>0.3.1-SNAPSHOT</version>
     <properties>
-        <sesame.version>2.7.11</sesame.version>
+        <sesame.version>4.1.2</sesame.version>
     </properties>
     <name>Optique R2RML API - Sesame bridge</name>
     <dependencies>
