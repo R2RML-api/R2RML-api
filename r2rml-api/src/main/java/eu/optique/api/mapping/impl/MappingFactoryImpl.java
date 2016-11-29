@@ -39,10 +39,22 @@ public class MappingFactoryImpl implements MappingFactory {
 	}
 
 	@Override
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, String triplesMapIdentifier) {
+		return new TriplesMapImpl(lc, lt, sm, triplesMapIdentifier);
+	}
+
+	@Override
 	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm,
 			PredicateObjectMap pom) {
 
 		TriplesMap tm = new TriplesMapImpl(lc, lt, sm);
+		tm.addPredicateObjectMap(pom);
+		return tm;
+	}
+
+	@Override
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom, String triplesMapIdentifier) {
+		TriplesMap tm = new TriplesMapImpl(lc, lt, sm, triplesMapIdentifier);
 		tm.addPredicateObjectMap(pom);
 		return tm;
 	}

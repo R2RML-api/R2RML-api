@@ -63,6 +63,21 @@ public class TriplesMapImpl implements TriplesMap {
 		setResource(lc.createBNode());
 	}
 
+	public TriplesMapImpl(LibConfiguration c, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
+
+		if (c == null) {
+			throw new NullPointerException("LibConfiguration was null.");
+		}
+
+		lc = c;
+
+		pomList = new ArrayList<PredicateObjectMap>();
+		setLogicalTable(lt);
+		setSubjectMap(sm);
+
+		setResource(lc.createResource(resourceIdentifier));
+	}
+
 	@Override
 	public void setLogicalTable(LogicalTable lt) {
 		if (lt == null) {
