@@ -24,6 +24,8 @@ public interface MappingFactory {
 	 */
 	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm);
 
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, String triplesMapIdentifier);
+
 	/**
 	 * Create a new TriplesMap with the given LogicalTable, SubjectMap and
 	 * PredicateObjectMap.
@@ -40,6 +42,8 @@ public interface MappingFactory {
 	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm,
 			PredicateObjectMap pom);
 
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm,
+									   PredicateObjectMap pom, String triplesMapIdentifier);
 	/**
 	 * Create a new TriplesMap with the given LogicalTable, SubjectMap and list
 	 * of PredicateObjectMaps.
