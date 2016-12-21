@@ -35,7 +35,7 @@ import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.TriplesMap;
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
+import eu.optique.api.mapping.impl.rdf4j.SesameR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases

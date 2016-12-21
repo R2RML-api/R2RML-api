@@ -33,7 +33,7 @@ import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.impl.R2RMLVocabulary;
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
+import eu.optique.api.mapping.impl.rdf4j.SesameR2RMLMappingManagerFactory;
 
 public class SerializeSubMapTest {
 

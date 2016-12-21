@@ -40,7 +40,7 @@ import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TermMap.TermMapType;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.R2RMLViewImpl;
-import eu.optique.api.mapping.impl.sesame.SesameR2RMLMappingManagerFactory;
+import eu.optique.api.mapping.impl.rdf4j.SesameR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases

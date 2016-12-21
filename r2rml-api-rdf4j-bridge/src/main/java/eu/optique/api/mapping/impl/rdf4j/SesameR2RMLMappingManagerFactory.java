@@ -1,4 +1,4 @@
-package eu.optique.api.mapping.impl.sesame;
+package eu.optique.api.mapping.impl.rdf4j;
 
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.R2RMLMappingManager;

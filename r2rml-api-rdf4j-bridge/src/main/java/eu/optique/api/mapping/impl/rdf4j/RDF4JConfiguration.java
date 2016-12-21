@@ -1,22 +1,21 @@
-package eu.optique.api.mapping.impl.sesame;
+package eu.optique.api.mapping.impl.rdf4j;
 
-import java.util.Collection;
-import java.util.HashSet;
-
+import eu.optique.api.mapping.LibConfiguration;
+import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.R2RMLVocabulary;
+import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
-import org.eclipse.rdf4j.model.URI;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
-import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 
-import eu.optique.api.mapping.LibConfiguration;
-import eu.optique.api.mapping.TriplesMap;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * The library configuration for the OpenRDF Sesame API.
@@ -30,16 +29,16 @@ import eu.optique.api.mapping.TriplesMap;
  */
 public class RDF4JConfiguration implements LibConfiguration {
 
-	ValueFactory vf = ValueFactoryImpl.getInstance();
+	private ValueFactory vf = SimpleValueFactory.getInstance();
 
 	private Class<Resource> res = Resource.class;
 	private Class<Statement> trpl = Statement.class;
 	private Class<Model> graph = Model.class;
 
 	@Override
-	public Resource createResource(String URI) {
+	public Resource createResource(String iri) {
 
-		return vf.createURI(URI);
+		return vf.createIRI(iri);
 
 	}
 
@@ -54,7 +53,7 @@ public class RDF4JConfiguration implements LibConfiguration {
 	public Statement createTriple(Object subject, Object predicate,
 			Object object) {
 
-		return vf.createStatement((Resource) subject, (URI) predicate,
+		return vf.createStatement((Resource) subject, (IRI) predicate,
 				(Resource) object);
 
 	}
@@ -63,7 +62,7 @@ public class RDF4JConfiguration implements LibConfiguration {
 	public Statement createLiteralTriple(Object subject, Object predicate,
 			String litObject) {
 
-		return vf.createStatement((Resource) subject, (URI) predicate,
+		return vf.createStatement((Resource) subject, (IRI) predicate,
 				vf.createLiteral(litObject));
 
 	}
@@ -90,10 +89,10 @@ public class RDF4JConfiguration implements LibConfiguration {
 	@Override
 	public Collection<Object> getSubjects(Object graph, Object pred, Object obj) {
 
-		Model m = ((Model) graph).filter(null, (URI) pred, (Value) obj,
+		Model m = ((Model) graph).filter(null, (IRI) pred, (Value) obj,
 				(Resource) null);
 
-		Collection<Object> c = new HashSet<Object>();
+		Collection<Object> c = new HashSet<>();
 		c.addAll(m.subjects());
 
 		return c;
@@ -103,10 +102,10 @@ public class RDF4JConfiguration implements LibConfiguration {
 	@Override
 	public Collection<Object> getObjects(Object graph, Object subj, Object pred) {
 
-		Model m = ((Model) graph).filter((Resource) subj, (URI) pred, null,
+		Model m = ((Model) graph).filter((Resource) subj, (IRI) pred, null,
 				(Resource) null);
 
-		Collection<Object> c = new HashSet<Object>();
+		Collection<Object> c = new HashSet<>();
 		
 		for(Value v : m.objects()){
 			if(v instanceof Literal){
