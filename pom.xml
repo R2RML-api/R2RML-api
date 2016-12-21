@@ -30,7 +30,7 @@
         <module>r2rml-api</module>
         <module>r2rml-api-jena-bridge</module>
         <module>r2rml-api-owlapi-bridge</module>
-        <module>r2rml-api-sesame-bridge</module>
+        <module>r2rml-api-rdf4j-bridge</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
