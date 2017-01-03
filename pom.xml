@@ -3,7 +3,7 @@
     <groupId>eu.optique-project</groupId>
     <artifactId>r2rml</artifactId>
     <packaging>pom</packaging>
-    <version>0.3.1</version>
+    <version>0.4.0</version>
     <name>Optique R2RML API</name>
     <licenses>
         <license>
@@ -30,7 +30,7 @@
         <module>r2rml-api</module>
         <module>r2rml-api-jena-bridge</module>
         <module>r2rml-api-owlapi-bridge</module>
-        <module>r2rml-api-sesame-bridge</module>
+        <module>r2rml-api-rdf4j-bridge</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
