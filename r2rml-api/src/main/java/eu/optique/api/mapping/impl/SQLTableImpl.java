@@ -66,7 +66,7 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)));
 
         stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_TABLE_NAME),
                 lc.getRDF().createLiteral(getSQLTableName())));

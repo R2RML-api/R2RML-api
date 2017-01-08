@@ -154,7 +154,7 @@ public class RefObjectMapImpl implements RefObjectMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
         stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP), parent.getResource()));
 
 		for (Join j : joinList) {

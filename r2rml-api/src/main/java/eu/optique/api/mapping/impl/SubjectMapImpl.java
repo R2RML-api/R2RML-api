@@ -134,7 +134,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 		stmtSet.addAll(super.serialize());
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
 
 		for (IRI cl : classList) {
             stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_CLASS), cl));

@@ -93,7 +93,7 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_R2RML_VIEW)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_R2RML_VIEW)));
 
         stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SQL_QUERY),
                 lc.getRDF().createLiteral(getSQLQuery())));

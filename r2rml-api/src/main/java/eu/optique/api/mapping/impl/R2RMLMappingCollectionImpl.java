@@ -47,6 +47,9 @@ import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDFTerm;
+import org.apache.commons.rdf.api.Triple;
+
+import static java.util.stream.Collectors.toSet;
 
 /**
  * The class representing a collection of TriplesMaps, which is generated from a
@@ -135,8 +138,10 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		Map<BlankNodeOrIRI, TriplesMap> triples = new HashMap<>();
 		// find triplesmap nodes
 		// it has to have a logical table declaration
-        Collection<BlankNodeOrIRI> triplesMapNodes = lcfg.getSubjects(graph,
-                lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), null);
+        Collection<BlankNodeOrIRI> triplesMapNodes = graph
+                .stream(null, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), null)
+                .map(Triple::getSubject)
+                .collect(toSet());
 
 		// for each triplesmap node populate the triplesmap, ignoring property-object maps,
 		// and add it to the set of triplesmaps
@@ -179,8 +184,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			throws InvalidR2RMLMappingException {
 		LogicalTable toReturn = null;
 		// find logical table nodes
-        Collection<RDFTerm> logicalTableNode = lcfg.getObjects(graph, node,
-                lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE));
+        Collection<RDFTerm> logicalTableNode = graph.stream(node, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		// must be exactly one logicaltable node
 		if (logicalTableNode.size() != 1) {
 			throw new InvalidR2RMLMappingException(
@@ -239,7 +245,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	 */
 	private String readResource(BlankNodeOrIRI node, IRI resourceType) {
 		// look for resourceType declaration
-		Collection<RDFTerm> obj = lcfg.getObjects(graph, node, resourceType);
+        Collection<RDFTerm> obj = graph.stream(node, resourceType, null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		if (obj.size() == 1)
 			return lcfg.getLexicalForm(obj.iterator().next());
 		return null;
@@ -259,7 +267,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	private List<String> readResources(BlankNodeOrIRI node, IRI resourceType) {
 		List<String> resources = new ArrayList<String>();
 		// look for resourceType declaration
-		Collection<RDFTerm> obj = lcfg.getObjects(graph, node, resourceType);
+        Collection<RDFTerm> obj = graph.stream(node, resourceType, null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		if (obj.size() > 0) {
 			for (RDFTerm val : obj) {
 				resources.add(lcfg.getLexicalForm(val));
@@ -282,7 +292,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	 */
 	private RDFTerm readResourceURI(BlankNodeOrIRI node, IRI resourceType) {
 		// look for resourceType declaration
-		Collection<RDFTerm> obj = lcfg.getObjects(graph, node, resourceType);
+        Collection<RDFTerm> obj = graph.stream(node, resourceType, null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		if (obj.size() == 1)
 			return obj.iterator().next();
 		return null;
@@ -301,7 +313,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	private Set<RDFTerm> readResourceURIs(BlankNodeOrIRI node, IRI resourceType) {
 		Set<RDFTerm> resources = new HashSet<>();
 		// look for resourceType declarations
-		Collection<RDFTerm> obj = lcfg.getObjects(graph, node, resourceType);
+        Collection<RDFTerm> obj = graph.stream(node, resourceType, null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		for (RDFTerm value : obj)
 			resources.add(value);
 		return resources;
@@ -318,8 +332,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	private List<GraphMap> readGraphMap(BlankNodeOrIRI node) {
 		List<GraphMap> graphMapList = new ArrayList<GraphMap>();
 		// look for graph declaration
-        Collection<RDFTerm> graphDecl = lcfg.getObjects(graph, node,
-                lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH));
+        Collection<RDFTerm> graphDecl = graph.stream(node, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		if (graphDecl.size() > 0) {
 			for (RDFTerm val : graphDecl) {
 				graphMapList.add(mfact.createGraphMap(
@@ -327,8 +342,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			}
 		} else {
 			// look for graphMap nodes
-            Collection<RDFTerm> graphMaps = lcfg.getObjects(graph, node,
-                    lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP));
+            Collection<RDFTerm> graphMaps = graph.stream(node, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), null)
+                    .map(Triple::getObject)
+                    .collect(toSet());
 			for (RDFTerm value : graphMaps) {
                 BlankNodeOrIRI graphMapNode = (BlankNodeOrIRI) value;
 				// create graphMap object
@@ -361,8 +377,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			return mfact.createSubjectMap(TermMapType.CONSTANT_VALUED, subject);
 		} else {
 			// look for subjectMap declarations
-            Collection<RDFTerm> subjectMapNode = lcfg.getObjects(graph, node,
-                    lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP));
+            Collection<RDFTerm> subjectMapNode = graph.stream(node, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), null)
+                    .map(Triple::getObject)
+                    .collect(toSet());
 			if (subjectMapNode.size() != 1) {
 				throw new InvalidR2RMLMappingException(
 						"Invalid mapping: TriplesMap without subjectMap node");
@@ -424,8 +441,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		List<PredicateObjectMap> predObjs = new ArrayList<PredicateObjectMap>();
 
 		// find predicateobjectmap nodes
-        Collection<RDFTerm> predicateObjectNodes = lcfg.getObjects(graph, tripleMapNode,
-                lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP));
+        Collection<RDFTerm> predicateObjectNodes = graph.stream(tripleMapNode, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP), null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		// for each predicateobjectmap find predicatemap, objectmap
 		// and add it to the list to be returned
 		for (RDFTerm predobj : predicateObjectNodes) {
@@ -487,8 +505,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		// there might still be predicateMap declarations
 
 		// look for predicateMap declaration
-        Collection<RDFTerm> predicateMapNodes = lcfg.getObjects(graph, node,
-                lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP));
+        Collection<RDFTerm> predicateMapNodes = graph.stream(node, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP), null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		for (RDFTerm predMapNode : predicateMapNodes) {
 
 			BlankNodeOrIRI predicateNode = (BlankNodeOrIRI) predMapNode;
@@ -529,8 +548,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		}
 
 		// look for objectMap declaration
-        Collection<RDFTerm> objectMapNodes = lcfg.getObjects(graph, node,
-                lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP));
+        Collection<RDFTerm> objectMapNodes = graph.stream(node, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		for (RDFTerm objectMapNode : objectMapNodes) {
 
             BlankNodeOrIRI objectNode = (BlankNodeOrIRI) objectMapNode;
@@ -660,18 +680,17 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		List<RefObjectMap> refObjectMaps = new ArrayList<RefObjectMap>();
 
 		// look for objectMap declaration
-        Collection<RDFTerm> objectMapNodes = lcfg.getObjects(graph, pomNode,
-                lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP));
+        Collection<RDFTerm> objectMapNodes = graph.stream(pomNode, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), null)
+                .map(Triple::getObject)
+                .collect(toSet());
 		for (RDFTerm objectMapNode : objectMapNodes) {
 
 			BlankNodeOrIRI objectNode = (BlankNodeOrIRI) objectMapNode;
 
 			// look for parentTriplesMap keyword
-            Iterator<RDFTerm> parentTriplesMap = lcfg
-					.getObjects(
-							graph,
-							objectNode,
-                            lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP))
+            Iterator<RDFTerm> parentTriplesMap = graph.stream(objectNode, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP), null)
+                    .map(Triple::getObject)
+                    .collect(toSet())
 					.iterator();
 			if (!parentTriplesMap.hasNext()) {
 				continue;
@@ -689,9 +708,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			refObjectMap.setParentLogicalTable(readLogicalTable(parentNode));
 
 			// look for join condition
-            Collection<RDFTerm> joinConditions = lcfg.getObjects(graph,
-					objectNode,
-                    lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION));
+            Collection<RDFTerm> joinConditions = graph.stream(objectNode, lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION), null)
+                    .map(Triple::getObject)
+                    .collect(toSet());
 			for (RDFTerm value : joinConditions) {
 				BlankNodeOrIRI joinCondition = (BlankNodeOrIRI) value;
 

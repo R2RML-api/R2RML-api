@@ -91,9 +91,15 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
 			throw new IllegalArgumentException(
 					"The mapping collection is empty");
 
-		return lc.createGraph(maps);
+        Graph m = lc.getRDF().createGraph();
 
-	}
+        for (TriplesMap tm : maps) {
+            tm.serialize().forEach(m::add);
+        }
+
+        return m;
+
+    }
 
 	/**
 	 * Extracts the R2RML mapping from an RDF graph.

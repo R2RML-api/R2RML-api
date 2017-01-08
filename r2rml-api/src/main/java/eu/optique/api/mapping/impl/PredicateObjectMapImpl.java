@@ -292,7 +292,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_PREDICATE_OBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_PREDICATE_OBJECT_MAP)));
 
 		for (PredicateMap pm : predList) {
 			if (pm.getTermMapType() == TermMapType.CONSTANT_VALUED) {
