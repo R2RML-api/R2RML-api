@@ -32,6 +32,9 @@ import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.TermMap.TermMapType;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.RDFTerm;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of a TriplesMap.
@@ -45,7 +48,7 @@ public class TriplesMapImpl implements TriplesMap {
 	SubjectMap subMap;
 	ArrayList<PredicateObjectMap> pomList;
 
-	Object res;
+	BlankNodeOrIRI res;
 	final LibConfiguration lc;
 
 	public TriplesMapImpl(LibConfiguration c, LogicalTable lt, SubjectMap sm) {
@@ -134,7 +137,7 @@ public class TriplesMapImpl implements TriplesMap {
 	}
 
 	@Override
-	public void setResource(Object r) {
+	public void setResource(RDFTerm r) {
 		if (r != null && !lc.getResourceClass().isInstance(r)) {
 			throw new IllegalArgumentException("Parameter r is of type "
 					+ r.getClass() + ". Should be an instance of "
@@ -143,43 +146,43 @@ public class TriplesMapImpl implements TriplesMap {
 			throw new NullPointerException("A TriplesMap must have a resource.");
 		}
 
-		res = r;
+		res = (BlankNodeOrIRI) r;
 	}
 
-	@Override
-	public <R> R getResource(Class<R> resourceClass) {
-		return resourceClass.cast(res);
-	}
+    @Override
+    public BlankNodeOrIRI getResource() {
+        return res;
+    }
 
 	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<>();
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_TRIPLES_MAP))));
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_TRIPLES_MAP)));
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res,
+		stmtSet.add(lc.createTriple(res,
 				lc.createResource(R2RMLVocabulary.PROP_LOGICAL_TABLE),
-				getLogicalTable().getResource(lc.getResourceClass()))));
-		stmtSet.addAll(getLogicalTable().serialize(tripleClass));
+				getLogicalTable().getResource()));
+		stmtSet.addAll(getLogicalTable().serialize());
 
 		if (getSubjectMap().getTermMapType() == TermMapType.CONSTANT_VALUED) {
 			// Use constant shortcut property.
-			stmtSet.add(tripleClass.cast(lc.createTriple(res,
+			stmtSet.add(lc.createTriple(res,
 					lc.createResource(R2RMLVocabulary.PROP_SUBJECT),
-					lc.createResource(getSubjectMap().getConstant()))));
+					lc.createResource(getSubjectMap().getConstant())));
 		} else {
-			stmtSet.add(tripleClass.cast(lc.createTriple(res,
+			stmtSet.add(lc.createTriple(res,
 					lc.createResource(R2RMLVocabulary.PROP_SUBJECT_MAP),
-					getSubjectMap().getResource(lc.getResourceClass()))));
-			stmtSet.addAll(getSubjectMap().serialize(tripleClass));
+					getSubjectMap().getResource()));
+			stmtSet.addAll(getSubjectMap().serialize());
 		}
 
 		for (PredicateObjectMap pom : pomList) {
-			stmtSet.add(tripleClass.cast(lc.createTriple(res, 
+			stmtSet.add(lc.createTriple(res, 
 					lc.createResource(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP),
-					pom.getResource(lc.getResourceClass()))));
-			stmtSet.addAll(pom.serialize(tripleClass));
+					pom.getResource()));
+			stmtSet.addAll(pom.serialize());
 		}
 
 		return stmtSet;

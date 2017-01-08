@@ -19,6 +19,10 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.RDFTerm;
+
 /**
  * R2RML Term Map
  * 
@@ -95,13 +99,10 @@ public interface TermMap extends ManageResource, SerializeR2RML {
 	/**
 	 * Returns the term type of this TermMap. The term type can be rr:IRI,
 	 * rr:BlankNode or rr:Literal.
-	 * 
-	 * @param resourceClass
-	 *            Must be equal to (or a superclass of) the library's resource
-	 *            class.
+	 *
 	 * @return The term type of this TermMap.
 	 */
-	public <R> R getTermType(Class<R> resourceClass);
+	public IRI getTermType();
 
 	/**
 	 * Get the template value of this TermMap. It will return null if this is

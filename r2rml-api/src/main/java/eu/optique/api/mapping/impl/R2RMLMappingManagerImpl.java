@@ -26,6 +26,7 @@ import eu.optique.api.mapping.MappingFactory;
 import eu.optique.api.mapping.R2RMLMappingCollection;
 import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.TriplesMap;
+import org.apache.commons.rdf.api.Graph;
 
 /**
  * Implementation of the {@link R2RMLMappingManager} interface.
@@ -48,7 +49,7 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
 	}
 
 	@Override
-	public Collection<TriplesMap> importMappings(Object graph)
+	public Collection<TriplesMap> importMappings(Graph graph)
 			throws IllegalArgumentException, InvalidR2RMLMappingException {
 
 		// try once to extract the mapping from the graph and do some basic
@@ -63,17 +64,16 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
 			if (map.getLogicalTable() == null)
 				throw new IllegalArgumentException(
 						"No logical table for TriplesMap "
-								+ map.getResource(lc.getResourceClass())
+								+ map.getResource()
 										.toString());
-			if (map.getLogicalTable().getResource(lc.getResourceClass()) == null
+			if (map.getLogicalTable().getResource() == null
 					&& map.getLogicalTable().getSQLQuery() == null)
 				throw new IllegalArgumentException(
 						"No logical table for TriplesMap "
-								+ map.getResource(lc.getResourceClass())
+								+ map.getResource()
 										.toString());
 			if (map.getSubjectMap() == null)
-				throw new IllegalArgumentException(map.getResource(
-						lc.getResourceClass()).toString()
+				throw new IllegalArgumentException(map.getResource().toString()
 						+ " does not have any SubjectMap");
 		}
 
@@ -81,8 +81,7 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
 
 	}
 
-	@Override
-	public <G> G exportMappings(Collection<TriplesMap> maps, Class<G> graphClass)
+	public Graph exportMappings(Collection<TriplesMap> maps)
 			throws IllegalArgumentException {
 
 		if (maps == null)
@@ -92,7 +91,7 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
 			throw new IllegalArgumentException(
 					"The mapping collection is empty");
 
-		return graphClass.cast(lc.createGraph(maps));
+		return lc.createGraph(maps);
 
 	}
 
@@ -105,7 +104,7 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
 	 * @throws InvalidR2RMLMappingException
 	 *             if invalid mapping found
 	 */
-	protected R2RMLMappingCollection extractR2RMLMapping(Object graph)
+	protected R2RMLMappingCollection extractR2RMLMapping(Graph graph)
 			throws InvalidR2RMLMappingException {
 		return new R2RMLMappingCollectionImpl(this, lc, graph);
 	}

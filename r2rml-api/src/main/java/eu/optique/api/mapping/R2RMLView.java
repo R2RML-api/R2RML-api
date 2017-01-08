@@ -19,6 +19,8 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import org.apache.commons.rdf.api.IRI;
+
 import java.util.List;
 
 /**
@@ -48,32 +50,26 @@ public interface R2RMLView extends LogicalTable {
 	 * @param version
 	 *            The SQL version that will be set.
 	 */
-	public void addSQLVersion(Object version);
+	public void addSQLVersion(IRI version);
 
 	/**
 	 * Get the SQL version URI located at the given index.
-	 * 
-	 * @param resourceClass
-	 *            Must be equal to (or a superclass of) the library's resource
-	 *            class.
+	 *
 	 * @param index
 	 *            The index of the SQL version URI.
 	 * @return The SQL version URI located at the given index.
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
-	public <R> R getSQLVersion(Class<R> resourceClass, int index);
+	public IRI getSQLVersion(int index);
 
 	/**
 	 * Returns an unmodifiable view of the list of SQL versions that have been
 	 * added to this R2RMLView.
-	 * 
-	 * @param resourceClass
-	 *            Must be equal to (or a superclass of) the library's resource
-	 *            class.
+	 *
 	 * @return An unmodifiable list of SQL versions.
 	 */
-	public <R> List<R> getSQLVersions(Class<R> resourceClass);
+	public List<IRI> getSQLVersions();
 
 	/**
 	 * Remove the SQL version identifier given by the parameter, from the
@@ -83,5 +79,5 @@ public interface R2RMLView extends LogicalTable {
 	 * @param version
 	 *            The SQL version identifier that will be removed.
 	 */
-	public void removeSQLVersion(Object version);
+	public void removeSQLVersion(IRI version);
 }

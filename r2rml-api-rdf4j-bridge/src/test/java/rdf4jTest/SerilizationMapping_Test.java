@@ -24,6 +24,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Collection;
 
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
+import org.apache.commons.rdf.rdf4j.RDF4J;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
@@ -33,9 +36,7 @@ import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.TriplesMap;
-import eu.optique.api.mapping.impl.rdf4j.RDF4JR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
@@ -52,8 +53,10 @@ public class SerilizationMapping_Test
 
 			InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 			
-			R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
-			
+			RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+
+			RDF4J rdf4J = new RDF4J();
+
 			// Read the file into a model.
 			RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
 			Model m = new LinkedHashModel();
@@ -65,7 +68,7 @@ public class SerilizationMapping_Test
                         File fout = File.createTempFile("artistNew", "ttl");
                         fout.deleteOnExit();
 			FileOutputStream fos = new FileOutputStream(fout);
-			Model out = mm.exportMappings(coll, Model.class);
+			Model out = mm.exportMappings(coll).asModel().get();
 			Rio.write(out, fos, RDFFormat.TURTLE);
 			
 			FileInputStream fis1 = new FileInputStream(fout);

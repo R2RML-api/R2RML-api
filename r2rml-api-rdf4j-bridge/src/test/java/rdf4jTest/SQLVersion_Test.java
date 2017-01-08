@@ -22,10 +22,12 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
+import org.apache.commons.rdf.api.IRI;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.URI;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParser;
@@ -33,10 +35,8 @@ import org.eclipse.rdf4j.rio.Rio;
 import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 
 import eu.optique.api.mapping.LogicalTable;
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.R2RMLViewImpl;
-import eu.optique.api.mapping.impl.rdf4j.RDF4JR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
@@ -50,7 +50,7 @@ public class SQLVersion_Test
 	public void test() throws Exception{
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test15.ttl");
 		
-		R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
@@ -72,9 +72,9 @@ public class SQLVersion_Test
 				R2RMLViewImpl vi=(R2RMLViewImpl)t;
 
 				int cont=0;
-				Iterator<URI> iter=vi.getSQLVersions(URI.class).iterator();
+				Iterator<IRI> iter=vi.getSQLVersions().iterator();
 				while(iter.hasNext()){
-					URI s=iter.next();
+					IRI s=iter.next();
 					Assert.assertTrue(s.toString().contains("SQL2008"));
 					cont++;
 				}

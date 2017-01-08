@@ -26,6 +26,10 @@ import eu.optique.api.mapping.InverseExpression;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TermMap;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.RDFTerm;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of a TermMap. A TermMap must either be a SubjectMap, a
@@ -37,7 +41,7 @@ public abstract class TermMapImpl implements TermMap {
 
 	TermMapType type;
 
-	Object termtype;
+	IRI termtype;
 
 	// Only one of these will be set.
 	Template template;
@@ -46,7 +50,7 @@ public abstract class TermMapImpl implements TermMap {
 
 	InverseExpression inverseExp;
 
-	Object res;
+	BlankNodeOrIRI res;
 	final LibConfiguration lc;
 
 	public TermMapImpl(LibConfiguration c, TermMapType termMapType,
@@ -174,8 +178,8 @@ public abstract class TermMapImpl implements TermMap {
 	}
 
 	@Override
-	public <R> R getTermType(Class<R> resourceClass) {
-		return resourceClass.cast(termtype);
+	public IRI getTermType() {
+		return termtype;
 	}
 
 	@Override
@@ -214,7 +218,7 @@ public abstract class TermMapImpl implements TermMap {
 	}
 
 	@Override
-	public void setResource(Object r) {
+	public void setResource(RDFTerm r) {
 		if (r != null && !lc.getResourceClass().isInstance(r)) {
 			throw new IllegalArgumentException("Parameter r is of type "
 					+ r.getClass() + ". Should be an instance of "
@@ -223,42 +227,43 @@ public abstract class TermMapImpl implements TermMap {
 			throw new NullPointerException("A TermMap must have a resource.");
 		}
 
-		res = r;
+		res = (BlankNodeOrIRI) r;
 	}
 
-	@Override
-	public <R> R getResource(Class<R> resourceClass) {
-		return resourceClass.cast(res);
-	}
+    @Override
+    public BlankNodeOrIRI getResource() {
+        return res;
+    }
 
-	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_TERM_MAP))));
+    @Override
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<Triple>();
+
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_TERM_MAP)));
 
 		if (type == TermMapType.COLUMN_VALUED) {
-			stmtSet.add(tripleClass.cast(lc.createLiteralTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_COLUMN), getColumn())));
+			stmtSet.add(lc.createLiteralTriple(res,
+					lc.createResource(R2RMLVocabulary.PROP_COLUMN), getColumn()));
 		} else if (type == TermMapType.CONSTANT_VALUED) {
-			stmtSet.add(tripleClass.cast(lc.createLiteralTriple(res,
+			stmtSet.add(lc.createLiteralTriple(res,
 					lc.createResource(R2RMLVocabulary.PROP_CONSTANT),
-					getConstant())));
+					getConstant()));
 		} else if (type == TermMapType.TEMPLATE_VALUED) {
-			stmtSet.add(tripleClass.cast(lc.createLiteralTriple(res,
+			stmtSet.add(lc.createLiteralTriple(res,
 					lc.createResource(R2RMLVocabulary.PROP_TEMPLATE),
-					getTemplateString())));
+					getTemplateString()));
 		}
 
 		// Will always have the term type explicitly listed.
-		stmtSet.add(tripleClass.cast(lc.createTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_TERM_TYPE), termtype)));
+		stmtSet.add(lc.createTriple(res,
+				lc.createResource(R2RMLVocabulary.PROP_TERM_TYPE), termtype));
 		
 		if(getInverseExpression() != null){
-			stmtSet.add(tripleClass.cast(lc.createLiteralTriple(res, 
+			stmtSet.add(lc.createLiteralTriple(res,
 					lc.createResource(R2RMLVocabulary.PROP_INVERSE_EXPRESSION), 
-					getInverseExpressionString())));
+					getInverseExpressionString()));
 		}
 
 		return stmtSet;

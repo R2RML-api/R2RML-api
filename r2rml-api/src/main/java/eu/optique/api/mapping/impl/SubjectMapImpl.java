@@ -29,6 +29,8 @@ import eu.optique.api.mapping.GraphMap;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of a SubjectMap.
@@ -37,27 +39,27 @@ import eu.optique.api.mapping.Template;
  */
 public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
-	ArrayList<Object> classList;
+	ArrayList<IRI> classList;
 	ArrayList<GraphMap> graphList;
 
 	public SubjectMapImpl(LibConfiguration c, TermMapType termMapType,
 			Template template) {
 		super(c, termMapType, template);
 
-		classList = new ArrayList<Object>();
-		graphList = new ArrayList<GraphMap>();
+		classList = new ArrayList<>();
+		graphList = new ArrayList<>();
 	}
 
 	public SubjectMapImpl(LibConfiguration c, TermMapType termMapType,
 			String columnOrConst) {
 		super(c, termMapType, columnOrConst);
 
-		classList = new ArrayList<Object>();
-		graphList = new ArrayList<GraphMap>();
+		classList = new ArrayList<>();
+		graphList = new ArrayList<>();
 	}
 
 	@Override
-	public void addClass(Object classURI) {
+	public void addClass(IRI classURI) {
 		if (classURI != null && !lc.getResourceClass().isInstance(classURI)) {
 			throw new IllegalArgumentException("Parameter classURI is of type "
 					+ classURI.getClass() + ". Should be an instance of "
@@ -78,7 +80,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public void setTermType(Object typeURI) {
+	public void setTermType(IRI typeURI) {
 		if (typeURI != null && !lc.getResourceClass().isInstance(typeURI)) {
 			throw new IllegalArgumentException("Parameter typeURI is of type "
 					+ typeURI.getClass() + ". Should be an instance of "
@@ -106,8 +108,8 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public <R> R getClass(Class<R> resourceClass, int index) {
-		return resourceClass.cast(classList.get(index));
+	public IRI getClass(int index) {
+		return classList.get(index);
 	}
 
 	@Override
@@ -116,12 +118,12 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public <R> List<R> getClasses(Class<R> resourceClass) {
-		List<R> l = new ArrayList<R>();
-		for (Object o : classList) {
-			l.add(resourceClass.cast(o));
-		}
-		return Collections.unmodifiableList(l);
+	public List<IRI> getClasses() {
+//		List<R> l = new ArrayList<R>();
+//		for (Object o : classList) {
+//			l.add(resourceClass.cast(o));
+//		}
+		return Collections.unmodifiableList(classList);
 	}
 
 	@Override
@@ -140,30 +142,30 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
+	public  Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<Triple>();
 
-		stmtSet.addAll(super.serialize(tripleClass));
+		stmtSet.addAll(super.serialize());
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_SUBJECT_MAP))));
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
 
-		for (Object cl : classList) {
-			stmtSet.add(tripleClass.cast(lc.createTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_CLASS), cl)));
+		for (IRI cl : classList) {
+			stmtSet.add(lc.createTriple(res,
+					lc.createResource(R2RMLVocabulary.PROP_CLASS), cl));
 		}
 		
 		for(GraphMap g : graphList){
 			if(g.getTermMapType() == TermMapType.CONSTANT_VALUED){
 				// Use constant shortcut property.
-				stmtSet.add(tripleClass.cast(lc.createTriple(res, 
+				stmtSet.add(lc.createTriple(res,
 						lc.createResource(R2RMLVocabulary.PROP_GRAPH), 
-						lc.createResource(g.getConstant()))));
+						lc.createResource(g.getConstant())));
 			}else{
-				stmtSet.add(tripleClass.cast(lc.createTriple(res, 
+				stmtSet.add(lc.createTriple(res,
 						lc.createResource(R2RMLVocabulary.PROP_GRAPH_MAP), 
-						g.getResource(lc.getResourceClass()))));
-				stmtSet.addAll(g.serialize(tripleClass));
+						g.getResource()));
+				stmtSet.addAll(g.serialize());
 			}
 		}
 

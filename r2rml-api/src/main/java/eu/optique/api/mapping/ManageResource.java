@@ -19,6 +19,9 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.RDFTerm;
+
 /**
  * Handles resources that is needed by the serialization.
  * 
@@ -33,16 +36,14 @@ public interface ManageResource {
 	 * @param res
 	 *            The resource to set.
 	 */
-	public void setResource(Object res);
+	public void setResource(RDFTerm res);
 
 	/**
 	 * Get the resource used to serialize an R2RML component.
-	 * 
-	 * @param resourceClass
-	 *            Must be equal to (or a superclass of) the library's resource
-	 *            class.
+	 *
 	 * @return The resource set by setResource(Object res).
 	 */
-	public <R> R getResource(Class<R> resourceClass);
+	//public Object getResource(Class resourceClass);
+    public BlankNodeOrIRI getResource();
 
 }

@@ -19,6 +19,8 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import org.apache.commons.rdf.api.IRI;
+
 import java.util.List;
 
 /**
@@ -36,7 +38,7 @@ public interface SubjectMap extends TermMap {
 	 * @param classURI
 	 *            The class URI that will be added.
 	 */
-	public void addClass(Object classURI);
+	public void addClass(IRI classURI);
 
 	/**
 	 * Adds a GraphMap to this SubjectMap. The GraphMap will be added to the end
@@ -73,21 +75,18 @@ public interface SubjectMap extends TermMap {
 	 * @throws IllegalArgumentException
 	 *             If typeIRI is not a valid term type for a SubjectMap.
 	 */
-	public void setTermType(Object typeURI);
+	public void setTermType(IRI typeURI);
 
 	/**
 	 * Get the class URI located at the given index.
-	 * 
-	 * @param resourceClass
-	 *            Must be equal to (or a superclass of) the library's resource
-	 *            class.
+	 *
 	 * @param index
 	 *            The index of the class URI.
 	 * @return The class URI located at the given index.
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
-	public <R> R getClass(Class<R> resourceClass, int index);
+	public IRI getClass(int index);
 
 	/**
 	 * Get the GraphMap located at the given index.
@@ -103,13 +102,10 @@ public interface SubjectMap extends TermMap {
 	/**
 	 * Returns an unmodifiable view of the list of classes that have been added
 	 * to this SubjectMap.
-	 * 
-	 * @param resourceClass
-	 *            Must be equal to (or a superclass of) the library's resource
-	 *            class.
+	 *
 	 * @return An unmodifiable list of classes.
 	 */
-	public <R> List<R> getClasses(Class<R> resourceClass);
+	public List<IRI> getClasses();
 
 	/**
 	 * Returns an unmodifiable view of the list of GraphMaps that have been

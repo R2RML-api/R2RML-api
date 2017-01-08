@@ -22,6 +22,8 @@ package eu.optique.api.mapping.impl;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.SerializeR2RML;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.RDFTerm;
 
 /**
  * The abstract superclass for R2RMLViewImpl and SQLTableImpl.
@@ -30,7 +32,7 @@ import eu.optique.api.mapping.SerializeR2RML;
  */
 public abstract class LogicalTableImpl implements LogicalTable, SerializeR2RML {
 
-	Object res;
+	BlankNodeOrIRI res;
 	final LibConfiguration lc;
 
 	public LogicalTableImpl(LibConfiguration c) {
@@ -46,7 +48,7 @@ public abstract class LogicalTableImpl implements LogicalTable, SerializeR2RML {
 	public abstract String getSQLQuery();
 
 	@Override
-	public void setResource(Object r) {
+	public void setResource(RDFTerm r) {
 		if (r != null && !lc.getResourceClass().isInstance(r)) {
 			throw new IllegalArgumentException("Parameter r is of type "
 					+ r.getClass() + ". Should be an instance of "
@@ -56,12 +58,12 @@ public abstract class LogicalTableImpl implements LogicalTable, SerializeR2RML {
 					"A LogicalTable must have a resource.");
 		}
 
-		res = r;
+		res = (BlankNodeOrIRI) r;
 	}
 
 	@Override
-	public <R> R getResource(Class<R> resourceClass) {
-		return resourceClass.cast(res);
+	public BlankNodeOrIRI getResource() {
+		return res;
 	}
 
 }

@@ -22,6 +22,7 @@ package eu.optique.api.mapping;
 import java.util.Collection;
 
 import eu.optique.api.mapping.impl.InvalidR2RMLMappingException;
+import org.apache.commons.rdf.api.Graph;
 
 /**
  * Interface representing an R2RML mapping collection, i.e. a set of triples
@@ -42,7 +43,7 @@ public interface R2RMLMappingCollection {
 	 * @throws NullPointerException
 	 *             if the graph is null.
 	 */
-	public void initialize(Object graph) throws InvalidR2RMLMappingException;
+	public void initialize(Graph graph) throws InvalidR2RMLMappingException;
 
 	/**
 	 * Returns all triples maps in the R2RML mapping generated from the graph

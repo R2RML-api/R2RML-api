@@ -22,10 +22,13 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.rdf4j.RDF4J;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.URI;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
@@ -36,13 +39,11 @@ import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.PredicateObjectMap;
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.R2RMLVocabulary;
 import eu.optique.api.mapping.impl.SQLTableImpl;
-import eu.optique.api.mapping.impl.rdf4j.RDF4JR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
@@ -58,8 +59,10 @@ public class TermType1_Test {
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test8.ttl");
 		
-		R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
-		
+		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+
+        RDF4J rdf4j = new RDF4J();
+
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
 		Model m = new LinkedHashModel();
@@ -78,11 +81,11 @@ public class TermType1_Test {
 			Template t=s.getTemplate();
 			Assert.assertTrue(t.getColumnName(0).contains("fname"));
 			
-			URI u=s.getTermType(URI.class);
-			Assert.assertEquals(u, myFactory.createURI(R2RMLVocabulary.TERM_BLANK_NODE));
-		
-			
-			Iterator<URI> ituri=s.getClasses(URI.class).iterator();
+			IRI u=s.getTermType();
+
+            Assert.assertEquals(u, rdf4j.asRDFTerm(myFactory.createIRI(R2RMLVocabulary.TERM_BLANK_NODE)));
+
+			Iterator<IRI> ituri=s.getClasses().iterator();
 			int cont=0;
 			while(ituri.hasNext()){
 				ituri.next();

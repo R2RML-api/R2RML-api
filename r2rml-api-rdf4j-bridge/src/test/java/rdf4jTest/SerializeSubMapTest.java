@@ -20,42 +20,44 @@ package rdf4jTest;
 
 import java.util.Set;
 
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
+import org.apache.commons.rdf.api.Triple;
+import org.apache.commons.rdf.rdf4j.RDF4J;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Resource;
-import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.URIImpl;
 import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 
 import eu.optique.api.mapping.MappingFactory;
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.impl.R2RMLVocabulary;
-import eu.optique.api.mapping.impl.rdf4j.RDF4JR2RMLMappingManagerFactory;
 
 public class SerializeSubMapTest {
 
 	@Test
 	public void test(){
-
-		R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
 		ValueFactory myFactory = ValueFactoryImpl.getInstance();
-		
+
+        RDF4J rdf4J = new RDF4J();
+
 		//SubjectMap
 		String subMapURI = "http://data.example.com/resource/subject";
 		Resource subRes = new URIImpl(subMapURI);
 		Template templs =  mfact.createTemplate("http://data.example.com/employee/{EMPNO}");
 		SubjectMap sm =  mfact.createSubjectMap(templs);
-		sm.setResource(subRes);
+		sm.setResource(rdf4J.asRDFTerm(subRes));
 
-		Set<Statement> stmts = sm.serialize(Statement.class);
-		for(Statement stmt : stmts){
+		Set<Triple> stmts = sm.serialize();
+		for(Triple stmt : stmts){
 			if(myFactory.createURI(R2RMLVocabulary.PROP_TEMPLATE).equals(stmt.getPredicate())){
-				
-				Assert.assertTrue(stmt.getObject().stringValue().contains("{EMPNO}"));
+
+				Assert.assertTrue(stmt.getObject().toString().contains("{EMPNO}"));
 			}
 		}
 	}

@@ -22,10 +22,12 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
+import org.apache.commons.rdf.api.IRI;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.URI;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParser;
@@ -36,12 +38,10 @@ import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.PredicateObjectMap;
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.SQLTableImpl;
-import eu.optique.api.mapping.impl.rdf4j.RDF4JR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
@@ -55,7 +55,7 @@ public class Simplest_Test
 	public void test1() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 		
-		R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
@@ -76,9 +76,9 @@ public class Simplest_Test
 			Assert.assertTrue(t.getColumnName(0).contains("EMPNO"));
 		
 			int cont=0;
-			Iterator<URI> classesit=s.getClasses(URI.class).iterator();
+			Iterator<IRI> classesit=s.getClasses().iterator();
 			while(classesit.hasNext()){
-				URI u= classesit.next();
+				IRI u= classesit.next();
 				Assert.assertTrue(u.toString().contains("Employee"));
 				cont++;
 			}
@@ -98,7 +98,7 @@ public class Simplest_Test
 	public void test2() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 		
-		R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);

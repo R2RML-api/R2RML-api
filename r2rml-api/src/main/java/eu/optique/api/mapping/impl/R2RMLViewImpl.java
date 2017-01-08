@@ -27,6 +27,8 @@ import java.util.Set;
 
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.R2RMLView;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of a R2RMLView.
@@ -36,14 +38,14 @@ import eu.optique.api.mapping.R2RMLView;
 public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 
 	String sqlQuery;
-	ArrayList<Object> versionList;
+	ArrayList<IRI> versionList;
 
 	public R2RMLViewImpl(LibConfiguration c, String sqlQuery) {
 		super(c);
 
 		setR2RMLView(sqlQuery);
 
-		versionList = new ArrayList<Object>();
+		versionList = new ArrayList<>();
 
 		setResource(lc.createBNode());
 	}
@@ -59,7 +61,7 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	}
 
 	@Override
-	public void addSQLVersion(Object version) {
+	public void addSQLVersion(IRI version) {
 		if (version != null && !lc.getResourceClass().isInstance(version)) {
 			throw new IllegalArgumentException("Parameter version is of type "
 					+ version.getClass() + ". Should be an instance of "
@@ -75,39 +77,39 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	}
 
 	@Override
-	public <R> R getSQLVersion(Class<R> resourceClass, int index) {
-		return resourceClass.cast(versionList.get(index));
+	public IRI getSQLVersion(int index) {
+		return versionList.get(index);
 	}
 
 	@Override
-	public <R> List<R> getSQLVersions(Class<R> resourceClass) {
-		List<R> l = new ArrayList<R>();
-		for (Object o : versionList) {
-			l.add(resourceClass.cast(o));
-		}
-		return Collections.unmodifiableList(l);
+	public List<IRI> getSQLVersions() {
+//		List<R> l = new ArrayList<R>();
+//		for (Object o : versionList) {
+//			l.add(resourceClass.cast(o));
+//		}
+		return Collections.unmodifiableList(versionList);
 	}
 
 	@Override
-	public void removeSQLVersion(Object version) {
+	public void removeSQLVersion(IRI version) {
 		versionList.remove(version);
 	}
 
 	@Override
-	public <R> Set<R> serialize(Class<R> trpl) {
-		Set<R> stmtSet = new HashSet<R>();
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<>();
 
-		stmtSet.add(trpl.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_R2RML_VIEW))));
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_R2RML_VIEW)));
 
-		stmtSet.add(trpl.cast(lc.createLiteralTriple(res,
+		stmtSet.add(lc.createLiteralTriple(res,
 				lc.createResource(R2RMLVocabulary.PROP_SQL_QUERY),
-				getSQLQuery())));
+				getSQLQuery()));
 
-		for (Object version : versionList) {
-			stmtSet.add(trpl.cast(lc.createTriple(res,
+		for (IRI version : versionList) {
+			stmtSet.add(lc.createTriple(res,
 					lc.createResource(R2RMLVocabulary.PROP_SQL_VERSION),
-					version)));
+					version));
 		}
 
 		return stmtSet;

@@ -24,6 +24,7 @@ import java.util.Set;
 
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.SQLTable;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of a SQLTable.
@@ -62,15 +63,15 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 	}
 
 	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<Triple>();
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW))));
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)));
 
-		stmtSet.add(tripleClass.cast(lc.createLiteralTriple(res,
+		stmtSet.add(lc.createLiteralTriple(res,
 				lc.createResource(R2RMLVocabulary.PROP_TABLE_NAME),
-				getSQLTableName())));
+				getSQLTableName()));
 
 		return stmtSet;
 	}

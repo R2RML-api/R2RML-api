@@ -25,6 +25,7 @@ import java.util.Set;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.Template;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of a PredicateMap.
@@ -44,13 +45,13 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 	}
 
 	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<>();
 
-		stmtSet.addAll(super.serialize(tripleClass));
+		stmtSet.addAll(super.serialize());
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_PREDICATE_MAP))));
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_PREDICATE_MAP)));
 
 		return stmtSet;
 	}

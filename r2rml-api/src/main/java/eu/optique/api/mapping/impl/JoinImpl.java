@@ -24,6 +24,9 @@ import java.util.Set;
 
 import eu.optique.api.mapping.Join;
 import eu.optique.api.mapping.LibConfiguration;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.RDFTerm;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of Join.
@@ -35,7 +38,7 @@ public class JoinImpl implements Join {
 	String child;
 	String parent;
 
-	Object res;
+	BlankNodeOrIRI res;
 	final LibConfiguration lc;
 
 	public JoinImpl(LibConfiguration c, String childCol, String parentCol) {
@@ -81,22 +84,22 @@ public class JoinImpl implements Join {
 	}
 
 	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<Triple>();
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_JOIN))));
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_JOIN)));
 
-		stmtSet.add(tripleClass.cast(lc.createLiteralTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_CHILD), child)));
-		stmtSet.add(tripleClass.cast(lc.createLiteralTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_PARENT), parent)));
+		stmtSet.add(lc.createLiteralTriple(res,
+				lc.createResource(R2RMLVocabulary.PROP_CHILD), child));
+		stmtSet.add(lc.createLiteralTriple(res,
+				lc.createResource(R2RMLVocabulary.PROP_PARENT), parent));
 
 		return stmtSet;
 	}
 
 	@Override
-	public void setResource(Object r) {
+	public void setResource(RDFTerm r) {
 		if (r != null && !lc.getResourceClass().isInstance(r)) {
 			throw new IllegalArgumentException("Parameter r is of type "
 					+ r.getClass() + ". Should be an instance of "
@@ -105,13 +108,13 @@ public class JoinImpl implements Join {
 			throw new NullPointerException("A Join must have a resource.");
 		}
 
-		res = r;
+		res = (BlankNodeOrIRI) r;
 	}
 
-	@Override
-	public <R> R getResource(Class<R> resourceClass) {
-		return resourceClass.cast(res);
-	}
+    @Override
+    public BlankNodeOrIRI getResource(){
+        return res;
+    }
 
 	@Override
 	public int hashCode() {

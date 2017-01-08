@@ -22,10 +22,13 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.rdf4j.RDF4J;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.URI;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
@@ -38,13 +41,11 @@ import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.PredicateObjectMap;
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.R2RMLVocabulary;
 import eu.optique.api.mapping.impl.SQLTableImpl;
-import eu.optique.api.mapping.impl.rdf4j.RDF4JR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
@@ -57,10 +58,12 @@ public class TermType_Test {
 	public void test() throws Exception{
 		
 		ValueFactory myFactory = ValueFactoryImpl.getInstance();
-		
+
+		RDF4J rdf4J = new RDF4J();
+
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test7.ttl");
 
-        R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
@@ -112,9 +115,8 @@ public class TermType_Test {
 					Assert.assertEquals("\"FirstName\"", o.getTemplate().getColumnName(0));
 					Assert.assertEquals("\"LastName\"", o.getTemplate().getColumnName(1));
 					
-					URI u=o.getTermType(URI.class);
-					Assert.assertEquals(u, myFactory.createURI(R2RMLVocabulary.TERM_LITERAL));
-					
+					IRI u=o.getTermType();
+					Assert.assertEquals(u, rdf4J.asRDFTerm(myFactory.createIRI(R2RMLVocabulary.TERM_LITERAL)));
 				}
 			}
 			

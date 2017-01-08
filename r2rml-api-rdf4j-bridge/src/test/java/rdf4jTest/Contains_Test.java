@@ -24,6 +24,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
@@ -35,10 +37,8 @@ import org.eclipse.rdf4j.rio.helpers.StatementCollector;
 
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.PredicateObjectMap;
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TriplesMap;
-import eu.optique.api.mapping.impl.rdf4j.RDF4JR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
@@ -51,7 +51,7 @@ public class Contains_Test
 	public void test() throws Exception{
             InputStream fis = getClass().getResourceAsStream("../mappingFiles/test30.ttl");
 
-        R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);

@@ -22,6 +22,7 @@ package eu.optique.api.mapping;
 import java.util.Collection;
 
 import eu.optique.api.mapping.impl.InvalidR2RMLMappingException;
+import org.apache.commons.rdf.api.Graph;
 
 /**
  * General-purpose R2RML mapping management functionality. The API provides
@@ -46,7 +47,7 @@ public interface R2RMLMappingManager {
 	 * @throws IllegalArgumentException
 	 * @throws InvalidR2RMLMappingException
 	 */
-	public Collection<TriplesMap> importMappings(Object graph)
+	public Collection<TriplesMap> importMappings(Graph graph)
 			throws InvalidR2RMLMappingException;
 
 	/**
@@ -59,6 +60,6 @@ public interface R2RMLMappingManager {
 	 *            class.
 	 * @throws IllegalArgumentException
 	 */
-	public <G> G exportMappings(Collection<TriplesMap> maps, Class<G> graphClass)
+	public Graph exportMappings(Collection<TriplesMap> maps)
 			throws IllegalArgumentException;
 }

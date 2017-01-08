@@ -31,6 +31,9 @@ import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.RefObjectMap;
 import eu.optique.api.mapping.TriplesMap;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.RDFTerm;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of a RefObjectMap.
@@ -47,7 +50,7 @@ public class RefObjectMapImpl implements RefObjectMap {
 
 	ArrayList<Join> joinList;
 
-	Object res;
+	BlankNodeOrIRI res;
 	final LibConfiguration lc;
 
 	public RefObjectMapImpl(LibConfiguration c, TriplesMap parentMap) {
@@ -148,27 +151,27 @@ public class RefObjectMapImpl implements RefObjectMap {
 	}
 
 	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<Triple>();
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_REF_OBJECT_MAP))));
-		stmtSet.add(tripleClass.cast(lc.createTriple(res,
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
+		stmtSet.add(lc.createTriple(res,
 				lc.createResource(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP),
-				parent.getResource(lc.getResourceClass()))));
+				parent.getResource()));
 
 		for (Join j : joinList) {
-			stmtSet.add(tripleClass.cast(lc.createTriple(res,
+			stmtSet.add(lc.createTriple(res,
 					lc.createResource(R2RMLVocabulary.PROP_JOIN_CONDITION),
-					j.getResource(lc.getResourceClass()))));
-			stmtSet.addAll(j.serialize(tripleClass));
+					j.getResource()));
+			stmtSet.addAll(j.serialize());
 		}
 
 		return stmtSet;
 	}
 
 	@Override
-	public void setResource(Object r) {
+	public void setResource(RDFTerm r) {
 		if (r != null && !lc.getResourceClass().isInstance(r)) {
 			throw new IllegalArgumentException("Parameter r is of type "
 					+ r.getClass() + ". Should be an instance of "
@@ -178,12 +181,12 @@ public class RefObjectMapImpl implements RefObjectMap {
 					"A RefObjectMap must have a resource.");
 		}
 
-		res = r;
+		res = (BlankNodeOrIRI) r;
 	}
 
 	@Override
-	public <R> R getResource(Class<R> resourceClass) {
-		return resourceClass.cast(res);
+    public BlankNodeOrIRI getResource(){
+		return res;
 	}
 
 	@Override

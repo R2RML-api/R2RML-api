@@ -22,9 +22,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
+import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.rdf4j.RDF4J;
 import org.junit.Assert;
 import org.junit.Test;
-import org.eclipse.rdf4j.model.URI;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 
@@ -33,14 +36,12 @@ import eu.optique.api.mapping.MappingFactory;
 import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.PredicateObjectMap;
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.R2RMLView;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TermMap.TermMapType;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.impl.R2RMLViewImpl;
-import eu.optique.api.mapping.impl.rdf4j.RDF4JR2RMLMappingManagerFactory;
 
 /**
  * JUnit Test Cases
@@ -52,16 +53,18 @@ public class InMemoryStructureCreation2_Test {
 	@Test
 	public void test(){
 
-        R2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
         MappingFactory mfact = mm.getMappingFactory();
 		ValueFactory myFactory = ValueFactoryImpl.getInstance();
 
-	
-		//Table
+        RDF4J rdf4j = new RDF4J();
+
+        //Table
 		R2RMLView s = mfact.createR2RMLView("SELECT * FROM TABLE");
 		
 		//SQL Versions
-		s.addSQLVersion(myFactory.createURI("http://www.w3.org/ns/r2rml#","SQL2008"));
+		s.addSQLVersion((org.apache.commons.rdf.api.IRI) rdf4j.asRDFTerm(
+                myFactory.createURI("http://www.w3.org/ns/r2rml#","SQL2008")));
 		LogicalTable lt = s;
 
 		//SubjectMap
@@ -69,8 +72,8 @@ public class InMemoryStructureCreation2_Test {
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//Associated Classes
-		sm.addClass(myFactory.createURI("http://xmlns.com/foaf/0.1/", "Person"));
-		sm.addClass(myFactory.createURI("http://example.com/", "Student"));
+		sm.addClass((org.apache.commons.rdf.api.IRI) rdf4j.asRDFTerm(myFactory.createURI("http://xmlns.com/foaf/0.1/", "Person")));
+		sm.addClass((org.apache.commons.rdf.api.IRI) rdf4j.asRDFTerm(myFactory.createURI("http://example.com/", "Student")));
 					
 		//PredicateObjectMap
 		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");
@@ -81,7 +84,7 @@ public class InMemoryStructureCreation2_Test {
 		//Other PredicateObjectMap with DataType
 		PredicateMap pred1 = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role1");
 		ObjectMap obm1 = mfact.createObjectMap(TermMapType.COLUMN_VALUED, "ROLESS");
-		obm1.setDatatype(myFactory.createURI("http://www.w3.org/2001/XMLSchema#", "positiveInteger"));
+		obm1.setDatatype((org.apache.commons.rdf.api.IRI) rdf4j.asRDFTerm(myFactory.createURI("http://www.w3.org/2001/XMLSchema#", "positiveInteger")));
 		PredicateObjectMap pom11 = mfact.createPredicateObjectMap(pred1, obm1);
 
 		//TriplesMap
@@ -97,7 +100,7 @@ public class InMemoryStructureCreation2_Test {
 			TriplesMap current=it.next();
 			
 			int cont=0;
-			Iterator<URI> iter=current.getSubjectMap().getClasses(URI.class).iterator();
+			Iterator<IRI> iter=current.getSubjectMap().getClasses().iterator();
 			while(iter.hasNext()){
 				iter.next();
 				cont++;
@@ -110,9 +113,9 @@ public class InMemoryStructureCreation2_Test {
 				R2RMLViewImpl vi=(R2RMLViewImpl)t;
 
 				cont=0;
-				iter=vi.getSQLVersions(URI.class).iterator();
+				iter=vi.getSQLVersions().iterator();
 				while(iter.hasNext()){
-					URI ss=iter.next();
+					IRI ss=iter.next();
 					Assert.assertTrue(ss.toString().contains("SQL2008"));
 					cont++;
 				}
@@ -140,11 +143,11 @@ public class InMemoryStructureCreation2_Test {
 				while(omit.hasNext()){
 					ObjectMap o=omit.next();
 					
-					if(o.getDatatype(URI.class)==null){
+					if(o.getDatatype()==null){
 						Assert.assertTrue(o.getTemplate().getColumnName(0).contains("ROLE"));
 							
 					}else{
-						Assert.assertTrue(o.getDatatype(URI.class).toString().contains("positiveInteger"));
+						Assert.assertTrue(o.getDatatype().toString().contains("positiveInteger"));
 					}
 				}
 			}

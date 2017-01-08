@@ -25,6 +25,8 @@ import java.util.Set;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.Template;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of an ObjectMap.
@@ -34,7 +36,7 @@ import eu.optique.api.mapping.Template;
 public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 	String langTag;
-	Object dataType;
+	IRI dataType;
 
 	public ObjectMapImpl(LibConfiguration c, TermMapType termMapType,
 			Template template) {
@@ -47,7 +49,7 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 	}
 
 	@Override
-	public void setTermType(Object typeURI) {
+	public void setTermType(IRI typeURI) {
 		if (typeURI != null && !lc.getResourceClass().isInstance(typeURI)) {
 			throw new IllegalArgumentException("Parameter typeURI is of type "
 					+ typeURI.getClass() + ". Should be an instance of "
@@ -111,7 +113,7 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 	}
 
 	@Override
-	public void setDatatype(Object datatypeURI) {
+	public void setDatatype(IRI datatypeURI) {
 		if (datatypeURI != null
 				&& !lc.getResourceClass().isInstance(datatypeURI)) {
 			throw new IllegalArgumentException(
@@ -136,8 +138,8 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 	}
 
 	@Override
-	public <R> R getDatatype(Class<R> resourceClass) {
-		return resourceClass.cast(dataType);
+	public IRI getDatatype() {
+		return dataType;
 	}
 
 	@Override
@@ -151,20 +153,20 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 	}
 
 	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<Triple>();
 
-		stmtSet.addAll(super.serialize(tripleClass));
+		stmtSet.addAll(super.serialize());
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_OBJECT_MAP))));
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_OBJECT_MAP)));
 
 		if (dataType != null) {
-			stmtSet.add(tripleClass.cast(lc.createTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_DATATYPE), dataType)));
+			stmtSet.add(lc.createTriple(res,
+					lc.createResource(R2RMLVocabulary.PROP_DATATYPE), dataType));
 		} else if (langTag != null) {
-			stmtSet.add(tripleClass.cast(lc.createLiteralTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_LANGUAGE), langTag)));
+			stmtSet.add(lc.createLiteralTriple(res,
+					lc.createResource(R2RMLVocabulary.PROP_LANGUAGE), langTag));
 		}
 
 		return stmtSet;

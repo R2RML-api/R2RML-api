@@ -25,6 +25,7 @@ import java.util.Set;
 import eu.optique.api.mapping.GraphMap;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.Template;
+import org.apache.commons.rdf.api.Triple;
 
 /**
  * An implementation of a GraphMap.
@@ -44,13 +45,13 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
 	}
 
 	@Override
-	public <T> Set<T> serialize(Class<T> tripleClass) {
-		Set<T> stmtSet = new HashSet<T>();
+	public Set<Triple> serialize() {
+		Set<Triple> stmtSet = new HashSet<>();
 
-		stmtSet.addAll(super.serialize(tripleClass));
+		stmtSet.addAll(super.serialize());
 
-		stmtSet.add(tripleClass.cast(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_GRAPH_MAP))));
+		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
+				lc.createResource(R2RMLVocabulary.TYPE_GRAPH_MAP)));
 
 		return stmtSet;
 	}

@@ -19,6 +19,8 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import org.apache.commons.rdf.api.Triple;
+
 import java.util.Set;
 
 /**
@@ -30,12 +32,9 @@ public interface SerializeR2RML {
 
 	/**
 	 * Serializes the R2RML component to a list of RDF triples.
-	 * 
-	 * @param tripleClass
-	 *            Must be equal to (or a superclass of) the library's triples
-	 *            class.
+	 *
 	 * @return A set of triples.
 	 */
-	public <T> Set<T> serialize(Class<T> tripleClass);
+	public Set<Triple> serialize();
 
 }

@@ -19,6 +19,8 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import org.apache.commons.rdf.api.IRI;
+
 /**
  * R2RML Object Map
  * 
@@ -42,7 +44,7 @@ public interface ObjectMap extends TermMap {
 	 * @throws IllegalArgumentException
 	 *             If typeIRI is not a valid term type for an ObjectMap.
 	 */
-	public void setTermType(Object typeURI);
+	public void setTermType(IRI typeURI);
 
 	/**
 	 * Set the language tag of this ObjectMap if the term type is set to
@@ -68,7 +70,7 @@ public interface ObjectMap extends TermMap {
 	 * @throws IllegalStateException
 	 *             If the term type of this ObjectMap is not rr:Literal.
 	 */
-	public void setDatatype(Object datatypeURI);
+	public void setDatatype(IRI datatypeURI);
 
 	/**
 	 * Get the language tag for this ObjectMap. It will return null if the
@@ -81,13 +83,10 @@ public interface ObjectMap extends TermMap {
 	/**
 	 * Get the data type for this ObjectMap. It will return null if the
 	 * ObjectMap is not data typed.
-	 * 
-	 * @param resourceClass
-	 *            Must be equal to (or a superclass of) the library's resource
-	 *            class.
+	 *
 	 * @return The data type of this ObjectMap.
 	 */
-	public <R> R getDatatype(Class<R> resourceClass);
+	public IRI getDatatype();
 
 	/**
 	 * Remove the data type associated with this ObjectMap. The ObjectMap will

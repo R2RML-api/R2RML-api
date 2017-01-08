@@ -1,5 +1,13 @@
 package eu.optique.api.mapping;
 
+import org.apache.commons.rdf.api.BlankNode;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.Graph;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.Literal;
+import org.apache.commons.rdf.api.RDFTerm;
+import org.apache.commons.rdf.api.Triple;
+
 import java.util.Collection;
 
 /**
@@ -20,7 +28,7 @@ public interface LibConfiguration {
 	 *            - The URI of the created resource.
 	 * @return A resource.
 	 */
-	public Object createResource(String URI);
+	public IRI createResource(String URI);
 
 	/**
 	 * Creates a blank node resource. Returns an object of the class returned by
@@ -28,7 +36,7 @@ public interface LibConfiguration {
 	 *
 	 * @return A resource.
 	 */
-	public Object createBNode();
+	public BlankNode createBNode();
 
 	/**
 	 * Creates a triple from the given subject, predicate and object. The
@@ -43,7 +51,7 @@ public interface LibConfiguration {
 	 *            - The object of the triple.
 	 * @return A triple with the given subject, predicate and object.
 	 */
-	public Object createTriple(Object subject, Object predicate, Object object);
+	public Triple createTriple(BlankNodeOrIRI subject, IRI predicate, BlankNodeOrIRI object);
 
 	/**
 	 * Creates a literal triple from the given subject, predicate and literal
@@ -58,7 +66,7 @@ public interface LibConfiguration {
 	 *            - The object of the triple.
 	 * @return A triple with the given subject, predicate and literal object.
 	 */
-	public Object createLiteralTriple(Object subject, Object predicate,
+	public Triple createLiteralTriple(BlankNodeOrIRI subject, IRI predicate,
 			String litObject);
 
 	/**
@@ -70,7 +78,7 @@ public interface LibConfiguration {
 	 *            - The TriplesMaps that will be serialized.
 	 * @return A graph with the given TriplesMaps.
 	 */
-	public Object createGraph(Collection<TriplesMap> maps);
+	public Graph createGraph(Collection<TriplesMap> maps);
 
 	/**
 	 * Returns the URI of the rdf:type predicate. The URI will be of the class
@@ -78,7 +86,7 @@ public interface LibConfiguration {
 	 *
 	 * @return Resource with the URI of rdf:type.
 	 */
-	public Object getRDFType();
+	public IRI getRDFType();
 
 	/**
 	 * Gets the subject of all triples in the graph with the given predicate and
@@ -94,7 +102,7 @@ public interface LibConfiguration {
 	 *            - The object of the triple.
 	 * @return - A collection of resources.
 	 */
-	public Collection<Object> getSubjects(Object graph, Object pred, Object obj);
+	public Collection<BlankNodeOrIRI> getSubjects(Graph graph, IRI pred, RDFTerm obj);
 
 	/**
 	 * Gets the object of all triples in the graph with the given subject and
@@ -104,13 +112,13 @@ public interface LibConfiguration {
 	 *
 	 * @param graph
 	 *            - The graph to get triples from.
-	 * @param subj
+	 * @param subject
 	 *            - The subject of the triple.
-	 * @param pred
-	 *            - The predicate of the triple.
+     * @param pred
+     *            - The predicate of the triple.
 	 * @return - A collection of resources.
 	 */
-	public Collection<Object> getObjects(Object graph, Object subj, Object pred);
+	public Collection<RDFTerm> getObjects(Graph graph, BlankNodeOrIRI subject, IRI pred);
 
 	/**
 	 * Returns the resource class. A resource can either be named, or it can be
@@ -118,7 +126,9 @@ public interface LibConfiguration {
 	 *
 	 * @return The resource class.
 	 */
-	public Class<?> getResourceClass();
+	default public Class<?> getResourceClass() {
+		return BlankNodeOrIRI.class;
+	}
 
 	/**
 	 * Returns the triple class. A triple consists of a subject, predicate and
@@ -126,14 +136,18 @@ public interface LibConfiguration {
 	 *
 	 * @return The triple class.
 	 */
-	public Class<?> getTripleClass();
+	default public Class<?> getTripleClass() {
+		return Triple.class;
+	}
 
 	/**
 	 * Returns the graph class. A graph consists of a set of triples.
 	 *
 	 * @return The graph class.
 	 */
-	public Class<?> getGraphClass();
+	default public Class<?> getGraphClass() {
+		return Graph.class;
+	}
 
     /**
      *
@@ -152,5 +166,5 @@ public interface LibConfiguration {
      * @param node an IRI, Literal, or BNode
      * @return string
      */
-    String getLexicalForm(Object node);
+    String getLexicalForm(RDFTerm node);
 }
