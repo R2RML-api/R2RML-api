@@ -52,7 +52,7 @@ public class JoinImpl implements Join {
 		setChild(childCol);
 		setParent(parentCol);
 
-		setResource(lc.createBlankNode());
+        setResource(lc.getRDF().createBlankNode());
 	}
 
 	@Override
@@ -87,13 +87,13 @@ public class JoinImpl implements Join {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_JOIN)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_JOIN)));
 
-		stmtSet.add(lc.createLiteralTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_CHILD), child));
-		stmtSet.add(lc.createLiteralTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_PARENT), parent));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_CHILD),
+                lc.getRDF().createLiteral(child)));
+
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PARENT),
+                lc.getRDF().createLiteral(parent)));
 
 		return stmtSet;
 	}

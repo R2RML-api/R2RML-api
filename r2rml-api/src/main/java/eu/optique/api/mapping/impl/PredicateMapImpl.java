@@ -50,8 +50,7 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 
 		stmtSet.addAll(super.serialize());
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_PREDICATE_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_PREDICATE_MAP)));
 
 		return stmtSet;
 	}

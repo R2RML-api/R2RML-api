@@ -47,7 +47,7 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 
 		versionList = new ArrayList<>();
 
-		setResource(lc.createBlankNode());
+        setResource(lc.getRDF().createBlankNode());
 	}
 
 	@Override
@@ -93,17 +93,13 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<>();
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_R2RML_VIEW)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_R2RML_VIEW)));
 
-		stmtSet.add(lc.createLiteralTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_SQL_QUERY),
-				getSQLQuery()));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SQL_QUERY),
+                lc.getRDF().createLiteral(getSQLQuery())));
 
 		for (IRI version : versionList) {
-			stmtSet.add(lc.createTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_SQL_VERSION),
-					version));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SQL_VERSION), version));
 		}
 
 		return stmtSet;

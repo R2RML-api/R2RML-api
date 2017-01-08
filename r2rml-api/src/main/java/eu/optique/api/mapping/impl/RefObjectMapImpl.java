@@ -64,7 +64,7 @@ public class RefObjectMapImpl implements RefObjectMap {
 		joinList = new ArrayList<Join>();
 
 		setParentMap(parentMap);
-		setResource(lc.createBlankNode());
+        setResource(lc.getRDF().createBlankNode());
 	}
 
 	@Override
@@ -154,16 +154,11 @@ public class RefObjectMapImpl implements RefObjectMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
-		stmtSet.add(lc.createTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP),
-				parent.getResource()));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP), parent.getResource()));
 
 		for (Join j : joinList) {
-			stmtSet.add(lc.createTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_JOIN_CONDITION),
-					j.getResource()));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION), j.getResource()));
 			stmtSet.addAll(j.serialize());
 		}
 

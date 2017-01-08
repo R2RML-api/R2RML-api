@@ -63,7 +63,7 @@ public class TriplesMapImpl implements TriplesMap {
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-		setResource(lc.createBlankNode());
+        setResource(lc.getRDF().createBlankNode());
 	}
 
 	public TriplesMapImpl(LibConfiguration c, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
@@ -78,7 +78,7 @@ public class TriplesMapImpl implements TriplesMap {
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-		setResource(lc.createResource(resourceIdentifier));
+        setResource(lc.getRDF().createIRI(resourceIdentifier));
 	}
 
 	@Override
@@ -154,30 +154,21 @@ public class TriplesMapImpl implements TriplesMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<>();
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_TRIPLES_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_TRIPLES_MAP)));
 
-		stmtSet.add(lc.createTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_LOGICAL_TABLE),
-				getLogicalTable().getResource()));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), getLogicalTable().getResource()));
 		stmtSet.addAll(getLogicalTable().serialize());
 
 		if (getSubjectMap().getTermMapType() == TermMapType.CONSTANT_VALUED) {
 			// Use constant shortcut property.
-			stmtSet.add(lc.createTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_SUBJECT),
-					lc.createResource(getSubjectMap().getConstant())));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT), lc.getRDF().createIRI(getSubjectMap().getConstant())));
 		} else {
-			stmtSet.add(lc.createTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_SUBJECT_MAP),
-					getSubjectMap().getResource()));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), getSubjectMap().getResource()));
 			stmtSet.addAll(getSubjectMap().serialize());
 		}
 
 		for (PredicateObjectMap pom : pomList) {
-			stmtSet.add(lc.createTriple(res, 
-					lc.createResource(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP),
-					pom.getResource()));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP), pom.getResource()));
 			stmtSet.addAll(pom.serialize());
 		}
 

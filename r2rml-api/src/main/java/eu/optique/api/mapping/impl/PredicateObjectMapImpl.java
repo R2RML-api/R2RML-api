@@ -75,7 +75,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 			addPredicateMap(pm);
 			addObjectMap(om);
 
-			setResource(lc.createBlankNode());
+            setResource(lc.getRDF().createBlankNode());
 		}
 	}
 
@@ -103,7 +103,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 			addPredicateMap(pm);
 			addRefObjectMap(rom);
 
-			setResource(lc.createBlankNode());
+            setResource(lc.getRDF().createBlankNode());
 		}
 	}
 
@@ -158,7 +158,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 				}
 			}
 
-			setResource(lc.createBlankNode());
+            setResource(lc.getRDF().createBlankNode());
 		}
 	}
 
@@ -292,19 +292,14 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<>();
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_PREDICATE_OBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_PREDICATE_OBJECT_MAP)));
 
 		for (PredicateMap pm : predList) {
 			if (pm.getTermMapType() == TermMapType.CONSTANT_VALUED) {
 				// Use constant shortcut property.
-				stmtSet.add(lc.createTriple(res,
-						lc.createResource(R2RMLVocabulary.PROP_PREDICATE),
-						lc.createResource(pm.getConstant())));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE), lc.getRDF().createIRI(pm.getConstant())));
 			} else {
-				stmtSet.add(lc.createTriple(res,
-						lc.createResource(R2RMLVocabulary.PROP_PREDICATE_MAP),
-						pm.getResource()));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP), pm.getResource()));
 				stmtSet.addAll(pm.serialize());
 			}
 		}
@@ -312,46 +307,35 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 		for (ObjectMap om : objList) {
 			if (om.getTermMapType() == TermMapType.CONSTANT_VALUED) {
 				// Use constant shortcut property.
-				if (om.getTermType().equals(
-						lc.createResource(R2RMLVocabulary.TERM_IRI))) {
+                if (om.getTermType().equals(
+                        lc.getRDF().createIRI(R2RMLVocabulary.TERM_IRI))) {
 
-					stmtSet.add(lc.createTriple(res,
-							lc.createResource(R2RMLVocabulary.PROP_OBJECT),
-							lc.createResource(om.getConstant())));
+                    stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT), lc.getRDF().createIRI(om.getConstant())));
 
 				} else if (om.getTermType().equals(
-						lc.createResource(R2RMLVocabulary.TERM_LITERAL))) {
+                        lc.getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL))) {
 
-					stmtSet.add(lc.createLiteralTriple(res,
-							lc.createResource(R2RMLVocabulary.PROP_OBJECT),
-							om.getConstant()));
+                    stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT),
+                            lc.getRDF().createLiteral(om.getConstant())));
 
 				}
 			} else {
-				stmtSet.add(lc.createTriple(res,
-						lc.createResource(R2RMLVocabulary.PROP_OBJECT_MAP),
-						om.getResource()));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), om.getResource()));
 				stmtSet.addAll(om.serialize());
 			}
 		}
 		
 		for(RefObjectMap rom : refObjList){
-			stmtSet.add(lc.createTriple(res, 
-					lc.createResource(R2RMLVocabulary.PROP_OBJECT_MAP), 
-					rom.getResource()));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), rom.getResource()));
 			stmtSet.addAll(rom.serialize());
 		}
 		
 		for(GraphMap g : graphList){
 			if(g.getTermMapType() == TermMapType.CONSTANT_VALUED){
 				// Use constant shortcut property.
-				stmtSet.add(lc.createTriple(res, 
-						lc.createResource(R2RMLVocabulary.PROP_GRAPH), 
-						lc.createResource(g.getConstant())));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), lc.getRDF().createIRI(g.getConstant())));
 			}else{
-				stmtSet.add(lc.createTriple(res, 
-						lc.createResource(R2RMLVocabulary.PROP_GRAPH_MAP), 
-						g.getResource()));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getResource()));
 				stmtSet.addAll(g.serialize());
 			}
 		}

@@ -74,7 +74,7 @@ public abstract class TermMapImpl implements TermMap {
 			setDefaultTermType();
 			setTemplate(template);
 
-			setResource(lc.createBlankNode());
+            setResource(lc.getRDF().createBlankNode());
 		}
 	}
 
@@ -94,7 +94,7 @@ public abstract class TermMapImpl implements TermMap {
 		} else {
 			type = termMapType;
 			setDefaultTermType();
-			setResource(lc.createBlankNode());
+            setResource(lc.getRDF().createBlankNode());
 
 			if (getTermMapType() == TermMapType.COLUMN_VALUED) {
 				setColumn(columnOrConst);
@@ -137,7 +137,7 @@ public abstract class TermMapImpl implements TermMap {
                 
                 // NOTE: We assume that all the URIs start with "http://"
                 if (!constVal.startsWith("http://")){
-                    termtype = lc.createResource(R2RMLVocabulary.TERM_LITERAL);
+                    termtype = lc.getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL);
                 }
 			} else {
 				throw new NullPointerException(
@@ -174,7 +174,7 @@ public abstract class TermMapImpl implements TermMap {
 
 	@Override
 	public void setDefaultTermType() {
-		termtype = lc.createResource(R2RMLVocabulary.TERM_IRI);
+        termtype = lc.getRDF().createIRI(R2RMLVocabulary.TERM_IRI);
 	}
 
 	@Override
@@ -236,30 +236,29 @@ public abstract class TermMapImpl implements TermMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_TERM_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_TERM_MAP)));
 
 		if (type == TermMapType.COLUMN_VALUED) {
-			stmtSet.add(lc.createLiteralTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_COLUMN), getColumn()));
+
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_COLUMN),
+                    lc.getRDF().createLiteral(getColumn())));
 		} else if (type == TermMapType.CONSTANT_VALUED) {
-			stmtSet.add(lc.createLiteralTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_CONSTANT),
-					getConstant()));
+
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_CONSTANT),
+                    lc.getRDF().createLiteral(getConstant())));
 		} else if (type == TermMapType.TEMPLATE_VALUED) {
-			stmtSet.add(lc.createLiteralTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_TEMPLATE),
-					getTemplateString()));
+
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_TEMPLATE),
+                    lc.getRDF().createLiteral(getTemplateString())));
 		}
 
 		// Will always have the term type explicitly listed.
-		stmtSet.add(lc.createTriple(res,
-				lc.createResource(R2RMLVocabulary.PROP_TERM_TYPE), termtype));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE), termtype));
 		
 		if(getInverseExpression() != null){
-			stmtSet.add(lc.createLiteralTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_INVERSE_EXPRESSION), 
-					getInverseExpressionString()));
+
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_INVERSE_EXPRESSION),
+                    lc.getRDF().createLiteral(getInverseExpressionString())));
 		}
 
 		return stmtSet;

@@ -77,9 +77,8 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	public void setTermType(IRI typeURI) {
 		// Check if the typeIRI is one of the possible term type values for a
 		// SubjectMap.
-		if (typeURI.equals(lc.createResource(R2RMLVocabulary.TERM_IRI))
-				|| typeURI.equals(lc
-						.createResource(R2RMLVocabulary.TERM_BLANK_NODE))) {
+        if (typeURI.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
+				|| typeURI.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))) {
 
 			if (type == TermMapType.COLUMN_VALUED
 					|| type == TermMapType.TEMPLATE_VALUED) {
@@ -135,24 +134,18 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 		stmtSet.addAll(super.serialize());
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
 
 		for (IRI cl : classList) {
-			stmtSet.add(lc.createTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_CLASS), cl));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_CLASS), cl));
 		}
 		
 		for(GraphMap g : graphList){
 			if(g.getTermMapType() == TermMapType.CONSTANT_VALUED){
 				// Use constant shortcut property.
-				stmtSet.add(lc.createTriple(res,
-						lc.createResource(R2RMLVocabulary.PROP_GRAPH), 
-						lc.createResource(g.getConstant())));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), lc.getRDF().createIRI(g.getConstant())));
 			}else{
-				stmtSet.add(lc.createTriple(res,
-						lc.createResource(R2RMLVocabulary.PROP_GRAPH_MAP), 
-						g.getResource()));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getResource()));
 				stmtSet.addAll(g.serialize());
 			}
 		}

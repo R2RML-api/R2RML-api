@@ -52,11 +52,9 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 	public void setTermType(IRI typeURI) {
 		// Check if the typeURI is one of the possible term type values for an
 		// ObjectMap.
-		if (typeURI.equals(lc.createResource(R2RMLVocabulary.TERM_IRI))
-				|| typeURI.equals(lc
-						.createResource(R2RMLVocabulary.TERM_BLANK_NODE))
-				|| typeURI.equals(lc
-						.createResource(R2RMLVocabulary.TERM_LITERAL))) {
+        if (typeURI.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
+				|| typeURI.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))
+				|| typeURI.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL))) {
 
 			if (type == TermMapType.COLUMN_VALUED
 					|| type == TermMapType.TEMPLATE_VALUED) {
@@ -64,8 +62,7 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 				// Remove language tag and data type if the new term type isn't
 				// literal.
-				if (!typeURI.equals(lc
-						.createResource(R2RMLVocabulary.TERM_LITERAL))) {
+                if (!typeURI.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL))) {
 					removeLanguageTag();
 					removeDatatype();
 				}
@@ -89,15 +86,15 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 		 */
 		if (type == TermMapType.COLUMN_VALUED || langTag != null
 				|| dataType != null) {
-			termtype = lc.createResource(R2RMLVocabulary.TERM_LITERAL);
+            termtype = lc.getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL);
 		} else {
-			termtype = lc.createResource(R2RMLVocabulary.TERM_IRI);
+            termtype = lc.getRDF().createIRI(R2RMLVocabulary.TERM_IRI);
 		}
 	}
 
 	@Override
 	public void setLanguageTag(String lang) {
-		if (termtype.equals(lc.createResource(R2RMLVocabulary.TERM_LITERAL))) {
+        if (termtype.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL))) {
 			removeDatatype();
 			langTag = lang;
 		} else {
@@ -108,7 +105,7 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 	@Override
 	public void setDatatype(IRI datatypeURI) {
-		if (termtype.equals(lc.createResource(R2RMLVocabulary.TERM_LITERAL))) {
+        if (termtype.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL))) {
 			dataType = datatypeURI;
 			removeLanguageTag();
 		} else {
@@ -143,15 +140,14 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 		stmtSet.addAll(super.serialize());
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_OBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_OBJECT_MAP)));
 
 		if (dataType != null) {
-			stmtSet.add(lc.createTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_DATATYPE), dataType));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_DATATYPE), dataType));
 		} else if (langTag != null) {
-			stmtSet.add(lc.createLiteralTriple(res,
-					lc.createResource(R2RMLVocabulary.PROP_LANGUAGE), langTag));
+
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_LANGUAGE),
+                    lc.getRDF().createLiteral(langTag)));
 		}
 
 		return stmtSet;

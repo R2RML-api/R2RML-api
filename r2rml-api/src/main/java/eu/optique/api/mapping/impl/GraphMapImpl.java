@@ -50,8 +50,7 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
 
 		stmtSet.addAll(super.serialize());
 
-		stmtSet.add(lc.createTriple(res, lc.getRDFType(),
-				lc.createResource(R2RMLVocabulary.TYPE_GRAPH_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDFType(), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_GRAPH_MAP)));
 
 		return stmtSet;
 	}

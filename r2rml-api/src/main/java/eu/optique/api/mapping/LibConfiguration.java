@@ -30,67 +30,7 @@ public interface LibConfiguration {
      */
     public RDF getRDF();
 
-	/**
-	 * Creates a resource with the given URI. Returns an object of the class
-	 * returned by the method getResourceClass().
-	 *
-	 * @param iri
-	 *            - The URI of the created resource.
-	 * @return A resource.
-	 */
-    default IRI createResource(String iri) {
-        return getRDF().createIRI(iri);
-    }
-
-	/**
-	 * Creates a blank node resource. Returns an object of the class returned by
-	 * the method getResourceClass().
-	 *
-	 * @return A resource.
-	 */
-    default BlankNode createBlankNode(){
-        return getRDF().createBlankNode();
-    }
-
-	/**
-	 * Creates a triple from the given subject, predicate and object. The
-	 * subject, predicate and object must all be of the class returned by the
-	 * method getResourceClass().
-	 *
-	 * @param subject
-	 *            - The subject of the triple.
-	 * @param predicate
-	 *            - The predicate of the triple.
-	 * @param object
-	 *            - The object of the triple.
-	 * @return A triple with the given subject, predicate and object.
-	 */
-    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate, BlankNodeOrIRI object){
-        return getRDF().createTriple( subject, predicate, object);
-    }
-
-	/**
-	 * Creates a literal triple from the given subject, predicate and literal
-	 * object. The subject and predicate must both be of the class returned by
-	 * the method getResourceClass().
-	 *
-	 * @param subject
-	 *            - The subject of the triple.
-	 * @param predicate
-	 *            - The predicate of the triple.
-	 * @param litObject
-	 *            - The object of the triple.
-	 * @return A triple with the given subject, predicate and literal object.
-	 */
-    default Triple createLiteralTriple(BlankNodeOrIRI subject, IRI predicate,
-                                      String litObject) {
-
-        return getRDF().createTriple(subject, predicate,
-                getRDF().createLiteral(litObject));
-
-    }
-
-	/**
+    /**
 	 * Create a graph containing triples generated from the given collection of
 	 * TriplesMaps. The returned graph will be the class returned by the method
 	 * getGraphClass().
