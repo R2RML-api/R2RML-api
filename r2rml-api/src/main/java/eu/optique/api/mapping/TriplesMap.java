@@ -19,6 +19,8 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -28,6 +30,7 @@ import java.util.List;
  * @author Marius Strandhaug
  * @author Martin G. Skjæveland
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_TRIPLES_MAP)
 public interface TriplesMap extends R2RMLClass {
 
 	/**

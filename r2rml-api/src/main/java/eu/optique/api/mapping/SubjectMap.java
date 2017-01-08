@@ -19,6 +19,7 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
 import org.apache.commons.rdf.api.IRI;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.List;
  * 
  * @author Marius Strandhaug
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_LOGICAL_TABLE)
 public interface SubjectMap extends TermMap {
 
 	/**

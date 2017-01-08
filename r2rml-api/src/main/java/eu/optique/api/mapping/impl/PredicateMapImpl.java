@@ -62,7 +62,7 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 		return "PredicateMapImpl [type=" + type + ", termtype=" + termtype
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
-				+ ", res=" + getNode() + "]";
+				+ ", node=" + getNode() + "]";
 	}
 
 }

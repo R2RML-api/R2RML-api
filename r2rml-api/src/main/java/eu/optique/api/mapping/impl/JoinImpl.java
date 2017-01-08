@@ -76,12 +76,12 @@ public class JoinImpl extends R2RMLClassImpl implements Join {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_JOIN)));
+        stmtSet.add(getRDF().createTriple(node, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_JOIN)));
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_CHILD),
+        stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_CHILD),
                 getRDF().createLiteral(child)));
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_PARENT),
+        stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_PARENT),
                 getRDF().createLiteral(parent)));
 
 		return stmtSet;
@@ -93,7 +93,7 @@ public class JoinImpl extends R2RMLClassImpl implements Join {
 		int result = 1;
 		result = prime * result + ((child == null) ? 0 : child.hashCode());
 		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
-		result = prime * result + ((res == null) ? 0 : res.hashCode());
+		result = prime * result + ((node == null) ? 0 : node.hashCode());
 		return result;
 	}
 
@@ -125,11 +125,11 @@ public class JoinImpl extends R2RMLClassImpl implements Join {
 			return false;
 		}
 
-		if (res == null) {
-			if (other.res != null) {
+		if (node == null) {
+			if (other.node != null) {
 				return false;
 			}
-		} else if (!res.equals(other.res)) {
+		} else if (!node.equals(other.node)) {
 			return false;
 		}
 
@@ -138,8 +138,8 @@ public class JoinImpl extends R2RMLClassImpl implements Join {
 
 	@Override
 	public String toString() {
-		return "JoinImpl [child=" + child + ", parent=" + parent + ", res="
-				+ res + "]";
+		return "JoinImpl [child=" + child + ", parent=" + parent + ", node="
+				+ node + "]";
 	}
 
 }

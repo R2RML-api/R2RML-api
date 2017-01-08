@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import eu.optique.api.mapping.W3C_R2RML_Recommendation;
 import eu.optique.api.mapping.R2RMLView;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
@@ -37,13 +38,17 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 
-	String sqlQuery;
-	ArrayList<IRI> versionList;
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_QUERY)
+    private String sqlQuery;
 
-	public R2RMLViewImpl(RDF c, String sqlQuery) {
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_VERSION)
+    private
+    ArrayList<IRI> versionList;
+
+	R2RMLViewImpl(RDF c, String sqlQuery) {
 		super(c);
 
-		setR2RMLView(sqlQuery);
+		setSqlQuery(sqlQuery);
 
 		versionList = new ArrayList<>();
 
@@ -51,7 +56,7 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	}
 
 	@Override
-	public void setR2RMLView(String sqlQuery) {
+	public void setSqlQuery(String sqlQuery) {
 		if (sqlQuery != null) {
 			this.sqlQuery = sqlQuery;
 		} else {
@@ -77,10 +82,6 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 
 	@Override
 	public List<IRI> getSQLVersions() {
-//		List<R> l = new ArrayList<R>();
-//		for (Object o : versionList) {
-//			l.add(resourceClass.cast(o));
-//		}
 		return Collections.unmodifiableList(versionList);
 	}
 
@@ -93,13 +94,13 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<>();
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_R2RML_VIEW)));
+        stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_R2RML_VIEW)));
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SQL_QUERY),
+        stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_SQL_QUERY),
                 getRDF().createLiteral(getSQLQuery())));
 
 		for (IRI version : versionList) {
-            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SQL_VERSION), version));
+            stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_SQL_VERSION), version));
 		}
 
 		return stmtSet;
@@ -109,7 +110,7 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((res == null) ? 0 : res.hashCode());
+		result = prime * result + ((getNode() == null) ? 0 : getNode().hashCode());
 		result = prime * result
 				+ ((sqlQuery == null) ? 0 : sqlQuery.hashCode());
 		result = prime * result
@@ -129,11 +130,11 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 			return false;
 
 		R2RMLViewImpl other = (R2RMLViewImpl) obj;
-		if (res == null) {
-			if (other.res != null) {
+		if (getNode() == null) {
+			if (other.getNode() != null) {
 				return false;
 			}
-		} else if (!res.equals(other.res)) {
+		} else if (!getNode().equals(other.getNode())) {
 			return false;
 		}
 
@@ -159,7 +160,7 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	@Override
 	public String toString() {
 		return "R2RMLViewImpl [sqlQuery=" + sqlQuery + ", versionList="
-				+ versionList + ", res=" + res + "]";
+				+ versionList + ", node=" + node + "]";
 	}
 
 }

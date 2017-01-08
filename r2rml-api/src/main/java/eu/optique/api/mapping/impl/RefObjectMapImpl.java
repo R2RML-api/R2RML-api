@@ -146,11 +146,11 @@ public class RefObjectMapImpl extends R2RMLClassImpl implements RefObjectMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP), parent.getNode()));
+        stmtSet.add(getRDF().createTriple(node, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
+        stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP), parent.getNode()));
 
 		for (Join j : joinList) {
-            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION), j.getNode()));
+            stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION), j.getNode()));
 			stmtSet.addAll(j.serialize());
 		}
 
@@ -172,7 +172,7 @@ public class RefObjectMapImpl extends R2RMLClassImpl implements RefObjectMap {
 				* result
 				+ ((parentLogicalTable == null) ? 0 : parentLogicalTable
 						.hashCode());
-		result = prime * result + ((res == null) ? 0 : res.hashCode());
+		result = prime * result + ((node == null) ? 0 : node.hashCode());
 		return result;
 	}
 
@@ -220,11 +220,11 @@ public class RefObjectMapImpl extends R2RMLClassImpl implements RefObjectMap {
 			return false;
 		}
 
-		if (res == null) {
-			if (other.res != null) {
+		if (node == null) {
+			if (other.node != null) {
 				return false;
 			}
-		} else if (!res.equals(other.res)) {
+		} else if (!node.equals(other.node)) {
 			return false;
 		}
 
@@ -235,7 +235,7 @@ public class RefObjectMapImpl extends R2RMLClassImpl implements RefObjectMap {
 	public String toString() {
 		return "RefObjectMapImpl [parent=" + parent + ", parentLogicalTable="
 				+ parentLogicalTable + ", childLogicalTable="
-				+ childLogicalTable + ", joinList=" + joinList + ", res=" + res
+				+ childLogicalTable + ", joinList=" + joinList + ", node=" + node
 				+ "]";
 	}
 

@@ -19,11 +19,14 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
+
 /**
  * R2RML Predicate Map
  * 
  * @author Marius Strandhaug
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_PREDICATE_MAP)
 public interface PredicateMap extends TermMap {
 
 }

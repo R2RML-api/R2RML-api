@@ -66,9 +66,9 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)));
+        stmtSet.add(getRDF().createTriple(node, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)));
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_TABLE_NAME),
+        stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_TABLE_NAME),
                 getRDF().createLiteral(getSQLTableName())));
 
 		return stmtSet;
@@ -78,7 +78,7 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((res == null) ? 0 : res.hashCode());
+		result = prime * result + ((node == null) ? 0 : node.hashCode());
 		result = prime * result + ((table == null) ? 0 : table.hashCode());
 		return result;
 	}
@@ -95,11 +95,11 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 			return false;
 
 		SQLTableImpl other = (SQLTableImpl) obj;
-		if (res == null) {
-			if (other.res != null) {
+		if (node == null) {
+			if (other.node != null) {
 				return false;
 			}
-		} else if (!res.equals(other.res)) {
+		} else if (!node.equals(other.node)) {
 			return false;
 		}
 
@@ -116,7 +116,7 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 
 	@Override
 	public String toString() {
-		return "SQLTableImpl [table=" + table + ", res=" + res + "]";
+		return "SQLTableImpl [table=" + table + ", node=" + node + "]";
 	}
 
 }

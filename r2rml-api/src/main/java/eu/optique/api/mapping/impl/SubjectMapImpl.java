@@ -188,7 +188,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 				+ graphList + ", type=" + type + ", termtype=" + termtype
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
-				+ ", res=" + getNode() + "]";
+				+ ", node=" + getNode() + "]";
 	}
 
 }

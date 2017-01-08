@@ -306,7 +306,7 @@ public abstract class TermMapImpl extends R2RMLClassImpl implements TermMap {
 		return "TermMapImpl [type=" + type + ", termtype=" + termtype
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
-				+ ", res=" + getNode() + "]";
+				+ ", node=" + getNode() + "]";
 	}
 
 }

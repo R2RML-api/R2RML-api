@@ -19,6 +19,7 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
 import org.apache.commons.rdf.api.IRI;
 
 /**
@@ -26,6 +27,7 @@ import org.apache.commons.rdf.api.IRI;
  * 
  * @author Marius Strandhaug
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_TERM_MAP)
 public interface TermMap extends R2RMLClass {
 
 	/**

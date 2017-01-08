@@ -199,7 +199,7 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 		return "ObjectMapImpl [langTag=" + langTag + ", dataType=" + dataType
 				+ ", type=" + type + ", termtype=" + termtype + ", template="
 				+ template + ", constVal=" + constVal + ", columnName="
-				+ columnName + ", inverseExp=" + inverseExp + ", res=" + getNode()
+				+ columnName + ", inverseExp=" + inverseExp + ", node=" + getNode()
 				+ "]";
 	}
 

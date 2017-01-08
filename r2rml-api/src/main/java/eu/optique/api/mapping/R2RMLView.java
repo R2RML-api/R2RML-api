@@ -19,6 +19,7 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
 import org.apache.commons.rdf.api.IRI;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.List;
  * 
  * @author Marius Strandhaug
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_R2RML_VIEW)
 public interface R2RMLView extends LogicalTable {
 
 	/**
@@ -39,7 +41,8 @@ public interface R2RMLView extends LogicalTable {
 	 * @throws NullPointerException
 	 *             If sqlQuery is null.
 	 */
-	public void setR2RMLView(String sqlQuery);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_QUERY)
+    public void setSqlQuery(String sqlQuery);
 
 	/**
 	 * Adds a SQL version identifier to this R2RMLView. The SQL version URI will
@@ -50,7 +53,8 @@ public interface R2RMLView extends LogicalTable {
 	 * @param version
 	 *            The SQL version that will be set.
 	 */
-	public void addSQLVersion(IRI version);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_VERSION)
+    public void addSQLVersion(IRI version);
 
 	/**
 	 * Get the SQL version URI located at the given index.
@@ -61,7 +65,8 @@ public interface R2RMLView extends LogicalTable {
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
-	public IRI getSQLVersion(int index);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_VERSION)
+    public IRI getSQLVersion(int index);
 
 	/**
 	 * Returns an unmodifiable view of the list of SQL versions that have been
@@ -69,6 +74,7 @@ public interface R2RMLView extends LogicalTable {
 	 *
 	 * @return An unmodifiable list of SQL versions.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_VERSION)
 	public List<IRI> getSQLVersions();
 
 	/**
@@ -79,5 +85,6 @@ public interface R2RMLView extends LogicalTable {
 	 * @param version
 	 *            The SQL version identifier that will be removed.
 	 */
-	public void removeSQLVersion(IRI version);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_VERSION)
+    public void removeSQLVersion(IRI version);
 }

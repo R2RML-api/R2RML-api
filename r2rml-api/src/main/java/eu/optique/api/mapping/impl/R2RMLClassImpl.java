@@ -12,16 +12,17 @@ import static java.util.Objects.requireNonNull;
 public abstract class R2RMLClassImpl implements R2RMLClass {
 
     private final RDF rdf;
-    BlankNodeOrIRI res;
+
+    protected  BlankNodeOrIRI node;
 
     @Override
     public void setNode(BlankNodeOrIRI node) {
-        this.res = requireNonNull(node);
+        this.node = requireNonNull(node);
     }
 
     @Override
     public BlankNodeOrIRI getNode() {
-        return res;
+        return node;
     }
 
     R2RMLClassImpl(RDF rdf){

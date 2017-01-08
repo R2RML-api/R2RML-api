@@ -31,15 +31,13 @@ public class R2RMLVocabulary {
 	public static final String NAMESPACE = "http://www.w3.org/ns/r2rml#";
 
 	// R2RML types
-	public static final String TYPE_BASE_TABLE_OR_VIEW = NAMESPACE
-			+ "BaseTableOrView";
+	public static final String TYPE_BASE_TABLE_OR_VIEW = NAMESPACE + "BaseTableOrView";
 	public static final String TYPE_GRAPH_MAP = NAMESPACE + "GraphMap";
 	public static final String TYPE_JOIN = NAMESPACE + "Join";
 	public static final String TYPE_LOGICAL_TABLE = NAMESPACE + "LogicalTable";
 	public static final String TYPE_OBJECT_MAP = NAMESPACE + "ObjectMap";
 	public static final String TYPE_PREDICATE_MAP = NAMESPACE + "PredicateMap";
-	public static final String TYPE_PREDICATE_OBJECT_MAP = NAMESPACE
-			+ "PredicateObjectMap";
+	public static final String TYPE_PREDICATE_OBJECT_MAP = NAMESPACE + "PredicateObjectMap";
 	public static final String TYPE_R2RML_VIEW = NAMESPACE + "R2RMLView";
 	public static final String TYPE_REF_OBJECT_MAP = NAMESPACE + "RefObjectMap";
 	public static final String TYPE_SUBJECT_MAP = NAMESPACE + "SubjectMap";
@@ -54,21 +52,17 @@ public class R2RMLVocabulary {
 	public static final String PROP_CONSTANT = NAMESPACE + "constant";
 	public static final String PROP_GRAPH = NAMESPACE + "graph";
 	public static final String PROP_GRAPH_MAP = NAMESPACE + "graphMap";
-	public static final String PROP_INVERSE_EXPRESSION = NAMESPACE
-			+ "inverseExpression";
-	public static final String PROP_JOIN_CONDITION = NAMESPACE
-			+ "joinCondition";
+	public static final String PROP_INVERSE_EXPRESSION = NAMESPACE + "inverseExpression";
+	public static final String PROP_JOIN_CONDITION = NAMESPACE + "joinCondition";
 	public static final String PROP_LANGUAGE = NAMESPACE + "language";
 	public static final String PROP_LOGICAL_TABLE = NAMESPACE + "logicalTable";
 	public static final String PROP_OBJECT = NAMESPACE + "object";
 	public static final String PROP_OBJECT_MAP = NAMESPACE + "objectMap";
 	public static final String PROP_PARENT = NAMESPACE + "parent";
-	public static final String PROP_PARENT_TRIPLES_MAP = NAMESPACE
-			+ "parentTriplesMap";
+	public static final String PROP_PARENT_TRIPLES_MAP = NAMESPACE + "parentTriplesMap";
 	public static final String PROP_PREDICATE = NAMESPACE + "predicate";
 	public static final String PROP_PREDICATE_MAP = NAMESPACE + "predicateMap";
-	public static final String PROP_PREDICATE_OBJECT_MAP = NAMESPACE
-			+ "predicateObjectMap";
+	public static final String PROP_PREDICATE_OBJECT_MAP = NAMESPACE + "predicateObjectMap";
 	public static final String PROP_SQL_QUERY = NAMESPACE + "sqlQuery";
 	public static final String PROP_SQL_VERSION = NAMESPACE + "sqlVersion";
 	public static final String PROP_SUBJECT = NAMESPACE + "subject";

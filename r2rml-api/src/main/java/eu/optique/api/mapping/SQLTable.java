@@ -19,11 +19,14 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
+
 /**
  * A logical tables' SQL base table or view.
  * 
  * @author Marius Strandhaug
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)
 public interface SQLTable extends LogicalTable {
 
 	/**

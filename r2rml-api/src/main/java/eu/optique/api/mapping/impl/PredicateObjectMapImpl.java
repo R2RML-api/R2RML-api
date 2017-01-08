@@ -42,13 +42,15 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateObjectMap {
 
-    ArrayList<PredicateMap> predList;
-    ArrayList<ObjectMap> objList;
-    ArrayList<RefObjectMap> refObjList;
-    ArrayList<GraphMap> graphList;
+    private ArrayList<PredicateMap> predList;
 
-    public PredicateObjectMapImpl(RDF rdf, PredicateMap pm,
-                                  ObjectMap om) {
+    private ArrayList<ObjectMap> objList;
+
+    private ArrayList<RefObjectMap> refObjList;
+
+    private ArrayList<GraphMap> graphList;
+
+    PredicateObjectMapImpl(RDF rdf, PredicateMap pm, ObjectMap om) {
 
         super(rdf);
         predList = new ArrayList<PredicateMap>();
@@ -70,15 +72,13 @@ public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateO
         }
     }
 
-    public PredicateObjectMapImpl(RDF rdf, PredicateMap pm,
-                                  RefObjectMap rom) {
-
+    PredicateObjectMapImpl(RDF rdf, PredicateMap pm, RefObjectMap rom) {
         super(rdf);
 
-        predList = new ArrayList<PredicateMap>();
-        objList = new ArrayList<ObjectMap>();
-        refObjList = new ArrayList<RefObjectMap>();
-        graphList = new ArrayList<GraphMap>();
+        predList = new ArrayList<>();
+        objList = new ArrayList<>();
+        refObjList = new ArrayList<>();
+        graphList = new ArrayList<>();
 
         if (pm == null) {
             throw new NullPointerException(
@@ -94,15 +94,14 @@ public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateO
         }
     }
 
-    public PredicateObjectMapImpl(RDF rdf, List<PredicateMap> pms,
-                                  List<ObjectMap> oms, List<RefObjectMap> roms) {
+    public PredicateObjectMapImpl(RDF rdf, List<PredicateMap> pms, List<ObjectMap> oms, List<RefObjectMap> roms) {
 
         super(rdf);
 
-        predList = new ArrayList<PredicateMap>();
-        objList = new ArrayList<ObjectMap>();
-        refObjList = new ArrayList<RefObjectMap>();
-        graphList = new ArrayList<GraphMap>();
+        predList = new ArrayList<>();
+        objList = new ArrayList<>();
+        refObjList = new ArrayList<>();
+        graphList = new ArrayList<>();
 
         if (pms == null) {
             throw new NullPointerException(
@@ -263,26 +262,26 @@ public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateO
                     "A PredicateObjectMap must have a resource.");
         }
 
-        res = (BlankNodeOrIRI) node;
+        this.node = (BlankNodeOrIRI) node;
     }
 
     @Override
     public BlankNodeOrIRI getNode() {
-        return res;
+        return node;
     }
 
     @Override
     public Set<Triple> serialize() {
         Set<Triple> stmtSet = new HashSet<>();
 
-        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_PREDICATE_OBJECT_MAP)));
+        stmtSet.add(getRDF().createTriple(node, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_PREDICATE_OBJECT_MAP)));
 
         for (PredicateMap pm : predList) {
             if (pm.getTermMapType() == TermMapType.CONSTANT_VALUED) {
                 // Use constant shortcut property.
-                stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE), getRDF().createIRI(pm.getConstant())));
+                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE), getRDF().createIRI(pm.getConstant())));
             } else {
-                stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP), pm.getNode()));
+                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP), pm.getNode()));
                 stmtSet.addAll(pm.serialize());
             }
         }
@@ -293,32 +292,32 @@ public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateO
                 if (om.getTermType().equals(
                         getRDF().createIRI(R2RMLVocabulary.TERM_IRI))) {
 
-                    stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT), getRDF().createIRI(om.getConstant())));
+                    stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT), getRDF().createIRI(om.getConstant())));
 
                 } else if (om.getTermType().equals(
                         getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL))) {
 
-                    stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT),
+                    stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT),
                             getRDF().createLiteral(om.getConstant())));
 
                 }
             } else {
-                stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), om.getNode()));
+                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), om.getNode()));
                 stmtSet.addAll(om.serialize());
             }
         }
 
         for (RefObjectMap rom : refObjList) {
-            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), rom.getNode()));
+            stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), rom.getNode()));
             stmtSet.addAll(rom.serialize());
         }
 
         for (GraphMap g : graphList) {
             if (g.getTermMapType() == TermMapType.CONSTANT_VALUED) {
                 // Use constant shortcut property.
-                stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), getRDF().createIRI(g.getConstant())));
+                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), getRDF().createIRI(g.getConstant())));
             } else {
-                stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
+                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
                 stmtSet.addAll(g.serialize());
             }
         }
@@ -333,7 +332,7 @@ public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateO
         result = prime * result + ((objList == null) ? 0 : objList.hashCode());
         result = prime * result
                 + ((predList == null) ? 0 : predList.hashCode());
-        result = prime * result + ((res == null) ? 0 : res.hashCode());
+        result = prime * result + ((node == null) ? 0 : node.hashCode());
         return result;
     }
 
@@ -365,11 +364,11 @@ public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateO
             return false;
         }
 
-        if (res == null) {
-            if (other.res != null) {
+        if (node == null) {
+            if (other.node != null) {
                 return false;
             }
-        } else if (!res.equals(other.res)) {
+        } else if (!node.equals(other.node)) {
             return false;
         }
 
@@ -379,7 +378,7 @@ public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateO
     @Override
     public String toString() {
         return "PredicateObjectMapImpl [predList=" + predList + ", objList="
-                + objList + ", res=" + res + "]";
+                + objList + ", node=" + node + "]";
     }
 
 }

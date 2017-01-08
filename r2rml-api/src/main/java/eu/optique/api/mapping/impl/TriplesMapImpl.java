@@ -227,7 +227,7 @@ public class TriplesMapImpl extends R2RMLClassImpl implements TriplesMap {
 	@Override
 	public String toString() {
 		return "TriplesMapImpl [logTable=" + logTable + ", subMap=" + subMap
-				+ ", pomList=" + pomList + ", res=" + res + "]";
+				+ ", pomList=" + pomList + ", node=" + res + "]";
 	}
 
 }

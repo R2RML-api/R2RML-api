@@ -34,13 +34,13 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class GraphMapImpl extends TermMapImpl implements GraphMap {
 
-    public GraphMapImpl(RDF lc, TermMapType termMapType,
-                        Template template) {
+    GraphMapImpl(RDF lc, TermMapType termMapType,
+                 Template template) {
         super(lc, termMapType, template);
     }
 
-    public GraphMapImpl(RDF lc, TermMapType termMapType,
-                        String columnOrConst) {
+    GraphMapImpl(RDF lc, TermMapType termMapType,
+                 String columnOrConst) {
         super(lc, termMapType, columnOrConst);
     }
 
@@ -50,7 +50,10 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
 
         stmtSet.addAll(super.serialize());
 
-        stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_GRAPH_MAP)));
+        stmtSet.add(getRDF().createTriple(
+                getNode(),
+                getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                getRDF().createIRI(R2RMLVocabulary.TYPE_GRAPH_MAP)));
 
         return stmtSet;
     }
@@ -60,7 +63,7 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
         return "GraphMapImpl [type=" + type + ", termtype=" + termtype
                 + ", template=" + template + ", constVal=" + constVal
                 + ", columnName=" + columnName + ", inverseExp=" + inverseExp
-                + ", res=" + getNode() + "]";
+                + ", node=" + getNode() + "]";
     }
 
 }

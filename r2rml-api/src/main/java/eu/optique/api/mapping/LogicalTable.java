@@ -19,11 +19,14 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
+
 /**
  * R2RML Logical Table
  * 
  * @author Marius Strandhaug
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_LOGICAL_TABLE)
 public interface LogicalTable extends R2RMLClass {
 
 	/**
@@ -33,6 +36,7 @@ public interface LogicalTable extends R2RMLClass {
 	 * 
 	 * @return The effective SQL query of this LogicalTable.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_QUERY)
 	public String getSQLQuery();
 
 }

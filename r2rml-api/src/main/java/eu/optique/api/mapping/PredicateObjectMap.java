@@ -19,6 +19,8 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
+
 import java.util.List;
 
 /**
@@ -26,6 +28,7 @@ import java.util.List;
  * 
  * @author Marius Strandhaug
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_PREDICATE_OBJECT_MAP)
 public interface PredicateObjectMap extends R2RMLClass {
 
 	/**

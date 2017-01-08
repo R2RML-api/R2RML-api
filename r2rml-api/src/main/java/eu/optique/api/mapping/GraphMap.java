@@ -19,11 +19,14 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
+import eu.optique.api.mapping.impl.R2RMLVocabulary;
+
 /**
  * R2RML Graph Map
  * 
  * @author Marius Strandhaug
  */
+@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_GRAPH_MAP)
 public interface GraphMap extends TermMap {
 
 }
