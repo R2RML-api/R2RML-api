@@ -27,7 +27,7 @@ import java.util.List;
  * @author Marius Strandhaug
  * @author Martin G. Skjæveland
  */
-public interface RefObjectMap extends SerializeR2RML, ManageResource {
+public interface RefObjectMap extends SerializeR2RML, R2RMLClass {
 
 	/**
 	 * Sets the parent triples map of this RefObjectMap. A

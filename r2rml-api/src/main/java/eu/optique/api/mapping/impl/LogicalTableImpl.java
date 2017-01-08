@@ -23,16 +23,14 @@ import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.SerializeR2RML;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
-import org.apache.commons.rdf.api.RDFTerm;
 
 /**
  * The abstract superclass for R2RMLViewImpl and SQLTableImpl.
  * 
  * @author Marius Strandhaug
  */
-public abstract class LogicalTableImpl implements LogicalTable, SerializeR2RML {
+public abstract class LogicalTableImpl extends R2RMLClassImpl implements LogicalTable, SerializeR2RML {
 
-	BlankNodeOrIRI res;
 	final LibConfiguration lc;
 
 	public LogicalTableImpl(LibConfiguration c) {
@@ -46,19 +44,5 @@ public abstract class LogicalTableImpl implements LogicalTable, SerializeR2RML {
 
 	@Override
 	public abstract String getSQLQuery();
-
-	@Override
-	public void setResource(RDFTerm r) {
-		 if (r == null) {
-			throw new NullPointerException("A LogicalTable must have a resource.");
-		}
-
-		res = (BlankNodeOrIRI) r;
-	}
-
-	@Override
-	public BlankNodeOrIRI getResource() {
-		return res;
-	}
 
 }

@@ -140,13 +140,13 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 		stmtSet.addAll(super.serialize());
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_OBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_OBJECT_MAP)));
 
 		if (dataType != null) {
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_DATATYPE), dataType));
+            stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_DATATYPE), dataType));
 		} else if (langTag != null) {
 
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_LANGUAGE),
+            stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_LANGUAGE),
                     lc.getRDF().createLiteral(langTag)));
 		}
 
@@ -199,7 +199,7 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 		return "ObjectMapImpl [langTag=" + langTag + ", dataType=" + dataType
 				+ ", type=" + type + ", termtype=" + termtype + ", template="
 				+ template + ", constVal=" + constVal + ", columnName="
-				+ columnName + ", inverseExp=" + inverseExp + ", res=" + res
+				+ columnName + ", inverseExp=" + inverseExp + ", res=" + getNode()
 				+ "]";
 	}
 

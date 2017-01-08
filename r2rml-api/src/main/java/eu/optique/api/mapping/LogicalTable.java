@@ -24,7 +24,7 @@ package eu.optique.api.mapping;
  * 
  * @author Marius Strandhaug
  */
-public interface LogicalTable extends ManageResource, SerializeR2RML {
+public interface LogicalTable extends R2RMLClass, SerializeR2RML {
 
 	/**
 	 * Returns the effective SQL query of this LogicalTable. The effective SQL

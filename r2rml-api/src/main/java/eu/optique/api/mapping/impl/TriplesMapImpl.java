@@ -33,7 +33,6 @@ import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.TermMap.TermMapType;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
-import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -63,7 +62,7 @@ public class TriplesMapImpl implements TriplesMap {
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-        setResource(lc.getRDF().createBlankNode());
+        setNode(lc.getRDF().createBlankNode());
 	}
 
 	public TriplesMapImpl(LibConfiguration c, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
@@ -78,7 +77,7 @@ public class TriplesMapImpl implements TriplesMap {
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-        setResource(lc.getRDF().createIRI(resourceIdentifier));
+        setNode(lc.getRDF().createIRI(resourceIdentifier));
 	}
 
 	@Override
@@ -137,16 +136,16 @@ public class TriplesMapImpl implements TriplesMap {
 	}
 
 	@Override
-	public void setResource(RDFTerm r) {
-		if (r == null) {
+	public void setNode(BlankNodeOrIRI node) {
+		if (node == null) {
 			throw new NullPointerException("A TriplesMap must have a resource.");
 		}
 
-		res = (BlankNodeOrIRI) r;
+		res = (BlankNodeOrIRI) node;
 	}
 
     @Override
-    public BlankNodeOrIRI getResource() {
+    public BlankNodeOrIRI getNode() {
         return res;
     }
 
@@ -156,19 +155,19 @@ public class TriplesMapImpl implements TriplesMap {
 
         stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_TRIPLES_MAP)));
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), getLogicalTable().getResource()));
+        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), getLogicalTable().getNode()));
 		stmtSet.addAll(getLogicalTable().serialize());
 
 		if (getSubjectMap().getTermMapType() == TermMapType.CONSTANT_VALUED) {
 			// Use constant shortcut property.
             stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT), lc.getRDF().createIRI(getSubjectMap().getConstant())));
 		} else {
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), getSubjectMap().getResource()));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), getSubjectMap().getNode()));
 			stmtSet.addAll(getSubjectMap().serialize());
 		}
 
 		for (PredicateObjectMap pom : pomList) {
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP), pom.getResource()));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP), pom.getNode()));
 			stmtSet.addAll(pom.serialize());
 		}
 

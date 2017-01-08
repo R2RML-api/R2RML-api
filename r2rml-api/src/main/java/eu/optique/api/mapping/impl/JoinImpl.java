@@ -25,7 +25,6 @@ import java.util.Set;
 import eu.optique.api.mapping.Join;
 import eu.optique.api.mapping.LibConfiguration;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
-import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -52,7 +51,7 @@ public class JoinImpl implements Join {
 		setChild(childCol);
 		setParent(parentCol);
 
-        setResource(lc.getRDF().createBlankNode());
+        setNode(lc.getRDF().createBlankNode());
 	}
 
 	@Override
@@ -99,12 +98,12 @@ public class JoinImpl implements Join {
 	}
 
 	@Override
-	public void setResource(RDFTerm r) {
-		res = (BlankNodeOrIRI) r;
+	public void setNode(BlankNodeOrIRI node) {
+		res = (BlankNodeOrIRI) node;
 	}
 
     @Override
-    public BlankNodeOrIRI getResource(){
+    public BlankNodeOrIRI getNode(){
         return res;
     }
 

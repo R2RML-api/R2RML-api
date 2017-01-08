@@ -123,7 +123,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 
     @Override
 	public void addTriplesMap(TriplesMap mapping) {
-		triplesMaps.put(mapping.getResource(), mapping);
+		triplesMaps.put(mapping.getNode(), mapping);
 	}
 
 	@Override
@@ -197,7 +197,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		LogicalTable logicalTable = readLogicalTable(node);
 		SubjectMap subjectMap = readSubjectMap(node);
 		TriplesMap triplesMap = mfact.createTriplesMap(logicalTable, subjectMap);
-		triplesMap.setResource(node);
+		triplesMap.setNode(node);
 		return triplesMap;
 	}
 
@@ -258,7 +258,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 						"Invalid mapping: Logical table in TripleMap " + node + " has no tablename or SQL query.");
 			}
 
-			toReturn.setResource(logicalTable);
+			toReturn.setNode(logicalTable);
 			return toReturn;
 		}
 	}
@@ -381,7 +381,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				// create graphMap object
                 GraphMap graphMap = (GraphMap) readTermMap(graphMapNode,
                         lcfg.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP));
-				graphMap.setResource(graphMapNode);
+				graphMap.setNode(graphMapNode);
 				// add it to the list
 				graphMapList.add(graphMap);
 			}
@@ -451,7 +451,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				for (RDFTerm subjectClass : classes)
 					subjectMap.addClass((IRI)subjectClass);
 
-				subjectMap.setResource(subjectNode);
+				subjectMap.setNode(subjectNode);
 				return subjectMap;
 			}
 		}
@@ -505,7 +505,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 
 			// add predobjmap to the list to be returned
 			if (predobjMap != null) {
-				predobjMap.setResource(predobjNode);
+				predobjMap.setNode(predobjNode);
 				predObjs.add(predobjMap);
 			}
 
@@ -550,7 +550,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 
 			// termtype can be only iri which is the default
 			// so no reading of termtype needed
-			predicateMap.setResource(predicateNode);
+			predicateMap.setNode(predicateNode);
 
 			predicateMaps.add(predicateMap);
 		}
@@ -618,7 +618,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				if (lang != null)
 					objectMap.setLanguageTag(lang);
 
-				objectMap.setResource(objectNode);
+				objectMap.setNode(objectNode);
 				objectMaps.add(objectMap);
 			}
 		}
@@ -734,7 +734,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 						"Invalid mapping: RefObjectMap in TripleMap " + tmNode + " refers to non-existent TripleMap: " + parentNode);
 			}
 			RefObjectMap refObjectMap = mfact.createRefObjectMap(triplesMaps.get(parentNode));
-			refObjectMap.setResource(objectNode);
+			refObjectMap.setNode(objectNode);
 			refObjectMap.setChildLogicalTable(readLogicalTable(tmNode));
 			refObjectMap.setParentLogicalTable(readLogicalTable(parentNode));
 

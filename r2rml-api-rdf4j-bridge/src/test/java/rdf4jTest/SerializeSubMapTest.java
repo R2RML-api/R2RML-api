@@ -22,8 +22,10 @@ import java.util.Set;
 
 import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManager;
 import eu.optique.api.mapping.impl.RDF4JR2RMLMappingManagerFactory;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Triple;
 import org.apache.commons.rdf.rdf4j.RDF4J;
+import org.eclipse.rdf4j.model.IRI;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Resource;
@@ -48,10 +50,10 @@ public class SerializeSubMapTest {
 
 		//SubjectMap
 		String subMapURI = "http://data.example.com/resource/subject";
-		Resource subRes = new URIImpl(subMapURI);
+		IRI subRes = new URIImpl(subMapURI);
 		Template templs =  mfact.createTemplate("http://data.example.com/employee/{EMPNO}");
 		SubjectMap sm =  mfact.createSubjectMap(templs);
-		sm.setResource(rdf4J.asRDFTerm(subRes));
+		sm.setNode((BlankNodeOrIRI) rdf4J.asRDFTerm(subRes));
 
 		Set<Triple> stmts = sm.serialize();
 		for(Triple stmt : stmts){

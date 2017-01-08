@@ -47,7 +47,7 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 
 		versionList = new ArrayList<>();
 
-        setResource(lc.getRDF().createBlankNode());
+        setNode(lc.getRDF().createBlankNode());
 	}
 
 	@Override

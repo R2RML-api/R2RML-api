@@ -28,7 +28,7 @@ import java.util.List;
  * @author Marius Strandhaug
  * @author Martin G. Skjæveland
  */
-public interface TriplesMap extends SerializeR2RML, ManageResource {
+public interface TriplesMap extends SerializeR2RML, R2RMLClass {
 
 	/**
 	 * Set the LogicalTable of this TriplesMap. A TriplesMap must have exactly

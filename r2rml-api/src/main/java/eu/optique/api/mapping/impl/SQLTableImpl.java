@@ -40,7 +40,7 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 
 		setSQLTable(tableName);
 
-        setResource(lc.getRDF().createBlankNode());
+        setNode(lc.getRDF().createBlankNode());
 	}
 
 	@Override

@@ -40,6 +40,7 @@ import org.apache.commons.rdf.api.Triple;
 public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 	ArrayList<IRI> classList;
+
 	ArrayList<GraphMap> graphList;
 
 	public SubjectMapImpl(LibConfiguration c, TermMapType termMapType,
@@ -119,7 +120,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public void removeClass(Object classURI) {
+	public void removeClass(IRI classURI) {
 		classList.remove(classURI);
 	}
 
@@ -134,18 +135,18 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 		stmtSet.addAll(super.serialize());
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
 
 		for (IRI cl : classList) {
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_CLASS), cl));
+            stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_CLASS), cl));
 		}
 		
 		for(GraphMap g : graphList){
 			if(g.getTermMapType() == TermMapType.CONSTANT_VALUED){
 				// Use constant shortcut property.
-                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), lc.getRDF().createIRI(g.getConstant())));
+                stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), lc.getRDF().createIRI(g.getConstant())));
 			}else{
-                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getResource()));
+                stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
 				stmtSet.addAll(g.serialize());
 			}
 		}
@@ -191,7 +192,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 				+ graphList + ", type=" + type + ", termtype=" + termtype
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
-				+ ", res=" + res + "]";
+				+ ", res=" + getNode() + "]";
 	}
 
 }

@@ -19,16 +19,14 @@
  ******************************************************************************/
 package eu.optique.api.mapping;
 
-import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.IRI;
-import org.apache.commons.rdf.api.RDFTerm;
 
 /**
  * R2RML Term Map
  * 
  * @author Marius Strandhaug
  */
-public interface TermMap extends ManageResource, SerializeR2RML {
+public interface TermMap extends R2RMLClass, SerializeR2RML {
 
 	/**
 	 * The term map must be set to one of these values when created.

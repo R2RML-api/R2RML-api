@@ -119,11 +119,11 @@ public interface SubjectMap extends TermMap {
 	 * Remove the class given by the parameter, from the SubjectMap. The
 	 * subsequent class URIs in the list will be shifted left. The classURI
 	 * parameter must be an instance of the library's resource class.
-	 * 
-	 * @param classURI
-	 *            The class that will be removed.
-	 */
-	public void removeClass(Object classURI);
+	 *
+     * @param classURI
+     *            The class that will be removed.
+     */
+	public void removeClass(IRI classURI);
 
 	/**
 	 * Remove the GraphMap given by the parameter, from the SubjectMap. The

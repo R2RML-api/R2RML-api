@@ -33,7 +33,6 @@ import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.RefObjectMap;
 import eu.optique.api.mapping.TermMap.TermMapType;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
-import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -75,7 +74,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 			addPredicateMap(pm);
 			addObjectMap(om);
 
-            setResource(lc.getRDF().createBlankNode());
+            setNode(lc.getRDF().createBlankNode());
 		}
 	}
 
@@ -103,7 +102,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 			addPredicateMap(pm);
 			addRefObjectMap(rom);
 
-            setResource(lc.getRDF().createBlankNode());
+            setNode(lc.getRDF().createBlankNode());
 		}
 	}
 
@@ -158,7 +157,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 				}
 			}
 
-            setResource(lc.getRDF().createBlankNode());
+            setNode(lc.getRDF().createBlankNode());
 		}
 	}
 
@@ -274,17 +273,17 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 	}
 
 	@Override
-	public void setResource(RDFTerm r) {
-		if (r == null) {
+	public void setNode(BlankNodeOrIRI node) {
+		if (node == null) {
 			throw new NullPointerException(
 					"A PredicateObjectMap must have a resource.");
 		}
 
-		res = (BlankNodeOrIRI) r;
+		res = (BlankNodeOrIRI) node;
 	}
 
     @Override
-    public BlankNodeOrIRI getResource() {
+    public BlankNodeOrIRI getNode() {
         return res;
     }
 
@@ -299,7 +298,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 				// Use constant shortcut property.
                 stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE), lc.getRDF().createIRI(pm.getConstant())));
 			} else {
-                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP), pm.getResource()));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP), pm.getNode()));
 				stmtSet.addAll(pm.serialize());
 			}
 		}
@@ -320,13 +319,13 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 
 				}
 			} else {
-                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), om.getResource()));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), om.getNode()));
 				stmtSet.addAll(om.serialize());
 			}
 		}
 		
 		for(RefObjectMap rom : refObjList){
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), rom.getResource()));
+            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), rom.getNode()));
 			stmtSet.addAll(rom.serialize());
 		}
 		
@@ -335,7 +334,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 				// Use constant shortcut property.
                 stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), lc.getRDF().createIRI(g.getConstant())));
 			}else{
-                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getResource()));
+                stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
 				stmtSet.addAll(g.serialize());
 			}
 		}

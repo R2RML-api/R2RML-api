@@ -64,16 +64,16 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
 			if (map.getLogicalTable() == null)
 				throw new IllegalArgumentException(
 						"No logical table for TriplesMap "
-								+ map.getResource()
+								+ map.getNode()
 										.toString());
-			if (map.getLogicalTable().getResource() == null
+			if (map.getLogicalTable().getNode() == null
 					&& map.getLogicalTable().getSQLQuery() == null)
 				throw new IllegalArgumentException(
 						"No logical table for TriplesMap "
-								+ map.getResource()
+								+ map.getNode()
 										.toString());
 			if (map.getSubjectMap() == null)
-				throw new IllegalArgumentException(map.getResource().toString()
+				throw new IllegalArgumentException(map.getNode().toString()
 						+ " does not have any SubjectMap");
 		}
 

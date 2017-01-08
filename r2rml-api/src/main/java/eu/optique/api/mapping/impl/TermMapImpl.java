@@ -26,9 +26,7 @@ import eu.optique.api.mapping.InverseExpression;
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TermMap;
-import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.IRI;
-import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -37,7 +35,7 @@ import org.apache.commons.rdf.api.Triple;
  * 
  * @author Marius Strandhaug
  */
-public abstract class TermMapImpl implements TermMap {
+public abstract class TermMapImpl extends R2RMLClassImpl implements TermMap {
 
 	TermMapType type;
 
@@ -50,8 +48,7 @@ public abstract class TermMapImpl implements TermMap {
 
 	InverseExpression inverseExp;
 
-	BlankNodeOrIRI res;
-	final LibConfiguration lc;
+    final LibConfiguration lc;
 
 	public TermMapImpl(LibConfiguration c, TermMapType termMapType,
 			Template template) {
@@ -74,7 +71,7 @@ public abstract class TermMapImpl implements TermMap {
 			setDefaultTermType();
 			setTemplate(template);
 
-            setResource(lc.getRDF().createBlankNode());
+            setNode(lc.getRDF().createBlankNode());
 		}
 	}
 
@@ -94,7 +91,7 @@ public abstract class TermMapImpl implements TermMap {
 		} else {
 			type = termMapType;
 			setDefaultTermType();
-            setResource(lc.getRDF().createBlankNode());
+            setNode(lc.getRDF().createBlankNode());
 
 			if (getTermMapType() == TermMapType.COLUMN_VALUED) {
 				setColumn(columnOrConst);
@@ -217,47 +214,33 @@ public abstract class TermMapImpl implements TermMap {
 		inverseExp = null;
 	}
 
-	@Override
-	public void setResource(RDFTerm r) {
-        if (r == null) {
-            throw new NullPointerException("A LogicalTable must have a resource.");
-        }
-
-		res = (BlankNodeOrIRI) r;
-	}
-
-    @Override
-    public BlankNodeOrIRI getResource() {
-        return res;
-    }
-
 
     @Override
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_TERM_MAP)));
+        stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_TERM_MAP)));
 
 		if (type == TermMapType.COLUMN_VALUED) {
 
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_COLUMN),
+            stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_COLUMN),
                     lc.getRDF().createLiteral(getColumn())));
 		} else if (type == TermMapType.CONSTANT_VALUED) {
 
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_CONSTANT),
+            stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_CONSTANT),
                     lc.getRDF().createLiteral(getConstant())));
 		} else if (type == TermMapType.TEMPLATE_VALUED) {
 
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_TEMPLATE),
+            stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_TEMPLATE),
                     lc.getRDF().createLiteral(getTemplateString())));
 		}
 
 		// Will always have the term type explicitly listed.
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE), termtype));
+        stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE), termtype));
 		
 		if(getInverseExpression() != null){
 
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_INVERSE_EXPRESSION),
+            stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_INVERSE_EXPRESSION),
                     lc.getRDF().createLiteral(getInverseExpressionString())));
 		}
 
@@ -272,7 +255,7 @@ public abstract class TermMapImpl implements TermMap {
 				+ ((columnName == null) ? 0 : columnName.hashCode());
 		result = prime * result
 				+ ((constVal == null) ? 0 : constVal.hashCode());
-		result = prime * result + ((res == null) ? 0 : res.hashCode());
+		result = prime * result + ((getNode() == null) ? 0 : getNode().hashCode());
 		result = prime * result
 				+ ((termtype == null) ? 0 : termtype.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -307,11 +290,11 @@ public abstract class TermMapImpl implements TermMap {
 			return false;
 		}
 
-		if (res == null) {
-			if (other.res != null) {
+		if (getNode() == null) {
+			if (other.getNode() != null) {
 				return false;
 			}
-		} else if (!res.equals(other.res)) {
+		} else if (!getNode().equals(other.getNode())) {
 			return false;
 		}
 
@@ -335,7 +318,7 @@ public abstract class TermMapImpl implements TermMap {
 		return "TermMapImpl [type=" + type + ", termtype=" + termtype
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
-				+ ", res=" + res + "]";
+				+ ", res=" + getNode() + "]";
 	}
 
 }
