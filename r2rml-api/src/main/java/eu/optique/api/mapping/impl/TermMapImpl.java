@@ -74,7 +74,7 @@ public abstract class TermMapImpl implements TermMap {
 			setDefaultTermType();
 			setTemplate(template);
 
-			setResource(lc.createBNode());
+			setResource(lc.createBlankNode());
 		}
 	}
 
@@ -94,7 +94,7 @@ public abstract class TermMapImpl implements TermMap {
 		} else {
 			type = termMapType;
 			setDefaultTermType();
-			setResource(lc.createBNode());
+			setResource(lc.createBlankNode());
 
 			if (getTermMapType() == TermMapType.COLUMN_VALUED) {
 				setColumn(columnOrConst);

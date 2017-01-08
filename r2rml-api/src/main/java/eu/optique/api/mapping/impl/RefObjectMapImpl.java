@@ -64,7 +64,7 @@ public class RefObjectMapImpl implements RefObjectMap {
 		joinList = new ArrayList<Join>();
 
 		setParentMap(parentMap);
-		setResource(lc.createBNode());
+		setResource(lc.createBlankNode());
 	}
 
 	@Override

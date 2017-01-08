@@ -52,7 +52,7 @@ public class JoinImpl implements Join {
 		setChild(childCol);
 		setParent(parentCol);
 
-		setResource(lc.createBNode());
+		setResource(lc.createBlankNode());
 	}
 
 	@Override

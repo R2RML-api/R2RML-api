@@ -5,10 +5,13 @@ import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.Literal;
+import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 import java.util.Collection;
+
+import static java.util.stream.Collectors.toSet;
 
 /**
  * The library configuration that is used by the API to handle RDF. This
@@ -20,15 +23,24 @@ import java.util.Collection;
  */
 public interface LibConfiguration {
 
+    /**
+     * Gets a commons-rdf RDF factory
+     *
+     * @return RDF Factory
+     */
+    public RDF getRDF();
+
 	/**
 	 * Creates a resource with the given URI. Returns an object of the class
 	 * returned by the method getResourceClass().
 	 *
-	 * @param URI
+	 * @param iri
 	 *            - The URI of the created resource.
 	 * @return A resource.
 	 */
-	public IRI createResource(String URI);
+    default IRI createResource(String iri) {
+        return getRDF().createIRI(iri);
+    }
 
 	/**
 	 * Creates a blank node resource. Returns an object of the class returned by
@@ -36,7 +48,9 @@ public interface LibConfiguration {
 	 *
 	 * @return A resource.
 	 */
-	public BlankNode createBNode();
+    default BlankNode createBlankNode(){
+        return getRDF().createBlankNode();
+    }
 
 	/**
 	 * Creates a triple from the given subject, predicate and object. The
@@ -51,7 +65,9 @@ public interface LibConfiguration {
 	 *            - The object of the triple.
 	 * @return A triple with the given subject, predicate and object.
 	 */
-	public Triple createTriple(BlankNodeOrIRI subject, IRI predicate, BlankNodeOrIRI object);
+    default Triple createTriple(BlankNodeOrIRI subject, IRI predicate, BlankNodeOrIRI object){
+        return getRDF().createTriple( subject, predicate, object);
+    }
 
 	/**
 	 * Creates a literal triple from the given subject, predicate and literal
@@ -66,8 +82,13 @@ public interface LibConfiguration {
 	 *            - The object of the triple.
 	 * @return A triple with the given subject, predicate and literal object.
 	 */
-	public Triple createLiteralTriple(BlankNodeOrIRI subject, IRI predicate,
-			String litObject);
+    default Triple createLiteralTriple(BlankNodeOrIRI subject, IRI predicate,
+                                      String litObject) {
+
+        return getRDF().createTriple(subject, predicate,
+                getRDF().createLiteral(litObject));
+
+    }
 
 	/**
 	 * Create a graph containing triples generated from the given collection of
@@ -78,7 +99,16 @@ public interface LibConfiguration {
 	 *            - The TriplesMaps that will be serialized.
 	 * @return A graph with the given TriplesMaps.
 	 */
-	public Graph createGraph(Collection<TriplesMap> maps);
+	default Graph createGraph(Collection<TriplesMap> maps){
+        Graph m = getRDF().createGraph();
+
+        for (TriplesMap tm : maps) {
+            tm.serialize().forEach(m::add);
+        }
+
+        return m;
+
+    }
 
 	/**
 	 * Returns the URI of the rdf:type predicate. The URI will be of the class
@@ -86,7 +116,9 @@ public interface LibConfiguration {
 	 *
 	 * @return Resource with the URI of rdf:type.
 	 */
-	public IRI getRDFType();
+	default IRI getRDFType(){
+        return getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type");
+    }
 
 	/**
 	 * Gets the subject of all triples in the graph with the given predicate and
@@ -102,7 +134,11 @@ public interface LibConfiguration {
 	 *            - The object of the triple.
 	 * @return - A collection of resources.
 	 */
-	public Collection<BlankNodeOrIRI> getSubjects(Graph graph, IRI pred, RDFTerm obj);
+	default public Collection<BlankNodeOrIRI> getSubjects(Graph graph, IRI pred, RDFTerm obj) {
+        return graph.stream(null, pred, obj)
+                .map(Triple::getSubject)
+                .collect(toSet());
+    }
 
 	/**
 	 * Gets the object of all triples in the graph with the given subject and
@@ -118,36 +154,12 @@ public interface LibConfiguration {
      *            - The predicate of the triple.
 	 * @return - A collection of resources.
 	 */
-	public Collection<RDFTerm> getObjects(Graph graph, BlankNodeOrIRI subject, IRI pred);
+    default Collection<RDFTerm> getObjects(Graph graph, BlankNodeOrIRI subject, IRI pred){
+        return graph.stream(subject, pred, null)
+                .map(Triple::getObject)
+                .collect(toSet());
+    }
 
-	/**
-	 * Returns the resource class. A resource can either be named, or it can be
-	 * a blank node.
-	 *
-	 * @return The resource class.
-	 */
-	default public Class<?> getResourceClass() {
-		return BlankNodeOrIRI.class;
-	}
-
-	/**
-	 * Returns the triple class. A triple consists of a subject, predicate and
-	 * an object.
-	 *
-	 * @return The triple class.
-	 */
-	default public Class<?> getTripleClass() {
-		return Triple.class;
-	}
-
-	/**
-	 * Returns the graph class. A graph consists of a set of triples.
-	 *
-	 * @return The graph class.
-	 */
-	default public Class<?> getGraphClass() {
-		return Graph.class;
-	}
 
     /**
      *
@@ -166,5 +178,15 @@ public interface LibConfiguration {
      * @param node an IRI, Literal, or BNode
      * @return string
      */
-    String getLexicalForm(RDFTerm node);
+    default String getLexicalForm(RDFTerm node) {
+        if (node instanceof IRI) {
+            return ((IRI)node).getIRIString();
+        } else if (node instanceof BlankNode) {
+            return ((BlankNode)node).uniqueReference();
+        } else if (node instanceof Literal) {
+            return ((Literal)node).getLexicalForm();
+        } else {
+            throw new IllegalArgumentException("unknown term: " + node);
+        }
+    }
 }

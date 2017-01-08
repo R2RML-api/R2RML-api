@@ -75,7 +75,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 			addPredicateMap(pm);
 			addObjectMap(om);
 
-			setResource(lc.createBNode());
+			setResource(lc.createBlankNode());
 		}
 	}
 
@@ -103,7 +103,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 			addPredicateMap(pm);
 			addRefObjectMap(rom);
 
-			setResource(lc.createBNode());
+			setResource(lc.createBlankNode());
 		}
 	}
 
@@ -158,7 +158,7 @@ public class PredicateObjectMapImpl implements PredicateObjectMap {
 				}
 			}
 
-			setResource(lc.createBNode());
+			setResource(lc.createBlankNode());
 		}
 	}
 

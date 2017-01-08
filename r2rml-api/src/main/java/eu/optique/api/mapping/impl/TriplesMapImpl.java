@@ -63,7 +63,7 @@ public class TriplesMapImpl implements TriplesMap {
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-		setResource(lc.createBNode());
+		setResource(lc.createBlankNode());
 	}
 
 	public TriplesMapImpl(LibConfiguration c, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
