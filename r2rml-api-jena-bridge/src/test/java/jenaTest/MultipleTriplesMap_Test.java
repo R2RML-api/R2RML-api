@@ -21,6 +21,7 @@ package jenaTest;
 import java.io.InputStream;
 import java.util.Collection;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -44,7 +45,7 @@ public class MultipleTriplesMap_Test
 	public void test() throws Exception{
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test6.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");

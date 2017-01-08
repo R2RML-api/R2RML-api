@@ -11,10 +11,15 @@
 	<version>0.4.1-SNAPSHOT</version>
 	<name>Optique R2RML API - Jena bridge</name>
 	<properties>
-		<jena.version>3.0.1</jena.version>
+		<jena.version>3.1.1</jena.version>
 	</properties>
 	<dependencies>
-		<dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-rdf-jena</artifactId>
+        </dependency>
+
+        <dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-core</artifactId>
 			<version>${jena.version}</version>

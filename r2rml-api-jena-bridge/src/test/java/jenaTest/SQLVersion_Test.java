@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -48,7 +50,7 @@ public class SQLVersion_Test
 	public void test() throws Exception{
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test15.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");
@@ -66,9 +68,9 @@ public class SQLVersion_Test
 				R2RMLViewImpl vi=(R2RMLViewImpl)t;
 
 				int cont=0;
-				Iterator<Resource> iter=vi.getSQLVersions(Resource.class).iterator();
+				Iterator<IRI> iter=vi.getSQLVersions().iterator();
 				while(iter.hasNext()){
-					Resource s=iter.next();
+					IRI s=iter.next();
 					Assert.assertTrue(s.toString().contains("SQL2008"));
 					cont++;
 				}

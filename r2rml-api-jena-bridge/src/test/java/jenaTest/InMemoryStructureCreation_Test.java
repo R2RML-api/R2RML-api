@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class InMemoryStructureCreation_Test {
 	@Test
 	public void test(){
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
 	
 		//Table

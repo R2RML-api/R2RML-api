@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -49,7 +50,7 @@ public class DataType_Test
 	
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test13.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");
@@ -73,7 +74,7 @@ public class DataType_Test
 				Iterator<ObjectMap> omit=pom.getObjectMaps().iterator();
 				ObjectMap o=omit.next();
 				Assert.assertTrue(o.getColumn().contains("EMPNO"));
-				Assert.assertTrue(o.getDatatype(Resource.class).toString().contains("positiveInteger"));
+				Assert.assertTrue(o.getDatatype().toString().contains("positiveInteger"));
 			}
 		}
 

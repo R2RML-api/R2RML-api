@@ -22,6 +22,11 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.jena.JenaRDF;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.NodeFactory;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -53,7 +58,9 @@ public class TermType1_Test {
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test8.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+
+        JenaRDF jena = new JenaRDF();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");
@@ -69,11 +76,10 @@ public class TermType1_Test {
 			Template t=s.getTemplate();
 			Assert.assertTrue(t.getColumnName(0).contains("fname"));
 			
-			Resource u=s.getTermType(Resource.class);
-			Assert.assertEquals(u, ResourceFactory.createResource(R2RMLVocabulary.TERM_BLANK_NODE));
-		
-			
-			Iterator<Resource> ituri=s.getClasses(Resource.class).iterator();
+			IRI u = s.getTermType();
+			Assert.assertEquals(u, jena.asRDFTerm(NodeFactory.createURI(R2RMLVocabulary.TERM_BLANK_NODE)));
+
+			Iterator<IRI> ituri =s.getClasses().iterator();
 			int cont=0;
 			while(ituri.hasNext()){
 				ituri.next();

@@ -432,7 +432,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				// look for context graphMap
 				List<GraphMap> graphMaps = readGraphMap(subjectNode);
 				for (GraphMap graphMap : graphMaps)
-					subjectMap.addGraphMaps(graphMap);
+					subjectMap.addGraphMap(graphMap);
 
 				// look for inverseExpression
                 String invExpr = readResource(

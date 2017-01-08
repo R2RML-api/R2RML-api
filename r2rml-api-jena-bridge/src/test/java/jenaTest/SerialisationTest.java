@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,9 +76,9 @@ public class SerialisationTest {
 	}
 
 	public static Model getSerialisedModel (Model model) throws InvalidR2RMLMappingException {
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		Collection<TriplesMap> tripleMaps = mm.importMappings(model);
-		Model out = mm.exportMappings(tripleMaps, Model.class);
+		Model out = mm.exportMappings(tripleMaps).asJenaModel();
 		return out;
 	}
 

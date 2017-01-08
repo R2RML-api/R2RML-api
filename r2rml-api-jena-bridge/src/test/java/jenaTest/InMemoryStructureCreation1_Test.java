@@ -22,6 +22,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.jena.JenaRDF;
+import org.apache.jena.graph.NodeFactory;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -51,9 +55,11 @@ public class InMemoryStructureCreation1_Test {
 	@Test
 	public void test(){
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
-	
+
+		JenaRDF jena = new JenaRDF();
+
 		//Table
 		LogicalTable lt = mfact.createR2RMLView("SELECT * FROM TABLE");
 		
@@ -62,8 +68,8 @@ public class InMemoryStructureCreation1_Test {
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//Associated Classes
-		sm.addClass(ResourceFactory.createResource("http://xmlns.com/foaf/0.1/Person"));
-		sm.addClass(ResourceFactory.createResource("http://example.com/Student"));
+		sm.addClass((IRI)jena.asRDFTerm(NodeFactory.createURI("http://xmlns.com/foaf/0.1/Person")));
+		sm.addClass((IRI) jena.asRDFTerm(NodeFactory.createURI("http://example.com/Student")));
 					
 		//PredicateObjectMap
 		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");
@@ -74,7 +80,7 @@ public class InMemoryStructureCreation1_Test {
 		//Other PredicateObjectMap with DataType
 		PredicateMap pred1 = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role1");
 		ObjectMap obm1 = mfact.createObjectMap(TermMapType.COLUMN_VALUED, "ROLESS");
-		obm1.setDatatype(ResourceFactory.createResource("http://www.w3.org/2001/XMLSchema#positiveInteger"));
+		obm1.setDatatype((IRI)jena.asRDFTerm(NodeFactory.createURI("http://www.w3.org/2001/XMLSchema#positiveInteger")));
 		PredicateObjectMap pom11 = mfact.createPredicateObjectMap(pred1, obm1);
 		
 		//TriplesMap
@@ -91,7 +97,7 @@ public class InMemoryStructureCreation1_Test {
 			TriplesMap current=it.next();
 			
 			int cont=0;
-			Iterator<Resource> iter=current.getSubjectMap().getClasses(Resource.class).iterator();
+			Iterator<IRI> iter=current.getSubjectMap().getClasses().iterator();
 			while(iter.hasNext()){
 				iter.next();
 				cont++;
@@ -120,11 +126,11 @@ public class InMemoryStructureCreation1_Test {
 				while(omit.hasNext()){
 					ObjectMap o=omit.next();
 					
-					if(o.getDatatype(Resource.class)==null){
+					if(o.getDatatype()==null){
 						Assert.assertTrue(o.getTemplate().getColumnName(0).contains("ROLE"));
 							
 					}else{
-						Assert.assertTrue(o.getDatatype(Resource.class).toString().contains("positiveInteger"));
+						Assert.assertTrue(o.getDatatype().toString().contains("positiveInteger"));
 					}
 				}
 			}

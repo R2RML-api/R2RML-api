@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -52,7 +54,7 @@ public class NTriplesSyntax_Test
 	public void test1() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test27.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "N-TRIPLE");
@@ -69,9 +71,9 @@ public class NTriplesSyntax_Test
 			Assert.assertTrue(t.getColumnName(0).contains("EMPNO"));
 		
 			int cont=0;
-			Iterator<Resource> classesit=s.getClasses(Resource.class).iterator();
+			Iterator<IRI> classesit=s.getClasses().iterator();
 			while(classesit.hasNext()){
-				Resource u= classesit.next();
+				IRI u= classesit.next();
 				Assert.assertTrue(u.toString().contains("Employee"));
 				cont++;
 			}
@@ -91,7 +93,7 @@ public class NTriplesSyntax_Test
 	public void test2() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");

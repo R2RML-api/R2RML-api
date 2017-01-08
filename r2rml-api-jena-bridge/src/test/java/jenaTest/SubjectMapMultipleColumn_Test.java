@@ -22,6 +22,9 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.jena.JenaRDF;
+import org.apache.jena.graph.NodeFactory;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -56,7 +59,7 @@ public class SubjectMapMultipleColumn_Test
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test3.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");
@@ -91,7 +94,9 @@ public class SubjectMapMultipleColumn_Test
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test3.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+
+		JenaRDF jena = new JenaRDF();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");
@@ -109,7 +114,7 @@ public class SubjectMapMultipleColumn_Test
 				
 				Iterator<PredicateMap> pmit=pom.getPredicateMaps().iterator();
 				PredicateMap p=pmit.next();
-				Assert.assertEquals(ResourceFactory.createResource(R2RMLVocabulary.TERM_IRI),p.getTermType(Resource.class));
+				Assert.assertEquals(NodeFactory.createURI(R2RMLVocabulary.TERM_IRI), jena.asJenaNode(p.getTermType()));
 				Assert.assertTrue(p.getConstant().contains("role"));
 				
 				Iterator<ObjectMap> omit=pom.getObjectMaps().iterator();

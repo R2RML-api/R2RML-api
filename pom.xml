@@ -28,7 +28,7 @@
 
     <modules>
         <module>r2rml-api</module>
-        <!--<module>r2rml-api-jena-bridge</module>-->
+        <module>r2rml-api-jena-bridge</module>
         <!--<module>r2rml-api-owlapi-bridge</module>-->
         <module>r2rml-api-rdf4j-bridge</module>
     </modules>
@@ -99,6 +99,11 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-rdf-rdf4j</artifactId>
+                <version>${commons-rdf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-rdf-jena</artifactId>
                 <version>${commons-rdf.version}</version>
             </dependency>
         </dependencies>

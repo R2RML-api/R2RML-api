@@ -65,12 +65,12 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public void addGraphMaps(GraphMap gm) {
+	public void addGraphMap(GraphMap gm) {
 		graphList.add(gm);
 	}
 
 	@Override
-	public void addGraphMaps(List<GraphMap> gms) {
+	public void addGraphMap(List<GraphMap> gms) {
 		graphList.addAll(gms);
 	}
 

@@ -22,6 +22,10 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.jena.JenaRDF;
+import org.apache.jena.graph.NodeFactory;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -55,9 +59,11 @@ public class TermType_Test {
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test7.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
-		Model m = ModelFactory.createDefaultModel();
+		JenaRDF jena = new JenaRDF();
+
+        Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis, "http://example.com#testMapping", "TURTLE");
 		Collection<TriplesMap> coll = mm.importMappings(m);
 		
@@ -103,8 +109,9 @@ public class TermType_Test {
 					Assert.assertEquals("\"FirstName\"", o.getTemplate().getColumnName(0));
 					Assert.assertEquals("\"LastName\"", o.getTemplate().getColumnName(1));
 					
-					Resource u=o.getTermType(Resource.class);
-					Assert.assertEquals(u, ResourceFactory.createResource(R2RMLVocabulary.TERM_LITERAL));
+					IRI u=o.getTermType();
+
+                    Assert.assertEquals(jena.asJenaNode(u), NodeFactory.createURI(R2RMLVocabulary.TERM_LITERAL));
 					
 				}
 			}

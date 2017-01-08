@@ -22,19 +22,19 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
 import org.junit.Assert;
 
 import org.junit.Test;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Resource;
 
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.ObjectMap;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.PredicateObjectMap;
-import eu.optique.api.mapping.R2RMLMappingManager;
 import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManagerFactory;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
@@ -53,7 +53,7 @@ public class Simplest_Test
 	public void test1() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");
@@ -70,9 +70,9 @@ public class Simplest_Test
 			Assert.assertTrue(t.getColumnName(0).contains("EMPNO"));
 		
 			int cont=0;
-			Iterator<Resource> classesit=s.getClasses(Resource.class).iterator();
+			Iterator<IRI> classesit=s.getClasses().iterator();
 			while(classesit.hasNext()){
-				Resource u= classesit.next();
+				IRI u= classesit.next();
 				Assert.assertTrue(u.toString().contains("Employee"));
 				cont++;
 			}
@@ -92,7 +92,7 @@ public class Simplest_Test
 	public void test2() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 		
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");

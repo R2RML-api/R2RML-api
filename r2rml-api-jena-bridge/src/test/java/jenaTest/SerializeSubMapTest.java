@@ -20,6 +20,12 @@ package jenaTest;
 
 import java.util.Set;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.Triple;
+import org.apache.commons.rdf.jena.JenaRDF;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.NodeFactory;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -40,18 +46,20 @@ public class SerializeSubMapTest {
 	@Test
 	public void test(){
 
-		R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
-		
+
+		JenaRDF jena = new JenaRDF();
+
 		//SubjectMap
 		String subMapURI = "http://data.example.com/resource/subject";
-		Resource subRes = ResourceFactory.createResource(subMapURI);
+		Node subRes = NodeFactory.createURI(subMapURI);
 		Template templs =  mfact.createTemplate("http://data.example.com/employee/{EMPNO}");
 		SubjectMap sm =  mfact.createSubjectMap(templs);
-		sm.setResource(subRes);
+		sm.setNode((BlankNodeOrIRI) jena.asRDFTerm(subRes));
 
-		Set<Statement> stmts = sm.serialize(Statement.class);
-		for(Statement stmt : stmts){
+		Set<Triple> stmts = sm.serialize();
+		for(Triple stmt : stmts){
 			if(ResourceFactory.createResource(R2RMLVocabulary.PROP_TEMPLATE).equals(stmt.getPredicate())){
 				
 				Assert.assertTrue(stmt.getObject().toString().contains("{EMPNO}"));

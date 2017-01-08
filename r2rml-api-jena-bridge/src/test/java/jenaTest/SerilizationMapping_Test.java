@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Collection;
 
+import eu.optique.api.mapping.impl.jena.JenaR2RMLMappingManager;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -50,7 +51,7 @@ public class SerilizationMapping_Test
 
 			InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 			
-			R2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+			JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
 
 			Model m = ModelFactory.createDefaultModel();
 			m = m.read(fis,"testMapping", "TURTLE");
@@ -59,7 +60,7 @@ public class SerilizationMapping_Test
                         File fout = File.createTempFile("artistNew", "ttl");
                         fout.deleteOnExit();
 			FileOutputStream fos = new FileOutputStream(fout);
-			Model out = mm.exportMappings(coll, Model.class);
+			Model out = mm.exportMappings(coll).asJenaModel();
 			out.write(fos, "TURTLE");
 			
 			FileInputStream fis1 = new FileInputStream(fout);
