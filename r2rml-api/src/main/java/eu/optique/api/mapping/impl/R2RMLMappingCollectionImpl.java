@@ -43,9 +43,11 @@ import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TermMap;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.TermMap.TermMapType;
+import org.apache.commons.rdf.api.BlankNode;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.Literal;
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
@@ -90,7 +92,36 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		initialize(graph);
 	}
 
-	@Override
+    /**
+     *
+     * Gets the lexical form (no quotation or escape) of a node
+     * <ul>
+     * <li>
+     *     For IRIs, return the UNQUOTED String representation.
+     * </li>
+     * <li>
+     *     For Literals, return the UNESCAPED string representation of the value.
+     * </li>
+     * </ul>
+     *
+     * NOTE: Avoid using toString() methods in general, since they are not reliable.
+     *
+     * @param node an IRI, Literal, or BNode
+     * @return string
+     */
+    private static String getLexicalForm(RDFTerm node) {
+        if (node instanceof IRI) {
+            return ((IRI)node).getIRIString();
+        } else if (node instanceof BlankNode) {
+            return ((BlankNode)node).uniqueReference();
+        } else if (node instanceof Literal) {
+            return ((Literal)node).getLexicalForm();
+        } else {
+            throw new IllegalArgumentException("unknown term: " + node);
+        }
+    }
+
+    @Override
 	public void addTriplesMap(TriplesMap mapping) {
 		triplesMaps.put(mapping.getResource(), mapping);
 	}
@@ -249,7 +280,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                 .map(Triple::getObject)
                 .collect(toSet());
 		if (obj.size() == 1)
-			return lcfg.getLexicalForm(obj.iterator().next());
+			return getLexicalForm(obj.iterator().next());
 		return null;
 	}
 
@@ -272,7 +303,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                 .collect(toSet());
 		if (obj.size() > 0) {
 			for (RDFTerm val : obj) {
-				resources.add(lcfg.getLexicalForm(val));
+				resources.add(getLexicalForm(val));
 			}
 			return resources;
 		}

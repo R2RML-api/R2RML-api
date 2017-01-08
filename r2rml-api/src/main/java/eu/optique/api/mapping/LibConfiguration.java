@@ -29,34 +29,4 @@ public interface LibConfiguration {
      * @return RDF Factory
      */
     public RDF getRDF();
-
-
-    /**
-     *
-     * Gets the lexical form (no quotation or escape) of a node
-     * <ul>
-     * <li>
-     *     For IRIs, return the UNQUOTED String representation.
-     * </li>
-     * <li>
-     *     For Literals, return the UNESCAPED string representation of the value.
-     * </li>
-     * </ul>
-     *
-     * NOTE: Avoid using toString() methods in general, since they are not reliable.
-     *
-     * @param node an IRI, Literal, or BNode
-     * @return string
-     */
-    default String getLexicalForm(RDFTerm node) {
-        if (node instanceof IRI) {
-            return ((IRI)node).getIRIString();
-        } else if (node instanceof BlankNode) {
-            return ((BlankNode)node).uniqueReference();
-        } else if (node instanceof Literal) {
-            return ((Literal)node).getLexicalForm();
-        } else {
-            throw new IllegalArgumentException("unknown term: " + node);
-        }
-    }
 }
