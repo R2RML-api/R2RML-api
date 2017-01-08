@@ -62,12 +62,6 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 
 	@Override
 	public void addSQLVersion(IRI version) {
-		if (version != null && !lc.getResourceClass().isInstance(version)) {
-			throw new IllegalArgumentException("Parameter version is of type "
-					+ version.getClass() + ". Should be an instance of "
-					+ lc.getResourceClass() + ".");
-		}
-
 		versionList.add(version);
 	}
 

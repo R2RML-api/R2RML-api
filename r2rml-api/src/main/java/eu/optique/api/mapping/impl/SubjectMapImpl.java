@@ -60,12 +60,6 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 	@Override
 	public void addClass(IRI classURI) {
-		if (classURI != null && !lc.getResourceClass().isInstance(classURI)) {
-			throw new IllegalArgumentException("Parameter classURI is of type "
-					+ classURI.getClass() + ". Should be an instance of "
-					+ lc.getResourceClass() + ".");
-		}
-
 		classList.add(classURI);
 	}
 
@@ -81,12 +75,6 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 	@Override
 	public void setTermType(IRI typeURI) {
-		if (typeURI != null && !lc.getResourceClass().isInstance(typeURI)) {
-			throw new IllegalArgumentException("Parameter typeURI is of type "
-					+ typeURI.getClass() + ". Should be an instance of "
-					+ lc.getResourceClass() + ".");
-		}
-
 		// Check if the typeIRI is one of the possible term type values for a
 		// SubjectMap.
 		if (typeURI.equals(lc.createResource(R2RMLVocabulary.TERM_IRI))

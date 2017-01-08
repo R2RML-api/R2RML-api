@@ -219,13 +219,9 @@ public abstract class TermMapImpl implements TermMap {
 
 	@Override
 	public void setResource(RDFTerm r) {
-		if (r != null && !lc.getResourceClass().isInstance(r)) {
-			throw new IllegalArgumentException("Parameter r is of type "
-					+ r.getClass() + ". Should be an instance of "
-					+ lc.getResourceClass() + ".");
-		} else if (r == null) {
-			throw new NullPointerException("A TermMap must have a resource.");
-		}
+        if (r == null) {
+            throw new NullPointerException("A LogicalTable must have a resource.");
+        }
 
 		res = (BlankNodeOrIRI) r;
 	}

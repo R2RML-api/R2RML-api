@@ -50,12 +50,6 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 	@Override
 	public void setTermType(IRI typeURI) {
-		if (typeURI != null && !lc.getResourceClass().isInstance(typeURI)) {
-			throw new IllegalArgumentException("Parameter typeURI is of type "
-					+ typeURI.getClass() + ". Should be an instance of "
-					+ lc.getResourceClass() + ".");
-		}
-
 		// Check if the typeURI is one of the possible term type values for an
 		// ObjectMap.
 		if (typeURI.equals(lc.createResource(R2RMLVocabulary.TERM_IRI))
@@ -114,15 +108,6 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 	@Override
 	public void setDatatype(IRI datatypeURI) {
-		if (datatypeURI != null
-				&& !lc.getResourceClass().isInstance(datatypeURI)) {
-			throw new IllegalArgumentException(
-					"Parameter datatypeURI is of type "
-							+ datatypeURI.getClass()
-							+ ". Should be an instance of "
-							+ lc.getResourceClass() + ".");
-		}
-
 		if (termtype.equals(lc.createResource(R2RMLVocabulary.TERM_LITERAL))) {
 			dataType = datatypeURI;
 			removeLanguageTag();

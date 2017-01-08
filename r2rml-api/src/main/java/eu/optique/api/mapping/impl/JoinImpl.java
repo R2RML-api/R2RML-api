@@ -100,14 +100,6 @@ public class JoinImpl implements Join {
 
 	@Override
 	public void setResource(RDFTerm r) {
-		if (r != null && !lc.getResourceClass().isInstance(r)) {
-			throw new IllegalArgumentException("Parameter r is of type "
-					+ r.getClass() + ". Should be an instance of "
-					+ lc.getResourceClass() + ".");
-		} else if (r == null) {
-			throw new NullPointerException("A Join must have a resource.");
-		}
-
 		res = (BlankNodeOrIRI) r;
 	}
 

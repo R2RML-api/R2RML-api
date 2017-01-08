@@ -138,11 +138,7 @@ public class TriplesMapImpl implements TriplesMap {
 
 	@Override
 	public void setResource(RDFTerm r) {
-		if (r != null && !lc.getResourceClass().isInstance(r)) {
-			throw new IllegalArgumentException("Parameter r is of type "
-					+ r.getClass() + ". Should be an instance of "
-					+ lc.getResourceClass() + ".");
-		} else if (r == null) {
+		if (r == null) {
 			throw new NullPointerException("A TriplesMap must have a resource.");
 		}
 
