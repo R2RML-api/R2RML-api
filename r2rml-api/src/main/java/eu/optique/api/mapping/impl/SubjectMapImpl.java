@@ -65,12 +65,12 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public void addGraphMap(GraphMap gm) {
+	public void addGraphMaps(GraphMap gm) {
 		graphList.add(gm);
 	}
 
 	@Override
-	public void addGraphMap(List<GraphMap> gms) {
+	public void addGraphMaps(List<GraphMap> gms) {
 		graphList.addAll(gms);
 	}
 
@@ -107,10 +107,6 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 	@Override
 	public List<IRI> getClasses() {
-//		List<R> l = new ArrayList<R>();
-//		for (Object o : classList) {
-//			l.add(resourceClass.cast(o));
-//		}
 		return Collections.unmodifiableList(classList);
 	}
 
@@ -126,7 +122,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 	@Override
 	public void removeGraphMap(GraphMap gm) {
-		classList.remove(gm);
+        graphList.remove(gm);
 	}
 
 	@Override

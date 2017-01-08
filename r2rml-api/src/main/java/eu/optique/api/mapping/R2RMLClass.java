@@ -20,6 +20,9 @@
 package eu.optique.api.mapping;
 
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.Triple;
+
+import java.util.Set;
 
 /**
  * A common abstract of all the classes defined in the <a href="https://www.w3.org/TR/r2rml/https://www.w3.org/TR/r2rml/#dfn-r2rml-vocabulary">R2RML specification</a>:
@@ -79,4 +82,10 @@ public interface R2RMLClass {
     //public Object getNode(Class resourceClass);
     public BlankNodeOrIRI getNode();
 
+    /**
+     * Serializes the R2RML component to a list of RDF triples.
+     *
+     * @return A set of triples.
+     */
+    public Set<Triple> serialize();
 }

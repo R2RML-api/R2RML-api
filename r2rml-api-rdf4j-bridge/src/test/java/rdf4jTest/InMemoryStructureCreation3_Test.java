@@ -61,7 +61,7 @@ public class InMemoryStructureCreation3_Test{
 		SubjectMap sm = mfact.createSubjectMap(templs);
 
 		//GraphMap
-		sm.addGraphMap(mfact.createGraphMap(TermMapType.CONSTANT_VALUED, "http://example.com/graph/sports"));
+		sm.addGraphMaps(mfact.createGraphMap(TermMapType.CONSTANT_VALUED, "http://example.com/graph/sports"));
 		
 		//PredicateObjectMap
 		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");

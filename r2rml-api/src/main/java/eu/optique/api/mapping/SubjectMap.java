@@ -47,7 +47,7 @@ public interface SubjectMap extends TermMap {
 	 * @param gm
 	 *            The GraphMap that will be added.
 	 */
-	public void addGraphMap(GraphMap gm);
+	public void addGraphMaps(GraphMap gm);
 
 	/**
 	 * Adds a list of GraphMaps to this SubjectMap. A SubjectMap can have zero
@@ -57,7 +57,7 @@ public interface SubjectMap extends TermMap {
 	 * @param gms
 	 *            The list of GraphMaps that will be added.
 	 */
-	public void addGraphMap(List<GraphMap> gms);
+	public void addGraphMaps(List<GraphMap> gms);
 
 	/**
 	 * Sets the term type of this SubjectMap if it is a column-valued or

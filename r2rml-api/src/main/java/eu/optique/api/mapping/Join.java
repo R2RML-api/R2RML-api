@@ -24,7 +24,7 @@ package eu.optique.api.mapping;
  * 
  * @author Marius Strandhaug
  */
-public interface Join extends SerializeR2RML, R2RMLClass {
+public interface Join extends R2RMLClass {
 
 	/**
 	 * Set the child to a column that exists in the logical table of the triples

@@ -21,15 +21,13 @@ package eu.optique.api.mapping.impl;
 
 import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
-import eu.optique.api.mapping.SerializeR2RML;
-import org.apache.commons.rdf.api.BlankNodeOrIRI;
 
 /**
  * The abstract superclass for R2RMLViewImpl and SQLTableImpl.
  * 
  * @author Marius Strandhaug
  */
-public abstract class LogicalTableImpl extends R2RMLClassImpl implements LogicalTable, SerializeR2RML {
+public abstract class LogicalTableImpl extends R2RMLClassImpl implements LogicalTable {
 
 	final LibConfiguration lc;
 

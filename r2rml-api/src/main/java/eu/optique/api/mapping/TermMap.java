@@ -26,7 +26,7 @@ import org.apache.commons.rdf.api.IRI;
  * 
  * @author Marius Strandhaug
  */
-public interface TermMap extends R2RMLClass, SerializeR2RML {
+public interface TermMap extends R2RMLClass {
 
 	/**
 	 * The term map must be set to one of these values when created.

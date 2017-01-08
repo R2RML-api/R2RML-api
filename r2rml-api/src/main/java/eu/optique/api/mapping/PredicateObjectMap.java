@@ -26,7 +26,7 @@ import java.util.List;
  * 
  * @author Marius Strandhaug
  */
-public interface PredicateObjectMap extends R2RMLClass, SerializeR2RML {
+public interface PredicateObjectMap extends R2RMLClass {
 
 	/**
 	 * Adds a PredicateMap to this PredicateObjectMap. The PredicateMap will be
