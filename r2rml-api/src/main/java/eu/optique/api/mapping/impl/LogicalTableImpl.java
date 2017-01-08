@@ -19,8 +19,8 @@
  ******************************************************************************/
 package eu.optique.api.mapping.impl;
 
-import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
+import org.apache.commons.rdf.api.RDF;
 
 /**
  * The abstract superclass for R2RMLViewImpl and SQLTableImpl.
@@ -29,15 +29,8 @@ import eu.optique.api.mapping.LogicalTable;
  */
 public abstract class LogicalTableImpl extends R2RMLClassImpl implements LogicalTable {
 
-	final LibConfiguration lc;
-
-	public LogicalTableImpl(LibConfiguration c) {
-
-		if (c == null) {
-			throw new NullPointerException("LibConfiguration was null.");
-		}
-
-		lc = c;
+	public LogicalTableImpl(RDF rdf) {
+		super(rdf);
 	}
 
 	@Override

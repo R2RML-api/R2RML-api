@@ -22,9 +22,9 @@ package eu.optique.api.mapping.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.PredicateMap;
 import eu.optique.api.mapping.Template;
+import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -34,14 +34,14 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 
-	public PredicateMapImpl(LibConfiguration c, TermMapType termMapType,
-			Template template) {
-		super(c, termMapType, template);
+	public PredicateMapImpl(RDF rdf, TermMapType termMapType,
+                            Template template) {
+		super(rdf, termMapType, template);
 	}
 
-	public PredicateMapImpl(LibConfiguration c, TermMapType termMapType,
-			String columnOrConst) {
-		super(c, termMapType, columnOrConst);
+	public PredicateMapImpl(RDF rdf, TermMapType termMapType,
+                            String columnOrConst) {
+		super(rdf, termMapType, columnOrConst);
 	}
 
 	@Override
@@ -50,9 +50,9 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 
 		stmtSet.addAll(super.serialize());
 
-        stmtSet.add(lc.getRDF().createTriple(getNode(),
-                lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
-                lc.getRDF().createIRI(R2RMLVocabulary.TYPE_PREDICATE_MAP)));
+        stmtSet.add(getRDF().createTriple(getNode(),
+                getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                getRDF().createIRI(R2RMLVocabulary.TYPE_PREDICATE_MAP)));
 
 		return stmtSet;
 	}

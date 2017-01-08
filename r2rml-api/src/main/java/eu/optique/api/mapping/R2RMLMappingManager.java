@@ -44,8 +44,6 @@ public interface R2RMLMappingManager {
 	 * 
 	 * @param graph
 	 *            The graph object containing R2RML mappings.
-	 * @throws IllegalArgumentException
-	 * @throws InvalidR2RMLMappingException
 	 */
 	public Collection<TriplesMap> importMappings(Graph graph)
 			throws InvalidR2RMLMappingException;
@@ -55,11 +53,6 @@ public interface R2RMLMappingManager {
 	 * 
 	 * @param maps
 	 *            A collection of mappings
-	 * @param graphClass
-	 *            Must be equal to (or a superclass of) the library's graph
-	 *            class.
-	 * @throws IllegalArgumentException
 	 */
-	public Graph exportMappings(Collection<TriplesMap> maps)
-			throws IllegalArgumentException;
+	public Graph exportMappings(Collection<TriplesMap> maps);
 }

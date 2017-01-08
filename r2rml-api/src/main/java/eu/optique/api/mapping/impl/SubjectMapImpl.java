@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Set;
 
 import eu.optique.api.mapping.GraphMap;
-import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -43,15 +43,15 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 	ArrayList<GraphMap> graphList;
 
-	public SubjectMapImpl(LibConfiguration c, TermMapType termMapType,
-			Template template) {
+	public SubjectMapImpl(RDF c, TermMapType termMapType,
+                          Template template) {
 		super(c, termMapType, template);
 
 		classList = new ArrayList<>();
 		graphList = new ArrayList<>();
 	}
 
-	public SubjectMapImpl(LibConfiguration c, TermMapType termMapType,
+	public SubjectMapImpl(RDF c, TermMapType termMapType,
 			String columnOrConst) {
 		super(c, termMapType, columnOrConst);
 
@@ -78,8 +78,8 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	public void setTermType(IRI typeURI) {
 		// Check if the typeIRI is one of the possible term type values for a
 		// SubjectMap.
-        if (typeURI.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
-				|| typeURI.equals(lc.getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))) {
+        if (typeURI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
+				|| typeURI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))) {
 
 			if (type == TermMapType.COLUMN_VALUED
 					|| type == TermMapType.TEMPLATE_VALUED) {
@@ -131,18 +131,18 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 		stmtSet.addAll(super.serialize());
 
-        stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
+        stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_SUBJECT_MAP)));
 
 		for (IRI cl : classList) {
-            stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_CLASS), cl));
+            stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_CLASS), cl));
 		}
 		
 		for(GraphMap g : graphList){
 			if(g.getTermMapType() == TermMapType.CONSTANT_VALUED){
 				// Use constant shortcut property.
-                stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), lc.getRDF().createIRI(g.getConstant())));
+                stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), getRDF().createIRI(g.getConstant())));
 			}else{
-                stmtSet.add(lc.getRDF().createTriple(getNode(), lc.getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
+                stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
 				stmtSet.addAll(g.serialize());
 			}
 		}

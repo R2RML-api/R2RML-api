@@ -26,13 +26,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.PredicateObjectMap;
 import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.TermMap.TermMapType;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -41,43 +41,34 @@ import org.apache.commons.rdf.api.Triple;
  * @author Marius Strandhaug
  * @author Martin G. Skjæveland
  */
-public class TriplesMapImpl implements TriplesMap {
+public class TriplesMapImpl extends R2RMLClassImpl implements TriplesMap {
 
 	LogicalTable logTable;
 	SubjectMap subMap;
 	ArrayList<PredicateObjectMap> pomList;
 
 	BlankNodeOrIRI res;
-	final LibConfiguration lc;
 
-	public TriplesMapImpl(LibConfiguration c, LogicalTable lt, SubjectMap sm) {
+	public TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm) {
 
-		if (c == null) {
-			throw new NullPointerException("LibConfiguration was null.");
-		}
+		super(rdf);
 
-		lc = c;
-
-		pomList = new ArrayList<PredicateObjectMap>();
+		pomList = new ArrayList<>();
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-        setNode(lc.getRDF().createBlankNode());
+        setNode(getRDF().createBlankNode());
 	}
 
-	public TriplesMapImpl(LibConfiguration c, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
+	public TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
 
-		if (c == null) {
-			throw new NullPointerException("LibConfiguration was null.");
-		}
+        super(rdf);
 
-		lc = c;
-
-		pomList = new ArrayList<PredicateObjectMap>();
+		pomList = new ArrayList<>();
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-        setNode(lc.getRDF().createIRI(resourceIdentifier));
+        setNode(getRDF().createIRI(resourceIdentifier));
 	}
 
 	@Override
@@ -153,21 +144,21 @@ public class TriplesMapImpl implements TriplesMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_TRIPLES_MAP)));
+        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_TRIPLES_MAP)));
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), getLogicalTable().getNode()));
+        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), getLogicalTable().getNode()));
 		stmtSet.addAll(getLogicalTable().serialize());
 
 		if (getSubjectMap().getTermMapType() == TermMapType.CONSTANT_VALUED) {
 			// Use constant shortcut property.
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT), lc.getRDF().createIRI(getSubjectMap().getConstant())));
+            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT), getRDF().createIRI(getSubjectMap().getConstant())));
 		} else {
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), getSubjectMap().getNode()));
+            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), getSubjectMap().getNode()));
 			stmtSet.addAll(getSubjectMap().serialize());
 		}
 
 		for (PredicateObjectMap pom : pomList) {
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP), pom.getNode()));
+            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP), pom.getNode()));
 			stmtSet.addAll(pom.serialize());
 		}
 

@@ -25,7 +25,5 @@ package eu.optique.api.mapping;
  * @author Marius Strandhaug
  */
 public interface R2RMLMappingManagerFactory {
-
     public R2RMLMappingManager getR2RMLMappingManager();
-
 }

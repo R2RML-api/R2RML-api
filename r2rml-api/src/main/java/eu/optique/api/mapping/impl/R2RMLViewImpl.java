@@ -25,9 +25,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.R2RMLView;
 import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -40,14 +40,14 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	String sqlQuery;
 	ArrayList<IRI> versionList;
 
-	public R2RMLViewImpl(LibConfiguration c, String sqlQuery) {
+	public R2RMLViewImpl(RDF c, String sqlQuery) {
 		super(c);
 
 		setR2RMLView(sqlQuery);
 
 		versionList = new ArrayList<>();
 
-        setNode(lc.getRDF().createBlankNode());
+        setNode(getRDF().createBlankNode());
 	}
 
 	@Override
@@ -93,13 +93,13 @@ public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_R2RML_VIEW)));
+        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_R2RML_VIEW)));
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SQL_QUERY),
-                lc.getRDF().createLiteral(getSQLQuery())));
+        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SQL_QUERY),
+                getRDF().createLiteral(getSQLQuery())));
 
 		for (IRI version : versionList) {
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_SQL_VERSION), version));
+            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SQL_VERSION), version));
 		}
 
 		return stmtSet;

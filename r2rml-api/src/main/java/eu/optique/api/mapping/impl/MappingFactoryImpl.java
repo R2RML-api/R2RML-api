@@ -5,7 +5,6 @@ import java.util.List;
 import eu.optique.api.mapping.GraphMap;
 import eu.optique.api.mapping.InverseExpression;
 import eu.optique.api.mapping.Join;
-import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.MappingFactory;
 import eu.optique.api.mapping.ObjectMap;
@@ -18,6 +17,7 @@ import eu.optique.api.mapping.SubjectMap;
 import eu.optique.api.mapping.Template;
 import eu.optique.api.mapping.TriplesMap;
 import eu.optique.api.mapping.TermMap.TermMapType;
+import org.apache.commons.rdf.api.RDF;
 
 /**
  * Implementation of the Mapping Factory interface.
@@ -27,9 +27,9 @@ import eu.optique.api.mapping.TermMap.TermMapType;
  */
 public class MappingFactoryImpl implements MappingFactory {
 
-	private LibConfiguration lc;
+	private RDF lc;
 
-	public MappingFactoryImpl(LibConfiguration c) {
+	public MappingFactoryImpl(RDF c) {
 		lc = c;
 	}
 

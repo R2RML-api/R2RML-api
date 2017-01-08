@@ -43,7 +43,7 @@ public interface R2RMLMappingCollection {
 	 * @throws NullPointerException
 	 *             if the graph is null.
 	 */
-	public void initialize(Graph graph) throws InvalidR2RMLMappingException;
+	public void load(Graph graph) throws InvalidR2RMLMappingException;
 
 	/**
 	 * Returns all triples maps in the R2RML mapping generated from the graph

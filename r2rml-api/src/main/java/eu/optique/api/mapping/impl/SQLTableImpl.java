@@ -22,8 +22,8 @@ package eu.optique.api.mapping.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.SQLTable;
+import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -35,12 +35,12 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 
 	String table;
 
-	public SQLTableImpl(LibConfiguration c, String tableName) {
+	public SQLTableImpl(RDF c, String tableName) {
 		super(c);
 
 		setSQLTable(tableName);
 
-        setNode(lc.getRDF().createBlankNode());
+        setNode(getRDF().createBlankNode());
 	}
 
 	@Override
@@ -66,10 +66,10 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)));
+        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)));
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_TABLE_NAME),
-                lc.getRDF().createLiteral(getSQLTableName())));
+        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_TABLE_NAME),
+                getRDF().createLiteral(getSQLTableName())));
 
 		return stmtSet;
 	}

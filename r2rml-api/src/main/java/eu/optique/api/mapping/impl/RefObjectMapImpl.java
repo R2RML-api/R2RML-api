@@ -27,11 +27,10 @@ import java.util.List;
 import java.util.Set;
 
 import eu.optique.api.mapping.Join;
-import eu.optique.api.mapping.LibConfiguration;
 import eu.optique.api.mapping.LogicalTable;
 import eu.optique.api.mapping.RefObjectMap;
 import eu.optique.api.mapping.TriplesMap;
-import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -40,7 +39,7 @@ import org.apache.commons.rdf.api.Triple;
  * @author Marius Strandhaug
  * @author Martin G. Skjæveland
  */
-public class RefObjectMapImpl implements RefObjectMap {
+public class RefObjectMapImpl extends R2RMLClassImpl implements RefObjectMap {
 
 	TriplesMap parent;
 
@@ -49,21 +48,15 @@ public class RefObjectMapImpl implements RefObjectMap {
 
 	ArrayList<Join> joinList;
 
-	BlankNodeOrIRI res;
-	final LibConfiguration lc;
 
-	public RefObjectMapImpl(LibConfiguration c, TriplesMap parentMap) {
+	public RefObjectMapImpl(RDF c, TriplesMap parentMap) {
 
-		if (c == null) {
-			throw new NullPointerException("LibConfiguration was null.");
-		}
-
-		lc = c;
+		super(c);
 
 		joinList = new ArrayList<Join>();
 
 		setParentMap(parentMap);
-        setNode(lc.getRDF().createBlankNode());
+        setNode(getRDF().createBlankNode());
 	}
 
 	@Override
@@ -153,30 +146,15 @@ public class RefObjectMapImpl implements RefObjectMap {
 	public Set<Triple> serialize() {
 		Set<Triple> stmtSet = new HashSet<Triple>();
 
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), lc.getRDF().createIRI(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
-        stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP), parent.getNode()));
+        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)));
+        stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP), parent.getNode()));
 
 		for (Join j : joinList) {
-            stmtSet.add(lc.getRDF().createTriple(res, lc.getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION), j.getNode()));
+            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION), j.getNode()));
 			stmtSet.addAll(j.serialize());
 		}
 
 		return stmtSet;
-	}
-
-	@Override
-	public void setNode(BlankNodeOrIRI node) {
-		 if (node == null) {
-			throw new NullPointerException(
-					"A RefObjectMap must have a resource.");
-		}
-
-		res = (BlankNodeOrIRI) node;
-	}
-
-	@Override
-    public BlankNodeOrIRI getNode(){
-		return res;
 	}
 
 	@Override
