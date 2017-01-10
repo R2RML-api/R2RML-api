@@ -33,7 +33,6 @@ import org.apache.jena.rdf.model.ModelFactory;
 import eu.optique.r2rml.api.model.ObjectMap;
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
-import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManagerFactory;
 import eu.optique.r2rml.api.model.TriplesMap;
 
 /**
@@ -48,7 +47,7 @@ public class DataType_Test
 	
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test13.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");

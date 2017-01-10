@@ -22,7 +22,6 @@ import eu.optique.r2rml.api.model.ObjectMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.TriplesMap;
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
-import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManagerFactory;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.rio.RDFFormat;
@@ -49,7 +48,7 @@ public class TriplesMapsWithMultiplePOMap_Test
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test18.ttl");
 		
-		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);

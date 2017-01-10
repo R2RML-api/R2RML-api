@@ -31,7 +31,6 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
 import eu.optique.r2rml.api.model.InverseExpression;
-import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManagerFactory;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.TriplesMap;
 
@@ -47,7 +46,7 @@ public class InverseExpression_Test
 	public void test() throws Exception{
 			InputStream fis = getClass().getResourceAsStream("../mappingFiles/test14.ttl");
 			
-			JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+			JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
 
 			Model m = ModelFactory.createDefaultModel();
 			m = m.read(fis,"testMapping", "TURTLE");

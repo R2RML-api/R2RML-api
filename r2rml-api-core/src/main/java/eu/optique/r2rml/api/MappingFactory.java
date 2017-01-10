@@ -1,4 +1,19 @@
-package eu.optique.r2rml.api.model;
+package eu.optique.r2rml.api;
+
+import eu.optique.r2rml.api.model.GraphMap;
+import eu.optique.r2rml.api.model.InverseExpression;
+import eu.optique.r2rml.api.model.Join;
+import eu.optique.r2rml.api.model.LogicalTable;
+import eu.optique.r2rml.api.model.ObjectMap;
+import eu.optique.r2rml.api.model.PredicateMap;
+import eu.optique.r2rml.api.model.PredicateObjectMap;
+import eu.optique.r2rml.api.model.R2RMLView;
+import eu.optique.r2rml.api.model.RefObjectMap;
+import eu.optique.r2rml.api.model.SQLTable;
+import eu.optique.r2rml.api.model.SubjectMap;
+import eu.optique.r2rml.api.model.Template;
+import eu.optique.r2rml.api.model.TermMap;
+import eu.optique.r2rml.api.model.TriplesMap;
 
 import java.util.List;
 

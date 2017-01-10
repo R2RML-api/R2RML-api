@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
-import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManagerFactory;
 import org.apache.commons.rdf.api.IRI;
 import org.junit.Assert;
 import org.junit.Test;
@@ -54,7 +53,7 @@ public class RDFSyntax_Test
 	public void test1() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test21.ttl");
 		
-		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.RDFXML);
@@ -97,7 +96,7 @@ public class RDFSyntax_Test
 	public void test2() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 		
-		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);

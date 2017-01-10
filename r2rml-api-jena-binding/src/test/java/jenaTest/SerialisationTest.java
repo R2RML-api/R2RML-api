@@ -44,7 +44,6 @@ import org.apache.jena.util.FileUtils;
 import org.apache.jena.vocabulary.RDF;
 
 import eu.optique.r2rml.api.model.impl.InvalidR2RMLMappingException;
-import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManagerFactory;
 import eu.optique.r2rml.api.model.TriplesMap;
 
 import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
@@ -75,7 +74,7 @@ public class SerialisationTest {
 	}
 
 	public static Model getSerialisedModel (Model model) throws InvalidR2RMLMappingException {
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
 		Collection<TriplesMap> tripleMaps = mm.importMappings(model);
 		Model out = mm.exportMappings(tripleMaps).asJenaModel();
 		return out;

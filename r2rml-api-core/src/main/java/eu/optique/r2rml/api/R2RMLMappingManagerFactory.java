@@ -17,7 +17,9 @@
  * the University of Bolzano, La Sapienza University of Rome, and fluid Operations AG, 
  * as part of the Optique project, www.optique-project.eu
  ******************************************************************************/
-package eu.optique.r2rml.api.model;
+package eu.optique.r2rml.api;
+
+import eu.optique.r2rml.api.R2RMLMappingManager;
 
 /**
  * Factory creating a new instance of the MappingManager service.

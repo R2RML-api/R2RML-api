@@ -30,12 +30,12 @@ import java.util.Set;
 
 import eu.optique.r2rml.api.model.GraphMap;
 import eu.optique.r2rml.api.model.LogicalTable;
-import eu.optique.r2rml.api.model.MappingFactory;
+import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.ObjectMap;
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.R2RMLMappingCollection;
-import eu.optique.r2rml.api.model.R2RMLMappingManager;
+import eu.optique.r2rml.api.R2RMLMappingManager;
 import eu.optique.r2rml.api.model.R2RMLView;
 import eu.optique.r2rml.api.model.RefObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;

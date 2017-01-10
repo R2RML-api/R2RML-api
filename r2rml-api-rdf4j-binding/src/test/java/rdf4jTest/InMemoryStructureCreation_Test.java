@@ -23,12 +23,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
-import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManagerFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
 import eu.optique.r2rml.api.model.LogicalTable;
-import eu.optique.r2rml.api.model.MappingFactory;
+import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.ObjectMap;
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
@@ -46,7 +45,7 @@ public class InMemoryStructureCreation_Test {
 	
 	@Test
 	public void test(){
-        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
 	
 		//Table

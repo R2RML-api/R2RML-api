@@ -17,10 +17,12 @@
  * the University of Bolzano, La Sapienza University of Rome, and fluid Operations AG, 
  * as part of the Optique project, www.optique-project.eu
  ******************************************************************************/
-package eu.optique.r2rml.api.model;
+package eu.optique.r2rml.api;
 
 import java.util.Collection;
 
+import eu.optique.r2rml.api.MappingFactory;
+import eu.optique.r2rml.api.model.TriplesMap;
 import eu.optique.r2rml.api.model.impl.InvalidR2RMLMappingException;
 import org.apache.commons.rdf.api.Graph;
 

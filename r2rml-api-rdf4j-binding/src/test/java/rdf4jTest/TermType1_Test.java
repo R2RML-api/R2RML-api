@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
-import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManagerFactory;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.rdf4j.RDF4J;
 import org.junit.Assert;
@@ -59,7 +58,7 @@ public class TermType1_Test {
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test8.ttl");
 		
-		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
 
         RDF4J rdf4j = new RDF4J();
 

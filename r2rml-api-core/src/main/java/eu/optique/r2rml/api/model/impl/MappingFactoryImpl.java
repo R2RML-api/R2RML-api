@@ -6,7 +6,7 @@ import eu.optique.r2rml.api.model.GraphMap;
 import eu.optique.r2rml.api.model.InverseExpression;
 import eu.optique.r2rml.api.model.Join;
 import eu.optique.r2rml.api.model.LogicalTable;
-import eu.optique.r2rml.api.model.MappingFactory;
+import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.ObjectMap;
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;

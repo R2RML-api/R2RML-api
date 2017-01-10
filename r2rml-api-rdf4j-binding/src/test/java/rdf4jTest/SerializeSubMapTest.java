@@ -21,7 +21,6 @@ package rdf4jTest;
 import java.util.Set;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
-import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManagerFactory;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Triple;
 import org.apache.commons.rdf.rdf4j.RDF4J;
@@ -32,7 +31,7 @@ import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.URIImpl;
 import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 
-import eu.optique.r2rml.api.model.MappingFactory;
+import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
@@ -41,7 +40,7 @@ public class SerializeSubMapTest {
 
 	@Test
 	public void test(){
-        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManagerFactory().getR2RMLMappingManager();
+        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
 		ValueFactory myFactory = ValueFactoryImpl.getInstance();
 

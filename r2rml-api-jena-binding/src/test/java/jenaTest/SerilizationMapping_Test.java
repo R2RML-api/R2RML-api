@@ -32,7 +32,6 @@ import org.junit.Test;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 
-import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManagerFactory;
 import eu.optique.r2rml.api.model.TriplesMap;
 
 /**
@@ -50,7 +49,7 @@ public class SerilizationMapping_Test
 
 			InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 			
-			JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+			JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
 
 			Model m = ModelFactory.createDefaultModel();
 			m = m.read(fis,"testMapping", "TURTLE");

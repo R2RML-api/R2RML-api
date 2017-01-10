@@ -1,5 +1,6 @@
 package eu.optique.r2rml.api.binding.rdf4j;
 
+import eu.optique.r2rml.api.R2RMLMappingManagerFactory;
 import eu.optique.r2rml.api.model.TriplesMap;
 import eu.optique.r2rml.api.model.impl.InvalidR2RMLMappingException;
 import eu.optique.r2rml.api.model.impl.R2RMLMappingManagerImpl;
@@ -11,7 +12,7 @@ import java.util.Collection;
 
 public class RDF4JR2RMLMappingManager extends R2RMLMappingManagerImpl {
 
-    RDF4JR2RMLMappingManager(RDF4J rdf) {
+    private RDF4JR2RMLMappingManager(RDF4J rdf) {
         super(rdf);
     }
 
@@ -22,5 +23,17 @@ public class RDF4JR2RMLMappingManager extends R2RMLMappingManagerImpl {
     @Override
     public RDF4JGraph exportMappings(Collection<TriplesMap> maps) {
         return (RDF4JGraph) super.exportMappings(maps);
+    }
+
+    public static class Factory implements R2RMLMappingManagerFactory {
+
+        /**
+         * @return A R2RMLMappingManager configured with RDF4J.
+         */
+        @Override
+        public RDF4JR2RMLMappingManager getR2RMLMappingManager() {
+            return new RDF4JR2RMLMappingManager(new RDF4J());
+        }
+
     }
 }

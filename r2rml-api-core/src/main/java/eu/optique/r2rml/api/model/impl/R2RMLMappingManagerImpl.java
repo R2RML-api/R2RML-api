@@ -23,9 +23,9 @@ import java.util.Collection;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import eu.optique.r2rml.api.model.MappingFactory;
+import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.R2RMLMappingCollection;
-import eu.optique.r2rml.api.model.R2RMLMappingManager;
+import eu.optique.r2rml.api.R2RMLMappingManager;
 import eu.optique.r2rml.api.model.TriplesMap;
 import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.RDF;

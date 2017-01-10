@@ -32,8 +32,7 @@ import org.junit.Test;
 
 import org.apache.jena.rdf.model.ResourceFactory;
 
-import eu.optique.r2rml.api.model.MappingFactory;
-import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManagerFactory;
+import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
@@ -43,7 +42,7 @@ public class SerializeSubMapTest {
 	@Test
 	public void test(){
 
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
 
 		JenaRDF jena = new JenaRDF();

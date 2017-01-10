@@ -36,7 +36,6 @@ import eu.optique.r2rml.api.model.LogicalTable;
 import eu.optique.r2rml.api.model.ObjectMap;
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
-import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManagerFactory;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
@@ -56,7 +55,7 @@ public class SubjectMapMultipleColumn_Test
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test3.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");
@@ -91,7 +90,7 @@ public class SubjectMapMultipleColumn_Test
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test3.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
 
 		JenaRDF jena = new JenaRDF();
 

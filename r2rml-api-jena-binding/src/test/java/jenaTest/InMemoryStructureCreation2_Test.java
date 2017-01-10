@@ -31,11 +31,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import eu.optique.r2rml.api.model.LogicalTable;
-import eu.optique.r2rml.api.model.MappingFactory;
+import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.ObjectMap;
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
-import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManagerFactory;
 import eu.optique.r2rml.api.model.R2RMLView;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
@@ -53,7 +52,7 @@ public class InMemoryStructureCreation2_Test {
 	@Test
 	public void test(){
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManagerFactory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
 		MappingFactory mfact = mm.getMappingFactory();
         JenaRDF jena = new JenaRDF();
 
