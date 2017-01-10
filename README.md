@@ -16,10 +16,10 @@ R2RML-api
 			<version>0.5.0</version>
 		</dependency>
 
-        <!-- Optique R2RML API Sesame Binding -->
+        <!-- Optique R2RML API RDF4J Binding -->
 		<dependency>
 			<groupId>eu.optique-project</groupId>
-			<artifactId>r2rml-api-sesame-binding</artifactId>
+			<artifactId>r2rml-api-rdf4j-binding</artifactId>
 			<version>0.5.0</version>
 		</dependency>
 
