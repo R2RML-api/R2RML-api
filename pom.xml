@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.optique-project</groupId>
-    <artifactId>r2rml</artifactId>
+    <artifactId>r2rml-api-parent</artifactId>
     <packaging>pom</packaging>
     <version>0.4.1-SNAPSHOT</version>
     <name>Optique R2RML API</name>
@@ -28,8 +28,8 @@
 
     <modules>
         <module>r2rml-api</module>
-        <module>r2rml-api-jena-bridge</module>
-        <module>r2rml-api-rdf4j-bridge</module>
+        <module>r2rml-api-jena-binding</module>
+        <module>r2rml-api-rdf4j-binding</module>
     </modules>
 
     <properties>
