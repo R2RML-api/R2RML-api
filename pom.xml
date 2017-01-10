@@ -29,7 +29,6 @@
     <modules>
         <module>r2rml-api</module>
         <module>r2rml-api-jena-bridge</module>
-        <!--<module>r2rml-api-owlapi-bridge</module>-->
         <module>r2rml-api-rdf4j-bridge</module>
     </modules>
 
