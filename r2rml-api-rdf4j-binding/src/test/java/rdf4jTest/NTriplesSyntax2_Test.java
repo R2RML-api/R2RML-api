@@ -50,7 +50,7 @@ public class NTriplesSyntax2_Test {
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test29.ttl");
 		
-		RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		RDF4JR2RMLMappingManager mm = RDF4JR2RMLMappingManager.getInstance();
 		
 		// Read the file into a model.
 		RDFParser rdfParser = Rio.createParser(RDFFormat.NTRIPLES);

@@ -28,7 +28,7 @@ import org.apache.commons.rdf.api.IRI;
  * @author Marius Strandhaug
  */
 @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_TERM_MAP)
-public interface TermMap extends R2RMLClass {
+public interface TermMap extends MappingComponent {
 
 	/**
 	 * The term map must be set to one of these values when created.

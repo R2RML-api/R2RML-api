@@ -52,7 +52,7 @@ public class InMemoryStructureCreation2_Test {
 	@Test
 	public void test(){
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = JenaR2RMLMappingManager.getInstance();
 		MappingFactory mfact = mm.getMappingFactory();
         JenaRDF jena = new JenaRDF();
 

@@ -39,7 +39,7 @@ import org.apache.commons.rdf.api.Triple;
  * @author Marius Strandhaug
  * @author Martin G. Skjæveland
  */
-public class RefObjectMapImpl extends R2RMLClassImpl implements RefObjectMap {
+public class RefObjectMapImpl extends MappingComponentImpl implements RefObjectMap {
 
 	TriplesMap parent;
 

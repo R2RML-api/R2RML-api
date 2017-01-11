@@ -41,7 +41,7 @@ import org.apache.commons.rdf.api.Triple;
  * @author Marius Strandhaug
  * @author Martin G. Skjæveland
  */
-public class TriplesMapImpl extends R2RMLClassImpl implements TriplesMap {
+public class TriplesMapImpl extends MappingComponentImpl implements TriplesMap {
 
 	LogicalTable logTable;
 	SubjectMap subMap;

@@ -52,7 +52,7 @@ public class InMemoryStructureCreation2_Test {
 	@Test
 	public void test(){
 
-        RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
+        RDF4JR2RMLMappingManager mm = RDF4JR2RMLMappingManager.getInstance();
         MappingFactory mfact = mm.getMappingFactory();
 		ValueFactory myFactory = ValueFactoryImpl.getInstance();
 

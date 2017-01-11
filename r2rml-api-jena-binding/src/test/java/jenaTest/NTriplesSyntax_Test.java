@@ -51,7 +51,7 @@ public class NTriplesSyntax_Test
 	public void test1() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test27.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = JenaR2RMLMappingManager.getInstance();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "N-TRIPLE");
@@ -90,7 +90,7 @@ public class NTriplesSyntax_Test
 	public void test2() throws Exception {
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = JenaR2RMLMappingManager.getInstance();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");

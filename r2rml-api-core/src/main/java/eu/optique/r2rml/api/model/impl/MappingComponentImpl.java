@@ -1,6 +1,6 @@
 package eu.optique.r2rml.api.model.impl;
 
-import eu.optique.r2rml.api.model.R2RMLClass;
+import eu.optique.r2rml.api.model.MappingComponent;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.RDF;
 
@@ -9,7 +9,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * @author xiao
  */
-public abstract class R2RMLClassImpl implements R2RMLClass {
+public abstract class MappingComponentImpl implements MappingComponent {
 
     private final RDF rdf;
 
@@ -25,7 +25,7 @@ public abstract class R2RMLClassImpl implements R2RMLClass {
         return node;
     }
 
-    R2RMLClassImpl(RDF rdf){
+    MappingComponentImpl(RDF rdf){
         this.rdf = rdf;
     }
 

@@ -31,7 +31,7 @@ import java.util.List;
  * @author Martin G. Skjæveland
  */
 @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_TRIPLES_MAP)
-public interface TriplesMap extends R2RMLClass {
+public interface TriplesMap extends MappingComponent {
 
 	/**
 	 * Set the LogicalTable of this TriplesMap. A TriplesMap must have exactly

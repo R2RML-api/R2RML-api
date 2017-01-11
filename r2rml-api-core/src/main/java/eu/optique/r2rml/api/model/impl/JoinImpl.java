@@ -31,7 +31,7 @@ import org.apache.commons.rdf.api.Triple;
  * 
  * @author Marius Strandhaug
  */
-public class JoinImpl extends R2RMLClassImpl implements Join {
+public class JoinImpl extends MappingComponentImpl implements Join {
 
 	private String child;
 	private String parent;

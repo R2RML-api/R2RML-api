@@ -27,7 +27,7 @@ import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
  * @author Marius Strandhaug
  */
 @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_JOIN)
-public interface Join extends R2RMLClass {
+public interface Join extends MappingComponent {
 
 	/**
 	 * Set the child to a column that exists in the logical table of the triples

@@ -35,7 +35,7 @@ import org.apache.commons.rdf.api.Triple;
  * 
  * @author Marius Strandhaug
  */
-public abstract class TermMapImpl extends R2RMLClassImpl implements TermMap {
+public abstract class TermMapImpl extends MappingComponentImpl implements TermMap {
 
 	TermMapType type;
 

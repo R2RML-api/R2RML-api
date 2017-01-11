@@ -47,7 +47,7 @@ public class GraphMap_JoinRefObjectMap_Test {
 	public void test() throws Exception{
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test10.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = JenaR2RMLMappingManager.getInstance();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");

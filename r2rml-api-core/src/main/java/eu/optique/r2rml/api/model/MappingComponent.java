@@ -25,7 +25,7 @@ import org.apache.commons.rdf.api.Triple;
 import java.util.Set;
 
 /**
- * A common abstract of all the classes defined in the <a href="https://www.w3.org/TR/r2rml/https://www.w3.org/TR/r2rml/#dfn-r2rml-vocabulary">R2RML specification</a>:
+ * A common abstract of all the classes defined in the <a href="https://www.w3.org/TR/r2rml/#dfn-r2rml-vocabulary">R2RML specification</a>:
  *
  * <ul>
  * <li><code>rr:TriplesMap</code> is the class of
@@ -60,11 +60,12 @@ import java.util.Set;
  * <a href="https://www.w3.org/TR/r2rml/#dfn-join-condition">join conditions</a>.</li>
  * </ul>
  *
+ * The members of these classes are collectively called mapping components.
  *
  * @author Marius Strandhaug
  * @author xiao
  */
-public interface R2RMLClass {
+public interface MappingComponent {
 
     /**
      * Sets the resource used to serialize an R2RML component. The node parameter

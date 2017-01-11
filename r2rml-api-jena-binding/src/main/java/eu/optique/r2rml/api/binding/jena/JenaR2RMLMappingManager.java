@@ -1,6 +1,5 @@
 package eu.optique.r2rml.api.binding.jena;
 
-import eu.optique.r2rml.api.R2RMLMappingManagerFactory;
 import eu.optique.r2rml.api.model.TriplesMap;
 import eu.optique.r2rml.api.model.impl.InvalidR2RMLMappingException;
 import eu.optique.r2rml.api.model.impl.R2RMLMappingManagerImpl;
@@ -10,7 +9,9 @@ import org.apache.jena.rdf.model.Model;
 
 import java.util.Collection;
 
-public class JenaR2RMLMappingManager  extends R2RMLMappingManagerImpl {
+public class JenaR2RMLMappingManager extends R2RMLMappingManagerImpl {
+
+    private static JenaR2RMLMappingManager INSTANCE = new JenaR2RMLMappingManager(new JenaRDF());
 
     private JenaR2RMLMappingManager(JenaRDF rdf) {
         super(rdf);
@@ -25,14 +26,7 @@ public class JenaR2RMLMappingManager  extends R2RMLMappingManagerImpl {
         return (JenaGraph) super.exportMappings(maps);
     }
 
-    public static class Factory implements R2RMLMappingManagerFactory {
-
-        /**
-         * @return A R2RMLMappingManager configured with Jena.
-         */
-        @Override
-        public JenaR2RMLMappingManager getR2RMLMappingManager() {
-            return new JenaR2RMLMappingManager(new JenaRDF());
-        }
+    public static JenaR2RMLMappingManager getInstance(){
+        return INSTANCE;
     }
 }

@@ -55,7 +55,7 @@ public class TermType_Test {
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test7.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = JenaR2RMLMappingManager.getInstance();
 
 		JenaRDF jena = new JenaRDF();
 

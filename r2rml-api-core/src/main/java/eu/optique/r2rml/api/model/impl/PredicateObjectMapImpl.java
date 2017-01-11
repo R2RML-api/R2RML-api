@@ -40,7 +40,7 @@ import org.apache.commons.rdf.api.Triple;
  *
  * @author Marius Strandhaug
  */
-public class PredicateObjectMapImpl extends R2RMLClassImpl implements PredicateObjectMap {
+public class PredicateObjectMapImpl extends MappingComponentImpl implements PredicateObjectMap {
 
     private ArrayList<PredicateMap> predList;
 

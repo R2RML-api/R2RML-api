@@ -74,7 +74,7 @@ public class SerialisationTest {
 	}
 
 	public static Model getSerialisedModel (Model model) throws InvalidR2RMLMappingException {
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = JenaR2RMLMappingManager.getInstance();
 		Collection<TriplesMap> tripleMaps = mm.importMappings(model);
 		Model out = mm.exportMappings(tripleMaps).asJenaModel();
 		return out;

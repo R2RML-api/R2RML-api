@@ -30,7 +30,7 @@ import java.util.List;
  * @author Martin G. Skjæveland
  */
 @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_REF_OBJECT_MAP)
-public interface RefObjectMap extends R2RMLClass {
+public interface RefObjectMap extends MappingComponent {
 
 	/**
 	 * Sets the parent triples map of this RefObjectMap. A

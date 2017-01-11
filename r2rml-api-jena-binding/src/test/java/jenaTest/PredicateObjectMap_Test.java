@@ -52,7 +52,7 @@ public class PredicateObjectMap_Test
 
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test2.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = JenaR2RMLMappingManager.getInstance();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");
@@ -86,7 +86,7 @@ public class PredicateObjectMap_Test
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test2.ttl");
 		
-		JenaR2RMLMappingManager mm = new JenaR2RMLMappingManager.Factory().getR2RMLMappingManager();
+		JenaR2RMLMappingManager mm = JenaR2RMLMappingManager.getInstance();
 
 		Model m = ModelFactory.createDefaultModel();
 		m = m.read(fis,"testMapping", "TURTLE");

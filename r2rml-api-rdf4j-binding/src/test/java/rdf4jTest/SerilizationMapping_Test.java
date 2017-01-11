@@ -52,7 +52,7 @@ public class SerilizationMapping_Test
 
 			InputStream fis = getClass().getResourceAsStream("../mappingFiles/artist.ttl");
 			
-			RDF4JR2RMLMappingManager mm = new RDF4JR2RMLMappingManager.Factory().getR2RMLMappingManager();
+			RDF4JR2RMLMappingManager mm = RDF4JR2RMLMappingManager.getInstance();
 
 			RDF4J rdf4J = new RDF4J();
 

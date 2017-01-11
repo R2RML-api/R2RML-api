@@ -27,7 +27,7 @@ import org.apache.commons.rdf.api.RDF;
  * 
  * @author Marius Strandhaug
  */
-public abstract class LogicalTableImpl extends R2RMLClassImpl implements LogicalTable {
+public abstract class LogicalTableImpl extends MappingComponentImpl implements LogicalTable {
 
 	public LogicalTableImpl(RDF rdf) {
 		super(rdf);
