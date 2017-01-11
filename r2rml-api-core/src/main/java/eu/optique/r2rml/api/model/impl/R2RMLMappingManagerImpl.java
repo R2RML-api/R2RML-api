@@ -21,8 +21,6 @@ package eu.optique.r2rml.api.model.impl;
 
 import java.util.Collection;
 
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
 import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.R2RMLMappingCollection;
 import eu.optique.r2rml.api.R2RMLMappingManager;
@@ -43,8 +41,7 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
 
     private MappingFactory mf;
 
-    @Inject
-    public R2RMLMappingManagerImpl(@Assisted RDF rdf) {
+    public R2RMLMappingManagerImpl(RDF rdf) {
         this.rdf = rdf;
         mf = new MappingFactoryImpl(rdf);
     }
