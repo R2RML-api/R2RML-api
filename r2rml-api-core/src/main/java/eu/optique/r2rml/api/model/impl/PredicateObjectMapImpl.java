@@ -95,7 +95,7 @@ public class PredicateObjectMapImpl extends MappingComponentImpl implements Pred
         }
     }
 
-    public PredicateObjectMapImpl(RDF rdf, List<PredicateMap> pms, List<ObjectMap> oms, List<RefObjectMap> roms) {
+    PredicateObjectMapImpl(RDF rdf, List<PredicateMap> pms, List<ObjectMap> oms, List<RefObjectMap> roms) {
 
         super(rdf);
 
@@ -166,7 +166,7 @@ public class PredicateObjectMapImpl extends MappingComponentImpl implements Pred
     }
 
     @Override
-    public void addGraphMap(List<GraphMap> gms) {
+    public void addGraphMaps(List<GraphMap> gms) {
         graphList.addAll(gms);
     }
 
