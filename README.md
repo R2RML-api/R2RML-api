@@ -12,30 +12,23 @@ R2RML-api
 		<!-- Optique R2RML API -->
 		<dependency>
 			<groupId>eu.optique-project</groupId>
-			<artifactId>r2rml-api</artifactId>
-			<version>0.4.0</version>
+			<artifactId>r2rml-api-core</artifactId>
+			<version>0.5.0</version>
 		</dependency>
 
-        <!-- Optique R2RML API Sesame Binding -->
+        <!-- Optique R2RML API RDF4J Binding -->
 		<dependency>
 			<groupId>eu.optique-project</groupId>
-			<artifactId>r2rml-api-rdf4j-bridge</artifactId>
-			<version>0.4.0</version>
+			<artifactId>r2rml-api-rdf4j-binding</artifactId>
+			<version>0.5.0</version>
 		</dependency>
 
         <!-- Optique R2RML API Jena Binding -->
         <dependency>
 			<groupId>eu.optique-project</groupId>
-			<artifactId>r2rml-api-jena-bridge</artifactId>
-			<version>0.4.0</version>
+			<artifactId>r2rml-api-jena-binding</artifactId>
+			<version>0.5.0</version>
 		</dependency>
-		
-		<!-- Optique R2RML API OWLAPI Binding -->
-		<dependency>
-        	<groupId>eu.optique-project</groupId>
-       		<artifactId>r2rml-api-owlapi-bridge</artifactId>
-   			<version>0.4.0</version>
-        </dependency>
 	</dependencies>
 ```
 
