@@ -738,7 +738,8 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			refObjectMap.setParentLogicalTable(readLogicalTable(parentNode));
 
 			// look for join condition
-            Collection<RDFTerm> joinConditions = graph.stream(objectNode, getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION), null)
+            Collection<RDFTerm> joinConditions = graph
+                    .stream(objectNode, getRDF().createIRI(R2RMLVocabulary.PROP_JOIN_CONDITION), null)
                     .map(Triple::getObject)
                     .collect(toSet());
 			for (RDFTerm value : joinConditions) {

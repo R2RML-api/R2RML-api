@@ -9,7 +9,7 @@ import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.R2RMLView;
 import eu.optique.r2rml.api.model.RefObjectMap;
-import eu.optique.r2rml.api.model.SQLTable;
+import eu.optique.r2rml.api.model.SQLBaseTableOrView;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
@@ -30,7 +30,7 @@ public interface MappingFactory {
 	 * 
 	 * @param lt
 	 *            The LogicalTable of the TriplesMap. This must either be a
-	 *            SQLTable or a R2RMLView.
+	 *            SQLBaseTableOrView or a R2RMLView.
 	 * @param sm
 	 *            The SubjectMap of the TriplesMap.
 	 * @return The created TriplesMap.
@@ -45,7 +45,7 @@ public interface MappingFactory {
 	 * 
 	 * @param lt
 	 *            The LogicalTable of the TriplesMap. This must either be a
-	 *            SQLTable or a R2RMLView.
+	 *            SQLBaseTableOrView or a R2RMLView.
 	 * @param sm
 	 *            The SubjectMap of the TriplesMap.
 	 * @param pom
@@ -63,7 +63,7 @@ public interface MappingFactory {
 	 * 
 	 * @param lt
 	 *            The LogicalTable of the TriplesMap. This must either be a
-	 *            SQLTable or a R2RMLView.
+	 *            SQLBaseTableOrView or a R2RMLView.
 	 * @param sm
 	 *            The SubjectMap of the TriplesMap.
 	 * @param listOfPom
@@ -126,13 +126,13 @@ public interface MappingFactory {
 	public R2RMLView createR2RMLView(String query);
 
 	/**
-	 * Create a new SQLTable with the given table name.
+	 * Create a new SQLBaseTableOrView with the given table name.
 	 * 
 	 * @param tableName
-	 *            The table name for the SQLTable.
-	 * @return The created SQLTable.
+	 *            The table name for the SQLBaseTableOrView.
+	 * @return The created SQLBaseTableOrView.
 	 */
-	public SQLTable createSQLBaseTableOrView(String tableName);
+	public SQLBaseTableOrView createSQLBaseTableOrView(String tableName);
 
 	/**
 	 * Create a new GraphMap with the given template. The term map type of the

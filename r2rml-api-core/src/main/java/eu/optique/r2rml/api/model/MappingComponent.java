@@ -73,7 +73,7 @@ public interface MappingComponent {
      *
      * @param node The resource to set.
      */
-    public void setNode(BlankNodeOrIRI node);
+    void setNode(BlankNodeOrIRI node);
 
     /**
      * Get the resource used to serialize an R2RML component.
@@ -81,12 +81,12 @@ public interface MappingComponent {
      * @return The resource set by setNode(Object res).
      */
     //public Object getNode(Class resourceClass);
-    public BlankNodeOrIRI getNode();
+    BlankNodeOrIRI getNode();
 
     /**
      * Serializes the R2RML component to a list of RDF triples.
      *
      * @return A set of triples.
      */
-    public Set<Triple> serialize();
+    Set<Triple> serialize();
 }

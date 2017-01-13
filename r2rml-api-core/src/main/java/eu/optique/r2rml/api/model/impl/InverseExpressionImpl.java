@@ -35,12 +35,12 @@ public class InverseExpressionImpl implements InverseExpression {
 	}
 
 	@Override
-	public void setInverseExpression(String strTemplate) {
+	public void setStringTemplate(String strTemplate) {
 		invExp = strTemplate;
 	}
 
 	@Override
-	public String getInverseExpression() {
+	public String getStringTemplate() {
 		return invExp;
 	}
 

@@ -25,23 +25,23 @@ package eu.optique.r2rml.api.model;
  * @author Marius Strandhaug
  */
 @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)
-public interface SQLTable extends LogicalTable {
+public interface SQLBaseTableOrView extends LogicalTable {
 
 	/**
-	 * Sets the SQL base table or view of this SQLTable.
+	 * Sets the SQL base table or view of this SQLBaseTableOrView.
 	 * 
 	 * @param tableName
 	 *            The name of the SQL base table or view.
 	 * @throws NullPointerException
 	 *             If tableName is null.
 	 */
-	public void setSQLTable(String tableName);
+	public void setTableName(String tableName);
 
 	/**
 	 * Gets the name of the SQL base table or view.
 	 * 
-	 * @return The table or view name of this SQLTable.
+	 * @return The table or view name of this SQLBaseTableOrView.
 	 */
-	public String getSQLTableName();
+	public String getTableName();
 
 }

@@ -23,38 +23,38 @@ import java.util.HashSet;
 import java.util.Set;
 
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
-import eu.optique.r2rml.api.model.SQLTable;
+import eu.optique.r2rml.api.model.SQLBaseTableOrView;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
 /**
- * An implementation of a SQLTable.
+ * An implementation of a SQLBaseTableOrView.
  * 
  * @author Marius Strandhaug
  */
-public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
+public class SQLBaseTableOrViewImpl extends LogicalTableImpl implements SQLBaseTableOrView {
 
 	String table;
 
-	public SQLTableImpl(RDF c, String tableName) {
+	public SQLBaseTableOrViewImpl(RDF c, String tableName) {
 		super(c);
 
-		setSQLTable(tableName);
+		setTableName(tableName);
 
         setNode(getRDF().createBlankNode());
 	}
 
 	@Override
-	public void setSQLTable(String tableName) {
+	public void setTableName(String tableName) {
 		if (tableName != null) {
 			table = tableName;
 		} else {
-			throw new NullPointerException("A SQLTable must have a table name.");
+			throw new NullPointerException("A SQLBaseTableOrView must have a table name.");
 		}
 	}
 
 	@Override
-	public String getSQLTableName() {
+	public String getTableName() {
 		return table;
 	}
 
@@ -70,7 +70,7 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
         stmtSet.add(getRDF().createTriple(node, getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)));
 
         stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_TABLE_NAME),
-                getRDF().createLiteral(getSQLTableName())));
+                getRDF().createLiteral(getTableName())));
 
 		return stmtSet;
 	}
@@ -92,10 +92,10 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 		if (obj == null)
 			return false;
 
-		if (!(obj instanceof SQLTableImpl))
+		if (!(obj instanceof SQLBaseTableOrViewImpl))
 			return false;
 
-		SQLTableImpl other = (SQLTableImpl) obj;
+		SQLBaseTableOrViewImpl other = (SQLBaseTableOrViewImpl) obj;
 		if (node == null) {
 			if (other.node != null) {
 				return false;
@@ -117,7 +117,7 @@ public class SQLTableImpl extends LogicalTableImpl implements SQLTable {
 
 	@Override
 	public String toString() {
-		return "SQLTableImpl [table=" + table + ", node=" + node + "]";
+		return "SQLBaseTableOrViewImpl [table=" + table + ", node=" + node + "]";
 	}
 
 }

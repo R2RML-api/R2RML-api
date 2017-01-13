@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
+import eu.optique.r2rml.api.model.impl.SQLBaseTableOrViewImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
@@ -39,7 +40,6 @@ import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
-import eu.optique.r2rml.api.model.impl.SQLTableImpl;
 
 /**
  * JUnit Test Cases
@@ -76,8 +76,8 @@ public class PredicateObjectMap_Test
 			
 			LogicalTable table=current.getLogicalTable();
 			
-			SQLTableImpl ta= (SQLTableImpl) table;
-			Assert.assertTrue(ta.getSQLTableName().contains("Student"));
+			SQLBaseTableOrViewImpl ta= (SQLBaseTableOrViewImpl) table;
+			Assert.assertTrue(ta.getTableName().contains("Student"));
 			
 		}			
 		

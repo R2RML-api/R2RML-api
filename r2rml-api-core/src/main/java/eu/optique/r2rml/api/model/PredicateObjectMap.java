@@ -37,6 +37,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @param pm
 	 *            The PredicateMap that will be added.
 	 */
+	@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PREDICATE_MAP)
 	public void addPredicateMap(PredicateMap pm);
 
 	/**
@@ -47,6 +48,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @param om
 	 *            The ObjectMap that will be added.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
 	public void addObjectMap(ObjectMap om);
 
 	/**
@@ -57,6 +59,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @param rom
 	 *            The RefObjectMap that will be added.
 	 */
+	@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
 	public void addRefObjectMap(RefObjectMap rom);
 
 	/**
@@ -67,6 +70,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @param gm
 	 *            The GraphMap that will be added.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
 	public void addGraphMap(GraphMap gm);
 
 	/**
@@ -77,7 +81,8 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @param gms
 	 *            The list of GraphMaps that will be added.
 	 */
-	public void addGraphMap(List<GraphMap> gms);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
+    public void addGraphMaps(List<GraphMap> gms);
 
 	/**
 	 * Get the GraphMap located at the given index.
@@ -88,6 +93,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
 	public GraphMap getGraphMap(int index);
 
 	/**
@@ -99,7 +105,8 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
-	public RefObjectMap getRefObjectMap(int index);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
+    public RefObjectMap getRefObjectMap(int index);
 
 	/**
 	 * Get the ObjectMap located at the given index.
@@ -107,10 +114,11 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @param index
 	 *            The index of the ObjectMap.
 	 * @return The ObjectMap located at the given index.
-	 * @throws NIndexOutOfBoundsException
+	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
-	public ObjectMap getObjectMap(int index);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
+    public ObjectMap getObjectMap(int index);
 
 	/**
 	 * Get the PredicateMap located at the given index.
@@ -121,7 +129,8 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
-	public PredicateMap getPredicateMap(int index);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PREDICATE_MAP)
+    public PredicateMap getPredicateMap(int index);
 
 	/**
 	 * Returns an unmodifiable view of the list of GraphMaps that have been
@@ -129,6 +138,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * 
 	 * @return An unmodifiable list of GraphMaps.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
 	public List<GraphMap> getGraphMaps();
 
 	/**
@@ -137,6 +147,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * 
 	 * @return An unmodifiable list of RefObjectMaps.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
 	public List<RefObjectMap> getRefObjectMaps();
 
 	/**
@@ -145,7 +156,8 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * 
 	 * @return An unmodifiable list of ObjectMaps.
 	 */
-	public List<ObjectMap> getObjectMaps();
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
+    public List<ObjectMap> getObjectMaps();
 
 	/**
 	 * Returns an unmodifiable view of the list of PredicateMaps that have been
@@ -153,7 +165,8 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * 
 	 * @return An unmodifiable list of PredicateMaps.
 	 */
-	public List<PredicateMap> getPredicateMaps();
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PREDICATE_MAP)
+    public List<PredicateMap> getPredicateMaps();
 
 	/**
 	 * Remove the GraphMap given by the parameter, from the PredicateObjectMap.
@@ -162,7 +175,8 @@ public interface PredicateObjectMap extends MappingComponent {
 	 * @param gm
 	 *            The GraphMap to be removed.
 	 */
-	public void removeGraphMap(GraphMap gm);
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
+    public void removeGraphMap(GraphMap gm);
 
 	/**
 	 * Remove the RefObjectMap, given by the parameter, from the
@@ -175,6 +189,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 *             If removing the RefObjectMap would cause the
 	 *             PredicateObjectMap to contain no RefObjectMaps or ObjectMaps.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
 	public void removeRefObjectMap(RefObjectMap rom);
 
 	/**
@@ -188,6 +203,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 *             If removing the RefObjectMap would cause the
 	 *             PredicateObjectMap to contain no RefObjectMaps or ObjectMaps.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
 	public void removeObjectMap(ObjectMap om);
 
 	/**
@@ -201,6 +217,7 @@ public interface PredicateObjectMap extends MappingComponent {
 	 *             If removing the RefObjectMap would cause the
 	 *             PredicateObjectMap to contain no PredicateMaps.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_OBJECT_MAP)
 	public void removePredicateMap(PredicateMap pm);
 
 }

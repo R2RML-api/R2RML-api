@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
+import eu.optique.r2rml.api.model.impl.SQLBaseTableOrViewImpl;
 import org.apache.commons.rdf.api.IRI;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,7 +41,6 @@ import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
-import eu.optique.r2rml.api.model.impl.SQLTableImpl;
 
 /**
  * JUnit Test Cases
@@ -84,8 +84,8 @@ public class NTriplesSyntax_Test
 			
 			LogicalTable table=current.getLogicalTable();
 			
-			SQLTableImpl ta= (SQLTableImpl) table;
-			Assert.assertTrue(ta.getSQLTableName().contains("EMP"));
+			SQLBaseTableOrViewImpl ta= (SQLBaseTableOrViewImpl) table;
+			Assert.assertTrue(ta.getTableName().contains("EMP"));
 			
 		}			
 	}

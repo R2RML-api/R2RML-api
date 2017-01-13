@@ -39,6 +39,7 @@ public interface RefObjectMap extends MappingComponent {
 	 *            The triples map that will be set as the
 	 *            parent triples map.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP)
 	public void setParentMap(TriplesMap tm);
 
 	/**
@@ -48,7 +49,10 @@ public interface RefObjectMap extends MappingComponent {
 	 * 
 	 * @param lt
 	 *            The logical table of this RefObjectMap's parent triples map.
+     *
+     * @deprecated does not correspond to Recommendation: logicalTable is not a property of RefObjectMap
 	 */
+	@Deprecated
 	public void setParentLogicalTable(LogicalTable lt);
 
 	/**
@@ -59,7 +63,9 @@ public interface RefObjectMap extends MappingComponent {
 	 * @param lt
 	 *            The logical table of the triples map that contains this
 	 *            RefObjectMap.
+     * @deprecated does not correspond to Recommendation: logicalTable is not a property of RefObjectMap
 	 */
+    @Deprecated
 	public void setChildLogicalTable(LogicalTable lt);
 
 	/**
@@ -71,6 +77,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * @throws NullPointerException
 	 *             If the child logical table is null.
 	 */
+    @Deprecated
 	public String getChildQuery();
 
 	/**
@@ -82,6 +89,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * @throws NullPointerException
 	 *             If the parent logical table is null.
 	 */
+    @Deprecated
 	public String getParentQuery();
 
 	/**
@@ -91,7 +99,8 @@ public interface RefObjectMap extends MappingComponent {
 	 * 
 	 * @return The joint query for this RefObjectMap.
 	 */
-	public String getJointQuery();
+    @Deprecated
+    public String getJointQuery();
 
 	/**
 	 * Add a join condition to this RefObjectMap. The Join will be added to the
@@ -101,6 +110,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * @param j
 	 *            The join condition to be added.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_JOIN_CONDITION)
 	public void addJoinCondition(Join j);
 
 	/**
@@ -112,6 +122,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_JOIN_CONDITION)
 	public Join getJoinCondition(int index);
 
 	/**
@@ -120,13 +131,15 @@ public interface RefObjectMap extends MappingComponent {
 	 * 
 	 * @return An unmodifiable list of Joins.
 	 */
-	public List<Join> getJoinConditions();
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_JOIN_CONDITION)
+    public List<Join> getJoinConditions();
 
 	/**
 	 * Get the parent triples map of this RefObjectMap.
 	 *
 	 * @return The parent triples map.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP)
 	public TriplesMap getParentMap();
 
 	/**
@@ -136,6 +149,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * @param j
 	 *            The join condition that will be removed.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_JOIN_CONDITION)
 	public void removeJoinCondition(Join j);
 
 	

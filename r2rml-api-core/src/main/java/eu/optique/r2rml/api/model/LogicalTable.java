@@ -29,7 +29,7 @@ public interface LogicalTable extends MappingComponent {
 
 	/**
 	 * Returns the effective SQL query of this LogicalTable. The effective SQL
-	 * query of a R2RMLView is it's own SQL query. For a SQLTable it's
+	 * query of a R2RMLView is it's own SQL query. For a SQLBaseTableOrView it's
 	 * "SELECT * FROM {table}".
 	 * 
 	 * @return The effective SQL query of this LogicalTable.

@@ -38,6 +38,7 @@ public interface TriplesMap extends MappingComponent {
 	 * @param lt
 	 *            The LogicalTable that will be added.
 	 */
+	@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_LOGICAL_TABLE)
 	public void setLogicalTable(LogicalTable lt);
 
 	/**
@@ -47,6 +48,7 @@ public interface TriplesMap extends MappingComponent {
 	 * @param sm
 	 *            The SubjectMap that will be added.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SUBJECT_MAP)
 	public void setSubjectMap(SubjectMap sm);
 
 	/**
@@ -57,6 +59,7 @@ public interface TriplesMap extends MappingComponent {
 	 * @param pom
 	 *            The PredicateObjectMap that will be added.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP)
 	public void addPredicateObjectMap(PredicateObjectMap pom);
 	
 	/**
@@ -67,6 +70,7 @@ public interface TriplesMap extends MappingComponent {
 	 * @param poms
 	 *            The PredicateObjectMaps that will be added.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP)
 	public void addPredicateObjectMaps(Collection<PredicateObjectMap> poms);
 
 	/**
@@ -74,6 +78,7 @@ public interface TriplesMap extends MappingComponent {
 	 * 
 	 * @return The LogicalTable of this TriplesMap.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_LOGICAL_TABLE)
 	public LogicalTable getLogicalTable();
 
 	/**
@@ -81,6 +86,7 @@ public interface TriplesMap extends MappingComponent {
 	 * 
 	 * @return The SubjectMap of this TriplesMap.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SUBJECT_MAP)
 	public SubjectMap getSubjectMap();
 
 	/**
@@ -92,6 +98,7 @@ public interface TriplesMap extends MappingComponent {
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP)
 	public PredicateObjectMap getPredicateObjectMap(int index);
 
 	/**
@@ -100,6 +107,7 @@ public interface TriplesMap extends MappingComponent {
 	 * 
 	 * @return An unmodifiable list of PredicateObjectMaps.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP)
 	public List<PredicateObjectMap> getPredicateObjectMaps();
 
 	/**
@@ -110,6 +118,7 @@ public interface TriplesMap extends MappingComponent {
 	 * @param pom
 	 *            The PredicateObjectMap to be removed.
 	 */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PREDICATE_OBJECT_MAP)
 	public void removePredicateObjectMap(PredicateObjectMap pom);
 
 	

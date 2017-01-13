@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
+import eu.optique.r2rml.api.model.impl.SQLBaseTableOrViewImpl;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.rdf4j.RDF4J;
 import org.junit.Assert;
@@ -44,7 +45,6 @@ import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
-import eu.optique.r2rml.api.model.impl.SQLTableImpl;
 
 /**
  * JUnit Test Cases
@@ -85,9 +85,9 @@ public class TermType_Test {
 			LogicalTable table=current.getLogicalTable();
 			
 			
-			if(table instanceof SQLTableImpl){
-				SQLTableImpl ta= (SQLTableImpl) table;
-				Assert.assertTrue(ta.getSQLTableName().contains("Student"));
+			if(table instanceof SQLBaseTableOrViewImpl){
+				SQLBaseTableOrViewImpl ta= (SQLBaseTableOrViewImpl) table;
+				Assert.assertTrue(ta.getTableName().contains("Student"));
 			}else{
 				Assert.assertTrue(false);
 			}

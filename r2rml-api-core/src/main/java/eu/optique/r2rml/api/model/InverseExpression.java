@@ -32,13 +32,13 @@ public interface InverseExpression {
 	 * @param strTemplate
 	 *            The string template to set.
 	 */
-	public void setInverseExpression(String strTemplate);
+	public void setStringTemplate(String strTemplate);
 
 	/**
 	 * Get the string template of this InverseExpression.
 	 * 
 	 * @return The string template of this InverseExpression.
 	 */
-	public String getInverseExpression();
+	public String getStringTemplate();
 
 }

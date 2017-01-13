@@ -23,7 +23,7 @@ import eu.optique.r2rml.api.model.LogicalTable;
 import org.apache.commons.rdf.api.RDF;
 
 /**
- * The abstract superclass for R2RMLViewImpl and SQLTableImpl.
+ * The abstract superclass for R2RMLViewImpl and SQLBaseTableOrViewImpl.
  * 
  * @author Marius Strandhaug
  */

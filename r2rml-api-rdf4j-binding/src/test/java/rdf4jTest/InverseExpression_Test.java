@@ -67,7 +67,7 @@ public class InverseExpression_Test
 				SubjectMap s=current.getSubjectMap();
 				
 				InverseExpression t=s.getInverseExpression();
-				Assert.assertTrue(t.getInverseExpression().contains("deptno"));
+				Assert.assertTrue(t.getStringTemplate().contains("deptno"));
 				
 	
 			}

@@ -39,7 +39,7 @@ import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
-import eu.optique.r2rml.api.model.impl.SQLTableImpl;
+import eu.optique.r2rml.api.model.impl.SQLBaseTableOrViewImpl;
 
 /**
  * JUnit Test Cases
@@ -76,8 +76,8 @@ public class MultiplePredicateObjectMap_Test
 			
 			
 			LogicalTable table=current.getLogicalTable();
-			SQLTableImpl ta= (SQLTableImpl) table;
-			Assert.assertTrue(ta.getSQLTableName().contains("EMP2DEPT"));
+			SQLBaseTableOrViewImpl ta= (SQLBaseTableOrViewImpl) table;
+			Assert.assertTrue(ta.getTableName().contains("EMP2DEPT"));
 		
 		}			
 	}
