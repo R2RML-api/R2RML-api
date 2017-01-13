@@ -3,7 +3,7 @@
     <groupId>eu.optique-project</groupId>
     <artifactId>r2rml-api-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.5.0</version>
+    <version>0.5.1-SNAPSHOT</version>
     <name>Optique R2RML API</name>
     <licenses>
         <license>
