@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import eu.optique.r2rml.api.model.GraphMap;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;

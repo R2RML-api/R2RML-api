@@ -46,7 +46,7 @@ import org.apache.jena.vocabulary.RDF;
 import eu.optique.r2rml.api.model.impl.InvalidR2RMLMappingException;
 import eu.optique.r2rml.api.model.TriplesMap;
 
-import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 
 /**
  * JUnit Test Cases

@@ -28,6 +28,7 @@ import java.util.Set;
 
 import eu.optique.r2rml.api.model.LogicalTable;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.TriplesMap;
 import eu.optique.r2rml.api.model.TermMap;

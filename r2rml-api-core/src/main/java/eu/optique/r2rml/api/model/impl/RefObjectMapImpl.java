@@ -28,6 +28,7 @@ import java.util.Set;
 
 import eu.optique.r2rml.api.model.Join;
 import eu.optique.r2rml.api.model.LogicalTable;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.RefObjectMap;
 import eu.optique.r2rml.api.model.TriplesMap;
 import org.apache.commons.rdf.api.RDF;

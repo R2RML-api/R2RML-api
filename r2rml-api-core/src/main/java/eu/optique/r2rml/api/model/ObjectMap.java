@@ -19,7 +19,6 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model;
 
-import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
 import org.apache.commons.rdf.api.IRI;
 
 /**

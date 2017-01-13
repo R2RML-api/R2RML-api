@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import eu.optique.r2rml.api.model.InverseExpression;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
 import org.apache.commons.rdf.api.IRI;

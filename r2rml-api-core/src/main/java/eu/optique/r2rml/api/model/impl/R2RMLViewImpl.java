@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.W3C_R2RML_Recommendation;
 import eu.optique.r2rml.api.model.R2RMLView;
 import org.apache.commons.rdf.api.IRI;

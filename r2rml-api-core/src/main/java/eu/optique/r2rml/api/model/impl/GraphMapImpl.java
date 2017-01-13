@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import eu.optique.r2rml.api.model.GraphMap;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;

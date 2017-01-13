@@ -37,6 +37,7 @@ import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.R2RMLMappingCollection;
 import eu.optique.r2rml.api.R2RMLMappingManager;
 import eu.optique.r2rml.api.model.R2RMLView;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.RefObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.TermMap;

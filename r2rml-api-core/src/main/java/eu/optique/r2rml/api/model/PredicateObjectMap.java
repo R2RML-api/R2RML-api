@@ -19,8 +19,6 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model;
 
-import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
-
 import java.util.List;
 
 /**

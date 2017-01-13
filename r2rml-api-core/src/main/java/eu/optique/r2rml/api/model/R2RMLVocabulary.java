@@ -17,7 +17,7 @@
  * the University of Bolzano, La Sapienza University of Rome, and fluid Operations AG,
  * as part of the Optique project, www.optique-project.eu
  ******************************************************************************/
-package eu.optique.r2rml.api.model.impl;
+package eu.optique.r2rml.api.model;
 
 /**
  * Vocabulary/String definitions for R2RML

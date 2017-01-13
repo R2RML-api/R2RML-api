@@ -43,7 +43,7 @@ import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
 import eu.optique.r2rml.api.model.impl.R2RMLViewImpl;
-import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 
 /**
  * JUnit Test Cases

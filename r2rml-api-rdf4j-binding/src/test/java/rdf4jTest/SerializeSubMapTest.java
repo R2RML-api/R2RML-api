@@ -34,7 +34,7 @@ import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
-import eu.optique.r2rml.api.model.impl.R2RMLVocabulary;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 
 public class SerializeSubMapTest {
 

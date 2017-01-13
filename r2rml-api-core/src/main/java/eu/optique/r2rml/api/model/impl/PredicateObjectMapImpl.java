@@ -29,6 +29,7 @@ import eu.optique.r2rml.api.model.GraphMap;
 import eu.optique.r2rml.api.model.ObjectMap;
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
+import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.RefObjectMap;
 import eu.optique.r2rml.api.model.TermMap;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
