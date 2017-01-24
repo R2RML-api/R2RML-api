@@ -372,7 +372,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                 .collect(toSet());
 		if (graphDecl.size() > 0) {
 			for (RDFTerm val : graphDecl) {
-				graphMapList.add(mfact.createGraphMap(TermMap.TermMapType.CONSTANT_VALUED, val));
+				graphMapList.add(mfact.createGraphMap((IRI)val));
 			}
 		} else {
 			// look for graphMap nodes
@@ -408,7 +408,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                 getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT));
 		if (subject != null) {
 			// return constant valued
-			return mfact.createSubjectMap(TermMap.TermMapType.CONSTANT_VALUED, subject);
+			return mfact.createSubjectMap(subject);
 		} else {
 			// look for subjectMap declarations
             Collection<RDFTerm> subjectMapNode = graph.stream(node, getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), null)
@@ -531,8 +531,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		if (predicates != null) {
 			for (RDFTerm predicate : predicates) {
 				// return constant valued
-				predicateMaps.add(mfact.createPredicateMap(
-						TermMap.TermMapType.CONSTANT_VALUED, predicate));
+				predicateMaps.add(mfact.createPredicateMap((IRI)predicate));
 			}
 		}
 
@@ -577,7 +576,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			for (RDFTerm object : objects) {
 				// return constant valued
 				objectMaps.add(mfact.createObjectMap(
-						TermMap.TermMapType.CONSTANT_VALUED, object));
+                        object));
 			}
 		}
 
@@ -664,9 +663,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				// return the corresponding subjectMap
                 switch (termMapType){
                     case COLUMN_VALUED:
-                        return mfact.createSubjectMap(termMapType, ((Literal) resource).getLexicalForm());
+                        return mfact.createSubjectMap(((Literal) resource).getLexicalForm());
                     case CONSTANT_VALUED:
-                        return mfact.createSubjectMap(termMapType, resource);
+                        return mfact.createSubjectMap(resource);
                     case TEMPLATE_VALUED:
                         return mfact.createSubjectMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
                 }
@@ -675,9 +674,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				// return the corresponding predicateMap
                 switch (termMapType){
                     case COLUMN_VALUED:
-                        return mfact.createPredicateMap(termMapType, ((Literal) resource).getLexicalForm());
+                        return mfact.createPredicateMap(((Literal) resource).getLexicalForm());
                     case CONSTANT_VALUED:
-                        return mfact.createPredicateMap(termMapType, resource);
+                        return mfact.createPredicateMap((IRI)resource);
                     case TEMPLATE_VALUED:
                         return mfact.createPredicateMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
                 }
@@ -687,9 +686,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 
                 switch (termMapType){
                     case COLUMN_VALUED:
-                        return mfact.createObjectMap(termMapType, ((Literal) resource).getLexicalForm());
+                        return mfact.createObjectMap(((Literal) resource).getLexicalForm());
                     case CONSTANT_VALUED:
-                        return mfact.createObjectMap(termMapType, resource);
+                        return mfact.createObjectMap(resource);
                     case TEMPLATE_VALUED:
                         return mfact.createObjectMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
                 }
@@ -698,9 +697,9 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				// return the corresponding graphMap
                 switch (termMapType){
                     case COLUMN_VALUED:
-                        return mfact.createGraphMap(termMapType, ((Literal) resource).getLexicalForm());
+                        return mfact.createGraphMap(((Literal) resource).getLexicalForm());
                     case CONSTANT_VALUED:
-                        return mfact.createGraphMap(termMapType, resource);
+                        return mfact.createGraphMap((IRI)resource);
                     case TEMPLATE_VALUED:
                         return mfact.createGraphMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
                 }

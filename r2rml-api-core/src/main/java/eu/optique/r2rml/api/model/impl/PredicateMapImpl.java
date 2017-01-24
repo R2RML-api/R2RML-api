@@ -42,19 +42,16 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 
     private List<IRI> validTermTypes = Arrays.asList(getRDF().createIRI(R2RMLVocabulary.TERM_IRI));
 
-	public PredicateMapImpl(RDF rdf, TermMap.TermMapType termMapType,
-                            Template template) {
-		super(rdf, termMapType, template);
+	PredicateMapImpl(RDF rdf, Template template) {
+		super(rdf, template);
 	}
 
-	public PredicateMapImpl(RDF rdf, TermMap.TermMapType termMapType,
-                            String columnOrConst) {
-		super(rdf, termMapType, columnOrConst);
+	PredicateMapImpl(RDF rdf, String columnName) {
+		super(rdf, columnName);
 	}
 
-    public PredicateMapImpl(RDF rdf, TermMap.TermMapType termMapType,
-                            RDFTerm columnOrConst) {
-        super(rdf, termMapType, columnOrConst);
+    PredicateMapImpl(RDF rdf, RDFTerm constant) {
+        super(rdf, constant);
     }
 
 	@Override

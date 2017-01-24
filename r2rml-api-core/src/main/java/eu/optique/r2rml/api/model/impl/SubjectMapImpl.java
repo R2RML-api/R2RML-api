@@ -48,29 +48,26 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
             getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE));
 
 
-    ArrayList<IRI> classList;
+    private ArrayList<IRI> classList;
 
-	ArrayList<GraphMap> graphList;
+	private ArrayList<GraphMap> graphList;
 
-	public SubjectMapImpl(RDF c, TermMap.TermMapType termMapType,
-                          Template template) {
-		super(c, termMapType, template);
-
-		classList = new ArrayList<>();
-		graphList = new ArrayList<>();
-	}
-
-	public SubjectMapImpl(RDF c, TermMap.TermMapType termMapType,
-			String columnOrConst) {
-		super(c, termMapType, columnOrConst);
+	SubjectMapImpl(RDF c, Template template) {
+		super(c, template);
 
 		classList = new ArrayList<>();
 		graphList = new ArrayList<>();
 	}
 
-    public SubjectMapImpl(RDF c, TermMap.TermMapType termMapType,
-                          RDFTerm columnOrConst) {
-        super(c, termMapType, columnOrConst);
+	SubjectMapImpl(RDF c, String columnName) {
+		super(c, columnName);
+
+		classList = new ArrayList<>();
+		graphList = new ArrayList<>();
+	}
+
+    SubjectMapImpl(RDF c, RDFTerm constant) {
+        super(c, constant);
 
         classList = new ArrayList<>();
         graphList = new ArrayList<>();

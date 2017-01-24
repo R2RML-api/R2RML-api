@@ -55,16 +55,16 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
     private String langTag;
 
 
-    public ObjectMapImpl(RDF c, TermMapType termMapType, Template template) {
-		super(c, termMapType, template);
+    ObjectMapImpl(RDF c, Template template) {
+		super(c, template);
 	}
 
-	public ObjectMapImpl(RDF c, TermMapType termMapType, String columnOrConst) {
-		super(c, termMapType, columnOrConst);
+	ObjectMapImpl(RDF c, String columnName) {
+		super(c, columnName);
 	}
 
-    public ObjectMapImpl(RDF c, TermMapType termMapType, RDFTerm constant) {
-        super(c, termMapType, constant);
+    ObjectMapImpl(RDF c, RDFTerm constant) {
+        super(c, constant);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 	@Override
 	public Set<Triple> serialize() {
-		Set<Triple> stmtSet = new HashSet<Triple>();
+		Set<Triple> stmtSet = new HashSet<>();
 
 		stmtSet.addAll(super.serialize());
 
@@ -150,8 +150,9 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
 		if (dataType != null) {
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_DATATYPE), dataType));
-		} else if (langTag != null) {
+		}
 
+		if (langTag != null) {
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_LANGUAGE),
                     getRDF().createLiteral(langTag)));
 		}

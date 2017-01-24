@@ -23,8 +23,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.rdf4j.RDF4J;
-import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 import org.junit.Assert;
@@ -37,7 +37,6 @@ import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
-import eu.optique.r2rml.api.model.TermMap.TermMapType;
 import eu.optique.r2rml.api.model.TriplesMap;
 
 /**
@@ -62,7 +61,7 @@ public class InMemoryStructureCreation_Test {
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//PredicateObjectMap
-		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, rdf4j.asRDFTerm(myFactory.createURI(
+		PredicateMap pred = mfact.createPredicateMap((IRI)rdf4j.asRDFTerm(myFactory.createURI(
                 "http://example.com/role")));
 		Template templo = mfact.createTemplate("http://data.example.com/roles/{ROLE}");
 		ObjectMap obm = mfact.createObjectMap(templo);

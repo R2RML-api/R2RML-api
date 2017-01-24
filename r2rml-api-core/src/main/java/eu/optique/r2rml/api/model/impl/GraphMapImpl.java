@@ -27,7 +27,6 @@ import java.util.Set;
 import eu.optique.r2rml.api.model.GraphMap;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
-import eu.optique.r2rml.api.model.TermMap;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.RDFTerm;
@@ -43,18 +42,16 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
     private List<IRI> validTermTypes = Arrays.asList(getRDF().createIRI(R2RMLVocabulary.TERM_IRI));
 
 
-    GraphMapImpl(RDF lc, TermMapType termMapType,
-                 Template template) {
-        super(lc, termMapType, template);
+    GraphMapImpl(RDF lc, Template template) {
+        super(lc, template);
     }
 
-    GraphMapImpl(RDF lc, TermMapType termMapType,
-                 String columnOrConst) {
-        super(lc, termMapType, columnOrConst);
+    GraphMapImpl(RDF lc, String columnName) {
+        super(lc, columnName);
     }
 
-    public GraphMapImpl(RDF rdf, TermMapType type, RDFTerm constant) {
-        super(rdf, type, constant);
+    public GraphMapImpl(RDF rdf, RDFTerm constant) {
+        super(rdf, constant);
     }
 
     @Override

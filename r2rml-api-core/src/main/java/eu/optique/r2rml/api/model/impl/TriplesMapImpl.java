@@ -50,7 +50,7 @@ public class TriplesMapImpl extends MappingComponentImpl implements TriplesMap {
 
 	BlankNodeOrIRI res;
 
-	public TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm) {
+	TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm) {
 
 		super(rdf);
 
@@ -61,7 +61,7 @@ public class TriplesMapImpl extends MappingComponentImpl implements TriplesMap {
         setNode(getRDF().createBlankNode());
 	}
 
-	public TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
+	TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
 
         super(rdf);
 

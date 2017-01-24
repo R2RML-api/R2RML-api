@@ -38,7 +38,6 @@ import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
-import eu.optique.r2rml.api.model.TermMap.TermMapType;
 
 /**
  * JUnit Test Cases
@@ -63,7 +62,7 @@ public class InMemoryStructureCreation_Test {
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//PredicateObjectMap
-		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, (IRI)jena.asRDFTerm(NodeFactory.createURI("http://example.com/role")));
+		PredicateMap pred = mfact.createPredicateMap((IRI)jena.asRDFTerm(NodeFactory.createURI("http://example.com/role")));
 		Template templo = mfact.createTemplate("http://data.example.com/roles/{ROLE}");
 		ObjectMap obm = mfact.createObjectMap(templo);
 		PredicateObjectMap pom = mfact.createPredicateObjectMap(pred, obm);
