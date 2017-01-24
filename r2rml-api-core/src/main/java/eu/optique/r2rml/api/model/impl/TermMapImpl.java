@@ -148,6 +148,9 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
                 // if it is a literal, we need to explicitly set the term termMapType to rr:Literal
                 
                 // NOTE: We assume that all the URIs start with "http://"
+
+                // NOTE(xiao): I don't remember why we need this hacky check!
+
                 if (!constVal.startsWith("http://")){
                     termTypeIRI = getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL);
                 }
