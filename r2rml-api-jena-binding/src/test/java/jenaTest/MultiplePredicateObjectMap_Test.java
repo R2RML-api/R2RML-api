@@ -112,11 +112,11 @@ public class MultiplePredicateObjectMap_Test
 				
 				while(pmit.hasNext()){
 					PredicateMap p=pmit.next();
-					if(p.getConstant().contains("department")){
+					if(p.getConstant().toString().contains("department")){
 						department=true;
 					}
 					
-					if(p.getConstant().contains("employee")){
+					if(p.getConstant().toString().contains("employee")){
 						employee=true;
 					}
 				}

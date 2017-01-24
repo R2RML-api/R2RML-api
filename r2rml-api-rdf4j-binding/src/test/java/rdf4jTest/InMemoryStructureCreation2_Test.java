@@ -134,7 +134,7 @@ public class InMemoryStructureCreation2_Test {
 				Iterator<PredicateMap> pmit=pom1.getPredicateMaps().iterator();
 				while(pmit.hasNext()){
 					PredicateMap p=pmit.next();
-					Assert.assertTrue(p.getConstant().contains("role"));
+					Assert.assertTrue(p.getConstant().toString().contains("role"));
 					
 				}
 				

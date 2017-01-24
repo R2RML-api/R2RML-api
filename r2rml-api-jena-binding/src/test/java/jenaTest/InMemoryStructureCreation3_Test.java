@@ -95,7 +95,7 @@ public class InMemoryStructureCreation3_Test{
 			int conta=0;
 			while(gmit.hasNext()){
 				GraphMap g=gmit.next();
-				Assert.assertTrue(g.getConstant().contains("http://example.com/graph/sports"));
+				Assert.assertTrue(g.getConstant().toString().contains("http://example.com/graph/sports"));
 				conta++;
 			}
 			Assert.assertTrue(conta==1);
@@ -125,7 +125,7 @@ public class InMemoryStructureCreation3_Test{
 				Iterator<PredicateMap> pmit=pom1.getPredicateMaps().iterator();
 				while(pmit.hasNext()){
 					PredicateMap p=pmit.next();
-					Assert.assertTrue(p.getConstant().contains("role"));
+					Assert.assertTrue(p.getConstant().toString().contains("role"));
 					
 				}
 				

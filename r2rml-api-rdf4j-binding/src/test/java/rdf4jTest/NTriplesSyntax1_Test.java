@@ -81,7 +81,7 @@ public class NTriplesSyntax1_Test{
 				int conta=0;
 				while(gmit.hasNext()){
 					GraphMap g=gmit.next();
-					Assert.assertTrue(g.getConstant().contains("http://example.com/graph/sports"));
+					Assert.assertTrue(g.getConstant().toString().contains("http://example.com/graph/sports"));
 					conta++;
 				}
 				Assert.assertTrue(conta==1);    
@@ -101,8 +101,8 @@ public class NTriplesSyntax1_Test{
 					int contt=0;
 					while(gmit.hasNext()){
 						GraphMap g=gmit.next();
-						boolean result=g.getConstant().contains("http://example.com/graph/practise");
-						boolean result1=g.getConstant().contains("http://example.com/graph/students");
+						boolean result=g.getConstant().toString().contains("http://example.com/graph/practise");
+						boolean result1=g.getConstant().toString().contains("http://example.com/graph/students");
 						
 						Assert.assertTrue(result || result1);
 						contt++;

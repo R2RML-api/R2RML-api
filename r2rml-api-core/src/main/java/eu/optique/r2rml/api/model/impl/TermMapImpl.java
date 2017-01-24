@@ -22,12 +22,14 @@ package eu.optique.r2rml.api.model.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.sun.istack.internal.NotNull;
 import eu.optique.r2rml.api.model.InverseExpression;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
+import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -44,7 +46,10 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
 	// Only one of these will be set.
 	Template template;
-	String constVal;
+
+	// TODO(xiao): replace it by RDFTerm
+    RDFTerm constVal;
+
 	String columnName;
 
 	InverseExpression inverseExp;
@@ -69,6 +74,17 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 		}
 	}
 
+    /**
+     *
+     * TODO(xiao): Split it into two methods:
+     *
+     * public TermMapImpl(RDF rdf, TermMapType termMapType, String column)
+     * public TermMapImpl(RDF rdf, TermMapType termMapType, RDFTerm constant)
+     *
+     * @param rdf
+     * @param termMapType
+     * @param columnOrConst
+     */
 	public TermMapImpl(RDF rdf, TermMapType termMapType, String columnOrConst) {
 		super(rdf);
 
@@ -83,13 +99,32 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
 			if (getTermMapType() == TermMapType.COLUMN_VALUED) {
 				setColumn(columnOrConst);
-			} else if (getTermMapType() == TermMapType.CONSTANT_VALUED) {
-				setConstant(columnOrConst);
 			} else {
 				throw new IllegalStateException("Wrong TermMapType");
 			}
 		}
 	}
+
+    public TermMapImpl(RDF rdf, @NotNull TermMapType termMapType, @NotNull RDFTerm constant) {
+        super(rdf);
+
+        if (termMapType != TermMapType.CONSTANT_VALUED) {
+            throw new IllegalArgumentException("termMapType - expected: TermMapType.CONSTANT_VALUED; provided: "+termMapType );
+        }
+
+
+            this.termMapType = termMapType;
+
+            // TODO(xiao): check if we need to set the default or not
+            setDefaultTermType();
+
+            setNode(getRDF().createBlankNode());
+
+            setConstant(constant);
+
+
+    }
+
 
 	@Override
 	public TermMapType getTermMapType() {
@@ -138,26 +173,9 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 	}
 
 	@Override
-	public void setConstant(String constVal) {
+	public void setConstant(RDFTerm constVal) {
 		if (getTermMapType() == TermMapType.CONSTANT_VALUED) {
-			if (constVal != null) {
 				this.constVal = constVal;
-
-                //Checking the value of the constant.
-                // By default an IRI will be generated;
-                // if it is a literal, we need to explicitly set the term termMapType to rr:Literal
-                
-                // NOTE: We assume that all the URIs start with "http://"
-
-                // NOTE(xiao): I don't remember why we need this hacky check!
-
-                if (!constVal.startsWith("http://")){
-                    termTypeIRI = getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL);
-                }
-			} else {
-				throw new NullPointerException(
-						"A constant-valued TermMap must have a value.");
-			}
 		} else {
 			throw new IllegalStateException("Wrong TermMapType");
 		}
@@ -208,7 +226,7 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 	}
 
 	@Override
-	public String getConstant() {
+	public RDFTerm getConstant() {
 		return constVal;
 	}
 
@@ -244,9 +262,8 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_COLUMN),
                     getRDF().createLiteral(getColumn())));
 		} else if (termMapType == TermMapType.CONSTANT_VALUED) {
-
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_CONSTANT),
-                    getRDF().createLiteral(getConstant())));
+                    getConstant()));
 		} else if (termMapType == TermMapType.TEMPLATE_VALUED) {
 
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_TEMPLATE),

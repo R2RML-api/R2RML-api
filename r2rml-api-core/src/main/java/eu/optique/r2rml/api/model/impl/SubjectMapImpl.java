@@ -127,7 +127,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 		for(GraphMap g : graphList){
 			if(g.getTermMapType() == TermMap.TermMapType.CONSTANT_VALUED){
 				// Use constant shortcut property.
-                stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), getRDF().createIRI(g.getConstant())));
+                stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), g.getConstant()));
 			}else{
                 stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
 				stmtSet.addAll(g.serialize());

@@ -20,6 +20,7 @@
 package eu.optique.r2rml.api.model;
 
 import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.RDFTerm;
 
 import java.util.List;
 
@@ -81,7 +82,7 @@ public interface TermMap extends MappingComponent {
      * @throws IllegalStateException If the TermMap is not constant-valued.
      */
     @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CONSTANT)
-    public void setConstant(String constVal);
+    public void setConstant(RDFTerm constVal);
 
     /**
      * Set the column-value of this TermMap if it's a constant-valued TermMap.
@@ -144,7 +145,7 @@ public interface TermMap extends MappingComponent {
      * @return The constant value of this TermMap.
      */
     @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CONSTANT)
-    public String getConstant();
+    public RDFTerm getConstant();
 
     /**
      * Get the column value of this TermMap. It will return null if this is not

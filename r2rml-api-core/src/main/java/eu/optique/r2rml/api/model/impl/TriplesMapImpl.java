@@ -152,7 +152,7 @@ public class TriplesMapImpl extends MappingComponentImpl implements TriplesMap {
 
 		if (getSubjectMap().getTermMapType() == TermMap.TermMapType.CONSTANT_VALUED) {
 			// Use constant shortcut property.
-            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT), getRDF().createIRI(getSubjectMap().getConstant())));
+            stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT), getSubjectMap().getConstant()));
 		} else {
             stmtSet.add(getRDF().createTriple(res, getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), getSubjectMap().getNode()));
 			stmtSet.addAll(getSubjectMap().serialize());
