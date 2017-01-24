@@ -19,13 +19,16 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model.impl;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
+import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
@@ -35,6 +38,8 @@ import org.apache.commons.rdf.api.Triple;
  * @author Marius Strandhaug
  */
 public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
+
+    private List<IRI> validTermTypes = Arrays.asList(getRDF().createIRI(R2RMLVocabulary.TERM_IRI));
 
 	public PredicateMapImpl(RDF rdf, TermMap.TermMapType termMapType,
                             Template template) {
@@ -67,4 +72,8 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 				+ ", node=" + getNode() + "]";
 	}
 
+    @Override
+    public List<IRI> getValidTermTypes() {
+        return validTermTypes;
+    }
 }

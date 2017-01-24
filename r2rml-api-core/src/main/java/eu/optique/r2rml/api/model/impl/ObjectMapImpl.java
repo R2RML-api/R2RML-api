@@ -38,8 +38,10 @@ import java.util.Set;
  */
 public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 
-    private static List<String> validTermTypeIRIs = Arrays.asList(R2RMLVocabulary.TERM_IRI,
-            R2RMLVocabulary.TERM_BLANK_NODE, R2RMLVocabulary.TERM_LITERAL);
+    private List<IRI> validTermTypes = Arrays.asList(
+            getRDF().createIRI(R2RMLVocabulary.TERM_IRI),
+            getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE),
+            getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL));
 
     /**
      * dataType IRI for literals
@@ -60,40 +62,23 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 		super(c, termMapType, columnOrConst);
 	}
 
-	@Override
-	public void setTermType(IRI termTypeIRI) {
+    @Override
+    public void setTermType(IRI typeIRI) {
 
-        final String typeIRIString = termTypeIRI.getIRIString();
+        super.setTermType(typeIRI);
 
-        if (!validTermTypeIRIs.contains(typeIRIString)){
-            throw new IllegalArgumentException(
-                String.format("<%s> is not a valid term termMapType IRI for ObjectMap.", typeIRIString));
+        if (!typeIRI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL))) {
+            removeLanguageTag();
+            removeDatatype();
         }
-
-        switch (termMapType) {
-            case TEMPLATE_VALUED:
-            case COLUMN_VALUED:
-                this.termTypeIRI = termTypeIRI;
-                // Remove language tag and data termMapType if the new term termMapType isn't
-                // literal.
-                if (!typeIRIString.equals(R2RMLVocabulary.TERM_LITERAL)) {
-                    removeLanguageTag();
-                    removeDatatype();
-                }
-                break;
-            case CONSTANT_VALUED:
-                 /*
-                  * IGNORE: See R2RML Recommendation Section 7.4:
-                  *
-                  * NOTE. Constant-valued term maps are not considered as having a term termMapType, and
-                  * specifying rr:termType on these term maps has no effect.
-                  */
-                break;
-        }
-
     }
 
-	@Override
+    @Override
+    public List<IRI> getValidTermTypes() {
+        return validTermTypes;
+    }
+
+    @Override
 	public void setDefaultTermType() {
 		/*
 		 * An object map's default term termMapType is Literal if it's column valued,

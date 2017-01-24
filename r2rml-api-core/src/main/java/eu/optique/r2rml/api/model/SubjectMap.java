@@ -69,14 +69,14 @@ public interface SubjectMap extends TermMap {
 	 * - rr:IRI<br>
 	 * - rr:BlankNode
 	 * 
-	 * @param typeURI
+	 * @param typeIRI
 	 *            The term type that will be set.
 	 * @throws IllegalStateException
 	 *             If the SubjectMap is not column-valued or template-valued.
 	 * @throws IllegalArgumentException
 	 *             If typeIRI is not a valid term type for a SubjectMap.
 	 */
-	public void setTermType(IRI typeURI);
+	public void setTermType(IRI typeIRI);
 
 	/**
 	 * Get the class URI located at the given index.

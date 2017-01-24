@@ -29,26 +29,20 @@ import org.apache.commons.rdf.api.IRI;
 @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_OBJECT_MAP)
 public interface ObjectMap extends TermMap {
 
-	/**
-	 * Sets the term type of this ObjectMap if it is column-valued or
-	 * template-valued. The typeURI must be an instance of the library's
-	 * resource class.<br>
-	 * The possible values for the term type are:<br>
-	 * - rr:IRI<br>
-	 * - rr:BlankNode<br>
-	 * - rr:Literal
-	 * 
-	 * @param typeURI
-	 *            The term type that will be set.
-	 * @throws IllegalStateException
-	 *             If the ObjectMap is not column-valued or template-valued.
-	 * @throws IllegalArgumentException
-	 *             If typeIRI is not a valid term type for an ObjectMap.
-	 */
-	@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_TERM_TYPE)
-	public void setTermType(IRI typeURI);
+    /**
+     * {@inheritDoc}
+     *
+     * The possible values for the term type are:<br>
+     * - rr:IRI<br>
+     * - rr:BlankNode<br>
+     * - rr:Literal
+     *
+     */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_TERM_TYPE)
+    @Override
+    void setTermType(IRI typeIRI);
 
-	/**
+    /**
 	 * Set the language tag of this ObjectMap if the term type is set to
 	 * rr:Literal. If the ObjectMap is data typed, the data type will be
 	 * removed.

@@ -19,12 +19,15 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model.impl;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import eu.optique.r2rml.api.model.GraphMap;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
+import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
@@ -34,6 +37,9 @@ import org.apache.commons.rdf.api.Triple;
  * @author Marius Strandhaug
  */
 public class GraphMapImpl extends TermMapImpl implements GraphMap {
+
+    private List<IRI> validTermTypes = Arrays.asList(getRDF().createIRI(R2RMLVocabulary.TERM_IRI));
+
 
     GraphMapImpl(RDF lc, TermMapType termMapType,
                  Template template) {
@@ -67,4 +73,9 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
                 + ", node=" + getNode() + "]";
     }
 
+
+    @Override
+    public List<IRI> getValidTermTypes() {
+        return validTermTypes;
+    }
 }

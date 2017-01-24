@@ -21,6 +21,8 @@ package eu.optique.r2rml.api.model;
 
 import org.apache.commons.rdf.api.IRI;
 
+import java.util.List;
+
 /**
  * R2RML Term Map
  *
@@ -35,6 +37,27 @@ public interface TermMap extends MappingComponent {
     public enum TermMapType {
         CONSTANT_VALUED, TEMPLATE_VALUED, COLUMN_VALUED
     }
+
+
+
+    /**
+     * Sets the term type of this TermMap if it is column-valued or
+     * template-valued.
+     *
+     * @param typeIRI
+     *            The term type that will be set.
+     * @throws IllegalStateException
+     *             If the ObjectMap is not column-valued or template-valued.
+     * @throws IllegalArgumentException
+     *             If typeIRI is not a valid term type for an ObjectMap.
+     */
+    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_TERM_TYPE)
+    void setTermType(IRI typeIRI);
+
+
+    List<IRI> getValidTermTypes();
+
+
 
     /**
      * Get the TermMapType of this TermMap. A TermMap's TermMapType will never

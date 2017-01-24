@@ -96,6 +96,33 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 		return termMapType;
 	}
 
+    @Override
+    public void setTermType(IRI typeIRI) {
+
+        final String typeIRIString = typeIRI.getIRIString();
+
+        if (!getValidTermTypes().contains(typeIRI)){
+            throw new IllegalArgumentException(
+                    String.format("invalid term termMapType IRI: <%s> .", typeIRIString));
+        }
+
+        switch (termMapType) {
+            case TEMPLATE_VALUED:
+            case COLUMN_VALUED:
+                this.termTypeIRI = typeIRI;
+                break;
+            case CONSTANT_VALUED:
+                 /*
+                  * IGNORE: See R2RML Recommendation Section 7.4:
+                  *
+                  * NOTE. Constant-valued term maps are not considered as having a term termMapType, and
+                  * specifying rr:termType on these term maps has no effect.
+                  */
+                break;
+        }
+
+    }
+
 	@Override
 	public void setTemplate(Template template) {
 		if (getTermMapType() == TermMapType.TEMPLATE_VALUED) {

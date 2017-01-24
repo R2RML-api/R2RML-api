@@ -20,6 +20,7 @@
 package eu.optique.r2rml.api.model.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -41,7 +42,12 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
-	ArrayList<IRI> classList;
+    private List<IRI> validTermTypes = Arrays.asList(
+            getRDF().createIRI(R2RMLVocabulary.TERM_IRI),
+            getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE));
+
+
+    ArrayList<IRI> classList;
 
 	ArrayList<GraphMap> graphList;
 
@@ -77,15 +83,15 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public void setTermType(IRI typeURI) {
+	public void setTermType(IRI typeIRI) {
 		// Check if the typeIRI is one of the possible term termMapType values for a
 		// SubjectMap.
-        if (typeURI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
-				|| typeURI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))) {
+        if (typeIRI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
+				|| typeIRI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))) {
 
 			if (termMapType == TermMap.TermMapType.COLUMN_VALUED
 					|| termMapType == TermMap.TermMapType.TEMPLATE_VALUED) {
-				termTypeIRI = typeURI;
+				termTypeIRI = typeIRI;
 			} else {
 				throw new IllegalStateException(
 						"The term termMapType can only be set for column "
@@ -193,4 +199,8 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 				+ ", node=" + getNode() + "]";
 	}
 
+    @Override
+    public List<IRI> getValidTermTypes() {
+        return validTermTypes;
+    }
 }
