@@ -89,8 +89,7 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 		 * An object map's default term termMapType is Literal if it's column valued,
 		 * has a language tag, or if it's data typed.
 		 */
-		if (termMapType == TermMapType.COLUMN_VALUED || langTag != null
-				|| dataType != null) {
+		if (termMapType == TermMapType.COLUMN_VALUED || langTag != null || dataType != null) {
             termTypeIRI = getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL);
 		} else {
             termTypeIRI = getRDF().createIRI(R2RMLVocabulary.TERM_IRI);

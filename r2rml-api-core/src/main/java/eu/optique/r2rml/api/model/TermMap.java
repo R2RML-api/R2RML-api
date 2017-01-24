@@ -110,6 +110,18 @@ public interface TermMap extends MappingComponent {
     /**
      * Set the term type of this TermMap to the default term type. The default
      * term type is given at http://www.w3.org/TR/r2rml/#dfn-term-type.
+     *
+     * If the term map does not have a rr:termType property, then its term type is:
+     * <ul>
+     *     <li>r:Literal, if it is an object map and at least one of the following conditions is true:
+     *  <ul>
+     * <li>It is a column-based term map.</li>
+     * <li>It has a rr:language property (and thus a specified language tag).</li>
+     * <li>It has a rr:datatype property (and thus a specified datatype).</li>
+     * </ul>
+     * </li>
+     * <li> rr:IRI, otherwise.</li>
+     </ul>r
      */
     public void setDefaultTermType();
 

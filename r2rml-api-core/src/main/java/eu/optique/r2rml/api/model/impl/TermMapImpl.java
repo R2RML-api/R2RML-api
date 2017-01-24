@@ -27,7 +27,9 @@ import eu.optique.r2rml.api.model.InverseExpression;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
+import org.apache.commons.rdf.api.BlankNode;
 import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.api.Literal;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
@@ -47,7 +49,6 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 	// Only one of these will be set.
 	Template template;
 
-	// TODO(xiao): replace it by RDFTerm
     RDFTerm constVal;
 
 	String columnName;
@@ -74,54 +75,36 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 		}
 	}
 
-    /**
-     *
-     * TODO(xiao): Split it into two methods:
-     *
-     * public TermMapImpl(RDF rdf, TermMapType termMapType, String column)
-     * public TermMapImpl(RDF rdf, TermMapType termMapType, RDFTerm constant)
-     *
-     * @param rdf
-     * @param termMapType
-     * @param columnOrConst
-     */
-	public TermMapImpl(RDF rdf, TermMapType termMapType, String columnOrConst) {
+	public TermMapImpl(RDF rdf, TermMapType termMapType, String columnName) {
 		super(rdf);
 
 		if (termMapType == null) {
 			throw new NullPointerException("The TermMapType is null.");
-		} else if (columnOrConst == null) {
-			throw new NullPointerException("ColumnOrConst is null.");
+		} else if (columnName == null) {
+			throw new NullPointerException("columnName is null.");
 		} else {
 			this.termMapType = termMapType;
 			setDefaultTermType();
             setNode(getRDF().createBlankNode());
 
 			if (getTermMapType() == TermMapType.COLUMN_VALUED) {
-				setColumn(columnOrConst);
+				setColumn(columnName);
 			} else {
 				throw new IllegalStateException("Wrong TermMapType");
 			}
 		}
 	}
 
-    public TermMapImpl(RDF rdf, @NotNull TermMapType termMapType, @NotNull RDFTerm constant) {
+    public TermMapImpl(RDF rdf, TermMapType termMapType, RDFTerm constant) {
         super(rdf);
 
         if (termMapType != TermMapType.CONSTANT_VALUED) {
-            throw new IllegalArgumentException("termMapType - expected: TermMapType.CONSTANT_VALUED; provided: "+termMapType );
+            throw new IllegalArgumentException("termMapType - expected: TermMapType.CONSTANT_VALUED; provided: " + termMapType);
         }
 
-            this.termMapType = termMapType;
-
-            // TODO(xiao): check if we need to set the default or not
-            setDefaultTermType();
-
-            setNode(getRDF().createBlankNode());
-
-            setConstant(constant);
-
-
+        this.termMapType = termMapType;
+        setNode(getRDF().createBlankNode());
+        setConstant(constant);
     }
 
 
@@ -173,7 +156,8 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
 	@Override
 	public void setConstant(RDFTerm constVal) {
-		if (getTermMapType() == TermMapType.CONSTANT_VALUED) {
+	     // termTypeIRI will be ignored
+        if (getTermMapType() == TermMapType.CONSTANT_VALUED) {
 				this.constVal = constVal;
 		} else {
 			throw new IllegalStateException("Wrong TermMapType");
