@@ -46,8 +46,7 @@ public interface TermMap extends MappingComponent {
      *
      * @param typeIRI
      *            The term type that will be set.
-     * @throws IllegalStateException
-     *             If the ObjectMap is not column-valued or template-valued.
+     *
      * @throws IllegalArgumentException
      *             If typeIRI is not a valid term type for an ObjectMap.
      */
@@ -56,7 +55,6 @@ public interface TermMap extends MappingComponent {
 
 
     List<IRI> getValidTermTypes();
-
 
 
     /**
