@@ -112,7 +112,6 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
             throw new IllegalArgumentException("termMapType - expected: TermMapType.CONSTANT_VALUED; provided: "+termMapType );
         }
 
-
             this.termMapType = termMapType;
 
             // TODO(xiao): check if we need to set the default or not

@@ -30,6 +30,7 @@ import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
+import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -50,6 +51,11 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
                             String columnOrConst) {
 		super(rdf, termMapType, columnOrConst);
 	}
+
+    public PredicateMapImpl(RDF rdf, TermMap.TermMapType termMapType,
+                            RDFTerm columnOrConst) {
+        super(rdf, termMapType, columnOrConst);
+    }
 
 	@Override
 	public Set<Triple> serialize() {

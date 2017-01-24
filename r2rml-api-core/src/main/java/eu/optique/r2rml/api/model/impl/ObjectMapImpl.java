@@ -24,6 +24,7 @@ import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
+import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 import java.util.Arrays;
@@ -61,6 +62,10 @@ public class ObjectMapImpl extends TermMapImpl implements ObjectMap {
 	public ObjectMapImpl(RDF c, TermMapType termMapType, String columnOrConst) {
 		super(c, termMapType, columnOrConst);
 	}
+
+    public ObjectMapImpl(RDF c, TermMapType termMapType, RDFTerm constant) {
+        super(c, termMapType, constant);
+    }
 
     @Override
     public void setTermType(IRI typeIRI) {

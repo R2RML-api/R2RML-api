@@ -23,7 +23,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.jena.JenaRDF;
+import org.apache.jena.graph.NodeFactory;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -64,10 +66,10 @@ public class InMemoryStructureCreation3_Test{
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//GraphMap
-		sm.addGraphMap(mfact.createGraphMap(TermMapType.CONSTANT_VALUED, "http://example.com/graph/sports"));
+		sm.addGraphMap(mfact.createGraphMap(TermMapType.CONSTANT_VALUED, (IRI)jena.asRDFTerm(NodeFactory.createURI("http://example.com/graph/sports"))));
 			
 		//PredicateObjectMap
-		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");
+		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, jena.asRDFTerm(NodeFactory.createURI("http://example.com/role")));
 		Template templo = mfact.createTemplate("http://data.example.com/roles/{ROLE}");
 		ObjectMap obm = mfact.createObjectMap(templo);
 		PredicateObjectMap pom = mfact.createPredicateObjectMap(pred, obm);

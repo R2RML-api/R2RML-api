@@ -18,6 +18,7 @@ import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
 import eu.optique.r2rml.api.model.TermMap;
 import org.apache.commons.rdf.api.RDF;
+import org.apache.commons.rdf.api.RDFTerm;
 
 /**
  * Implementation of the Mapping Factory interface.
@@ -112,7 +113,12 @@ public class MappingFactoryImpl implements MappingFactory {
 		return new GraphMapImpl(rdf, type, columnOrConst);
 	}
 
-	@Override
+    @Override
+    public GraphMap createGraphMap(TermMap.TermMapType type, RDFTerm constant) {
+        return new GraphMapImpl(rdf, type, constant);
+    }
+
+    @Override
 	public SubjectMap createSubjectMap(Template template) {
 		return new SubjectMapImpl(rdf, TermMap.TermMapType.TEMPLATE_VALUED, template);
 	}
@@ -122,7 +128,12 @@ public class MappingFactoryImpl implements MappingFactory {
 		return new SubjectMapImpl(rdf, type, columnOrConst);
 	}
 
-	@Override
+    @Override
+    public SubjectMap createSubjectMap(TermMap.TermMapType type, RDFTerm columnOrConst) {
+        return new SubjectMapImpl(rdf, type, columnOrConst);
+    }
+
+    @Override
 	public PredicateMap createPredicateMap(Template template) {
 		return new PredicateMapImpl(rdf, TermMap.TermMapType.TEMPLATE_VALUED, template);
 	}
@@ -133,6 +144,12 @@ public class MappingFactoryImpl implements MappingFactory {
 		return new PredicateMapImpl(rdf, type, columnOrConst);
 	}
 
+    @Override
+    public PredicateMap createPredicateMap(TermMap.TermMapType type,
+                                           RDFTerm constant) {
+        return new PredicateMapImpl(rdf, type, constant);
+    }
+
 	@Override
 	public ObjectMap createObjectMap(Template template) {
 		return new ObjectMapImpl(rdf, TermMap.TermMapType.TEMPLATE_VALUED, template);
@@ -142,6 +159,11 @@ public class MappingFactoryImpl implements MappingFactory {
 	public ObjectMap createObjectMap(TermMap.TermMapType type, String columnOrConst) {
 		return new ObjectMapImpl(rdf, type, columnOrConst);
 	}
+
+    @Override
+    public ObjectMap createObjectMap(TermMap.TermMapType type, RDFTerm constant) {
+        return new ObjectMapImpl(rdf, type, constant);
+    }
 	
 	public RefObjectMap createRefObjectMap(TriplesMap parentMap) {
 		return new RefObjectMapImpl(rdf, parentMap);

@@ -33,6 +33,7 @@ import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
+import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -66,6 +67,14 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 		classList = new ArrayList<>();
 		graphList = new ArrayList<>();
 	}
+
+    public SubjectMapImpl(RDF c, TermMap.TermMapType termMapType,
+                          RDFTerm columnOrConst) {
+        super(c, termMapType, columnOrConst);
+
+        classList = new ArrayList<>();
+        graphList = new ArrayList<>();
+    }
 
 	@Override
 	public void addClass(IRI classURI) {

@@ -14,6 +14,7 @@ import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
 import eu.optique.r2rml.api.model.TriplesMap;
+import org.apache.commons.rdf.api.RDFTerm;
 
 import java.util.List;
 
@@ -157,6 +158,8 @@ public interface MappingFactory {
 	 */
 	public GraphMap createGraphMap(TermMap.TermMapType type, String columnOrConst);
 
+    public GraphMap createGraphMap(TermMap.TermMapType type, RDFTerm rdfTerm);
+
 	/**
 	 * Create a new SubjectMap with the given template. The term map type of the
 	 * SubjectMap will be set to TermMapType.TEMPLATE_VALUED.
@@ -179,6 +182,8 @@ public interface MappingFactory {
 	 * @return The created SubjectMap.
 	 */
 	public SubjectMap createSubjectMap(TermMap.TermMapType type, String columnOrConst);
+
+    public SubjectMap createSubjectMap(TermMap.TermMapType type, RDFTerm columnOrConst);
 
 	/**
 	 * Create a new PredicateMap with the given template. The term map type of
@@ -204,6 +209,9 @@ public interface MappingFactory {
 	public PredicateMap createPredicateMap(TermMap.TermMapType type,
 			String columnOrConst);
 
+    public PredicateMap createPredicateMap(TermMap.TermMapType type,
+                                           RDFTerm value);
+
 	/**
 	 * Create a new ObjectMap with the given template. The term map type of the
 	 * ObjectMap will be set to TermMapType.TEMPLATE_VALUED.
@@ -226,6 +234,8 @@ public interface MappingFactory {
 	 * @return The created ObjectMap.
 	 */
 	public ObjectMap createObjectMap(TermMap.TermMapType type, String columnOrConst);
+
+    public ObjectMap createObjectMap(TermMap.TermMapType type, RDFTerm constant);
 
 	/**
 	 * Create a new RefObjectMap with the given resource for the parent triples

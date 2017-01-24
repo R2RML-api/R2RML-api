@@ -72,13 +72,13 @@ public class InMemoryStructureCreation2_Test {
 		sm.addClass((IRI) jena.asRDFTerm(NodeFactory.createURI("http://example.com/Student")));
 					
 		//PredicateObjectMap
-		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");
+		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, (IRI)jena.asRDFTerm(NodeFactory.createURI("http://example.com/role")));
 		Template templo = mfact.createTemplate("http://data.example.com/roles/{ROLE}");
 		ObjectMap obm = mfact.createObjectMap(templo);
 		PredicateObjectMap pom = mfact.createPredicateObjectMap(pred, obm);
 		
 		//Other PredicateObjectMap with DataType
-		PredicateMap pred1 = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role1");
+		PredicateMap pred1 = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, jena.asRDFTerm(NodeFactory.createURI("http://example.com/role1")));
 		ObjectMap obm1 = mfact.createObjectMap(TermMapType.COLUMN_VALUED, "ROLESS");
 		obm1.setDatatype((IRI) jena.asRDFTerm(NodeFactory.createURI("http://www.w3.org/2001/XMLSchema#positiveInteger")));
 		PredicateObjectMap pom11 = mfact.createPredicateObjectMap(pred1, obm1);
