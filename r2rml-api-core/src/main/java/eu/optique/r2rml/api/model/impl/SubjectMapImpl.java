@@ -83,27 +83,6 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	}
 
 	@Override
-	public void setTermType(IRI typeIRI) {
-		// Check if the typeIRI is one of the possible term termMapType values for a
-		// SubjectMap.
-        if (typeIRI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
-				|| typeIRI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))) {
-
-			if (termMapType == TermMap.TermMapType.COLUMN_VALUED
-					|| termMapType == TermMap.TermMapType.TEMPLATE_VALUED) {
-				termTypeIRI = typeIRI;
-			} else {
-				throw new IllegalStateException(
-						"The term termMapType can only be set for column "
-								+ "and template valued SubjectMaps.");
-			}
-		} else {
-			throw new IllegalArgumentException("The typeIRI is not a valid "
-					+ "term termMapType IRI for a SubjectMap.");
-		}
-	}
-
-	@Override
 	public IRI getClass(int index) {
 		return classList.get(index);
 	}
