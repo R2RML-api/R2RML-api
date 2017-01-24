@@ -61,7 +61,7 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 
 	@Override
 	public String toString() {
-		return "PredicateMapImpl [type=" + type + ", termtype=" + termtype
+		return "PredicateMapImpl [termMapType=" + termMapType + ", termTypeIRI=" + termTypeIRI
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
 				+ ", node=" + getNode() + "]";

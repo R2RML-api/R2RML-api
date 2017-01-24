@@ -78,22 +78,22 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
 	@Override
 	public void setTermType(IRI typeURI) {
-		// Check if the typeIRI is one of the possible term type values for a
+		// Check if the typeIRI is one of the possible term termMapType values for a
 		// SubjectMap.
         if (typeURI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
 				|| typeURI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))) {
 
-			if (type == TermMap.TermMapType.COLUMN_VALUED
-					|| type == TermMap.TermMapType.TEMPLATE_VALUED) {
-				termtype = typeURI;
+			if (termMapType == TermMap.TermMapType.COLUMN_VALUED
+					|| termMapType == TermMap.TermMapType.TEMPLATE_VALUED) {
+				termTypeIRI = typeURI;
 			} else {
 				throw new IllegalStateException(
-						"The term type can only be set for column "
+						"The term termMapType can only be set for column "
 								+ "and template valued SubjectMaps.");
 			}
 		} else {
 			throw new IllegalArgumentException("The typeIRI is not a valid "
-					+ "term type IRI for a SubjectMap.");
+					+ "term termMapType IRI for a SubjectMap.");
 		}
 	}
 
@@ -187,7 +187,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	@Override
 	public String toString() {
 		return "SubjectMapImpl [classList=" + classList + ", graphList="
-				+ graphList + ", type=" + type + ", termtype=" + termtype
+				+ graphList + ", termMapType=" + termMapType + ", termTypeIRI=" + termTypeIRI
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
 				+ ", node=" + getNode() + "]";

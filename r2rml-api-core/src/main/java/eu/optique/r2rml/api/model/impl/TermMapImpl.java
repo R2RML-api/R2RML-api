@@ -38,9 +38,9 @@ import org.apache.commons.rdf.api.Triple;
  */
 public abstract class TermMapImpl extends MappingComponentImpl implements TermMap {
 
-	TermMapType type;
+	TermMapType termMapType;
 
-	IRI termtype;
+	IRI termTypeIRI;
 
 	// Only one of these will be set.
 	Template template;
@@ -61,7 +61,7 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 		} else if (termMapType != TermMapType.TEMPLATE_VALUED) {
 			throw new IllegalStateException("Wrong TermMapType");
 		} else {
-			type = termMapType;
+			this.termMapType = termMapType;
 			setDefaultTermType();
 			setTemplate(template);
 
@@ -69,8 +69,7 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 		}
 	}
 
-	public TermMapImpl(RDF rdf, TermMapType termMapType,
-                       String columnOrConst) {
+	public TermMapImpl(RDF rdf, TermMapType termMapType, String columnOrConst) {
 		super(rdf);
 
 		if (termMapType == null) {
@@ -78,7 +77,7 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 		} else if (columnOrConst == null) {
 			throw new NullPointerException("ColumnOrConst is null.");
 		} else {
-			type = termMapType;
+			this.termMapType = termMapType;
 			setDefaultTermType();
             setNode(getRDF().createBlankNode());
 
@@ -94,7 +93,7 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
 	@Override
 	public TermMapType getTermMapType() {
-		return type;
+		return termMapType;
 	}
 
 	@Override
@@ -119,11 +118,11 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
                 //Checking the value of the constant.
                 // By default an IRI will be generated;
-                // if it is a literal, we need to explicitly set the term type to rr:Literal
+                // if it is a literal, we need to explicitly set the term termMapType to rr:Literal
                 
                 // NOTE: We assume that all the URIs start with "http://"
                 if (!constVal.startsWith("http://")){
-                    termtype = getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL);
+                    termTypeIRI = getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL);
                 }
 			} else {
 				throw new NullPointerException(
@@ -160,12 +159,12 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
 	@Override
 	public void setDefaultTermType() {
-        termtype = getRDF().createIRI(R2RMLVocabulary.TERM_IRI);
+        termTypeIRI = getRDF().createIRI(R2RMLVocabulary.TERM_IRI);
 	}
 
 	@Override
 	public IRI getTermType() {
-		return termtype;
+		return termTypeIRI;
 	}
 
 	@Override
@@ -210,22 +209,22 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
         stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_TERM_MAP)));
 
-		if (type == TermMapType.COLUMN_VALUED) {
+		if (termMapType == TermMapType.COLUMN_VALUED) {
 
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_COLUMN),
                     getRDF().createLiteral(getColumn())));
-		} else if (type == TermMapType.CONSTANT_VALUED) {
+		} else if (termMapType == TermMapType.CONSTANT_VALUED) {
 
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_CONSTANT),
                     getRDF().createLiteral(getConstant())));
-		} else if (type == TermMapType.TEMPLATE_VALUED) {
+		} else if (termMapType == TermMapType.TEMPLATE_VALUED) {
 
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_TEMPLATE),
                     getRDF().createLiteral(getTemplateString())));
 		}
 
-		// Will always have the term type explicitly listed.
-        stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE), termtype));
+		// Will always have the term termMapType explicitly listed.
+        stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE), termTypeIRI));
 		
 		if(getInverseExpression() != null){
 
@@ -246,8 +245,8 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 				+ ((constVal == null) ? 0 : constVal.hashCode());
 		result = prime * result + ((getNode() == null) ? 0 : getNode().hashCode());
 		result = prime * result
-				+ ((termtype == null) ? 0 : termtype.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
+				+ ((termTypeIRI == null) ? 0 : termTypeIRI.hashCode());
+		result = prime * result + ((termMapType == null) ? 0 : termMapType.hashCode());
 		return result;
 	}
 
@@ -287,15 +286,15 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 			return false;
 		}
 
-		if (termtype == null) {
-			if (other.termtype != null) {
+		if (termTypeIRI == null) {
+			if (other.termTypeIRI != null) {
 				return false;
 			}
-		} else if (!termtype.equals(other.termtype)) {
+		} else if (!termTypeIRI.equals(other.termTypeIRI)) {
 			return false;
 		}
 
-		if (type != other.type) {
+		if (termMapType != other.termMapType) {
 			return false;
 		}
 
@@ -304,7 +303,7 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
 	@Override
 	public String toString() {
-		return "TermMapImpl [type=" + type + ", termtype=" + termtype
+		return "TermMapImpl [termMapType=" + termMapType + ", termTypeIRI=" + termTypeIRI
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
 				+ ", node=" + getNode() + "]";

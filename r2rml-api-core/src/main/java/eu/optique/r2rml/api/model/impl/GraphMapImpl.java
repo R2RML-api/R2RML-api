@@ -61,7 +61,7 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
 
     @Override
     public String toString() {
-        return "GraphMapImpl [type=" + type + ", termtype=" + termtype
+        return "GraphMapImpl [type=" + termMapType + ", termtype=" + termTypeIRI
                 + ", template=" + template + ", constVal=" + constVal
                 + ", columnName=" + columnName + ", inverseExp=" + inverseExp
                 + ", node=" + getNode() + "]";
