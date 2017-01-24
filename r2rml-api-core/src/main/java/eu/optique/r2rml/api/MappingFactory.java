@@ -169,7 +169,7 @@ public interface MappingFactory {
      * @param constant The value for the SubjectMap.
      * @return The created SubjectMap.
      */
-    SubjectMap createSubjectMap(RDFTerm constant);
+    SubjectMap createSubjectMap(IRI constant);
 
     /**
      * Create a new PredicateMap with the given template. The term map type of

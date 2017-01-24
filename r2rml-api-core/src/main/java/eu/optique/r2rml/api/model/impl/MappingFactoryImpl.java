@@ -124,7 +124,7 @@ public class MappingFactoryImpl implements MappingFactory {
 	}
 
     @Override
-    public SubjectMap createSubjectMap(RDFTerm constant) {
+    public SubjectMap createSubjectMap(IRI constant) {
         return new SubjectMapImpl(rdf, constant);
     }
 

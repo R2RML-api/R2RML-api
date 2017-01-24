@@ -19,13 +19,6 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import eu.optique.r2rml.api.model.GraphMap;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.SubjectMap;
@@ -33,8 +26,14 @@ import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
-import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * An implementation of a SubjectMap.
@@ -66,7 +65,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 		graphList = new ArrayList<>();
 	}
 
-    SubjectMapImpl(RDF c, RDFTerm constant) {
+    SubjectMapImpl(RDF c, IRI constant) {
         super(c, constant);
 
         classList = new ArrayList<>();

@@ -19,18 +19,18 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model.impl;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
 import eu.optique.r2rml.api.model.InverseExpression;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
+import org.apache.commons.rdf.api.BlankNode;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 
@@ -74,8 +74,15 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
     TermMapImpl(RDF rdf, RDFTerm constant) {
         super(rdf);
         this.constVal = requireNonNull(constant);
+        if(constant instanceof BlankNode){
+            throw new IllegalArgumentException("BlankNode cannot be used as constant");
+        } else if (constant instanceof IRI){
+            this.termTypeIRI = getRDF().createIRI(R2RMLVocabulary.TERM_IRI);
+        } else {// if (constant instanceof Literal)
+            this.termTypeIRI = getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL);
+        }
+
         this.termMapType = TermMapType.CONSTANT_VALUED;
-        setDefaultTermType();
         setNode(getRDF().createBlankNode());
     }
 
