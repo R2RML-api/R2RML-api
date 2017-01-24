@@ -118,40 +118,21 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
 
     @Override
     public void setTemplate(Template template) {
-        if (getTermMapType() == TermMapType.TEMPLATE_VALUED) {
-            if (template != null) {
-                this.template = template;
-            } else {
-                throw new NullPointerException(
-                        "A template-valued TermMap must have a Template.");
-            }
-        } else {
-            throw new IllegalStateException("Wrong TermMapType");
-        }
+        this.termMapType = TermMapType.TEMPLATE_VALUED;
+        this.template = requireNonNull(template);
     }
 
     @Override
     public void setConstant(RDFTerm constVal) {
         // termTypeIRI will be ignored
-        if (getTermMapType() == TermMapType.CONSTANT_VALUED) {
-            this.constVal = constVal;
-        } else {
-            throw new IllegalStateException("Wrong TermMapType");
-        }
+        this.termMapType = TermMapType.CONSTANT_VALUED;
+        this.constVal = requireNonNull(constVal);
     }
 
     @Override
     public void setColumn(String columnName) {
-        if (getTermMapType() == TermMapType.COLUMN_VALUED) {
-            if (columnName != null) {
-                this.columnName = columnName;
-            } else {
-                throw new NullPointerException(
-                        "A column-valued TermMap must have a column name.");
-            }
-        } else {
-            throw new IllegalStateException("Wrong TermMapType");
-        }
+        this.termMapType = TermMapType.COLUMN_VALUED;
+        this.columnName = requireNonNull(columnName);
     }
 
     @Override
@@ -217,14 +198,12 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
         stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"), getRDF().createIRI(R2RMLVocabulary.TYPE_TERM_MAP)));
 
         if (termMapType == TermMapType.COLUMN_VALUED) {
-
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_COLUMN),
                     getRDF().createLiteral(getColumn())));
         } else if (termMapType == TermMapType.CONSTANT_VALUED) {
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_CONSTANT),
                     getConstant()));
         } else if (termMapType == TermMapType.TEMPLATE_VALUED) {
-
             stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_TEMPLATE),
                     getRDF().createLiteral(getTemplateString())));
         }

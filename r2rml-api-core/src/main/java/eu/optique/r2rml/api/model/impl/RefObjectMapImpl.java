@@ -42,15 +42,15 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class RefObjectMapImpl extends MappingComponentImpl implements RefObjectMap {
 
-	TriplesMap parent;
+	private TriplesMap parent;
 
-	LogicalTable parentLogicalTable;
-	LogicalTable childLogicalTable;
+	private LogicalTable parentLogicalTable;
+	private LogicalTable childLogicalTable;
 
-	ArrayList<Join> joinList;
+	private ArrayList<Join> joinList;
 
 
-	public RefObjectMapImpl(RDF c, TriplesMap parentMap) {
+	RefObjectMapImpl(RDF c, TriplesMap parentMap) {
 
 		super(c);
 
