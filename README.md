@@ -32,6 +32,35 @@ R2RML-api
 	</dependencies>
 ```
 
+
+## Release history
+
+<a name="v0.5.0"></a>
+### 13 January, 2017 ::  Version 0.5.0 
+* A major rewriting using commons-rdf 
+* retired owlapi-binding 
+
+<a name="v0.4.0"></a>
+### 3 January, 2017 ::  Version 0.4.0 
+* Upgrade Sesame to RDF4J 2.1.4  
+
+<a name="v0.3.0"></a>
+### 26 Feb, 2016 ::  Version 0.3.0 
+* Upgrade Jena to v3
+
+<a name="v0.2.1"></a>
+### 23 Feb, 2016 ::  Version 0.2.1 
+* Fix an issue of deploying `r2rml-api-jena-bridge` to central repository
+
+<a name="v0.2.0"></a>
+### 23 Feb, 2016 ::  Version 0.2.0
+* Upgrade OWL-API to v4
+* Deployed to central maven repository
+
+<a name="v0.1.0"></a>
+### 2014 ::  Version 0.1.0
+* First release
+
 ## Reference
 
 [1] "An R2RML Mapping Management API in Java", Marius Strandhaug, Master’s Thesis Spring 2014, University of Oslo.
