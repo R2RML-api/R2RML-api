@@ -24,7 +24,7 @@ package eu.optique.r2rml.api.model;
  * 
  * @author Marius Strandhaug
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_LOGICAL_TABLE)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_LOGICAL_TABLE)
 public interface LogicalTable extends MappingComponent {
 
 	/**
@@ -34,7 +34,7 @@ public interface LogicalTable extends MappingComponent {
 	 * 
 	 * @return The effective SQL query of this LogicalTable.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_QUERY)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_SQL_QUERY)
 	public String getSQLQuery();
 
 }

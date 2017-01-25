@@ -24,7 +24,7 @@ package eu.optique.r2rml.api.model;
  * 
  * @author Marius Strandhaug
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_PREDICATE_MAP)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_PREDICATE_MAP)
 public interface PredicateMap extends TermMap {
 
 }

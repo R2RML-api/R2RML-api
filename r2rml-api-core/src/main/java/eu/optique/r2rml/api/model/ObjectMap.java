@@ -26,7 +26,7 @@ import org.apache.commons.rdf.api.IRI;
  * 
  * @author Marius Strandhaug
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_OBJECT_MAP)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_OBJECT_MAP)
 public interface ObjectMap extends TermMap {
 
     /**
@@ -38,7 +38,7 @@ public interface ObjectMap extends TermMap {
      * - rr:Literal
      *
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_TERM_TYPE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_TERM_TYPE)
     @Override
     void setTermType(IRI typeIRI);
 
@@ -52,7 +52,7 @@ public interface ObjectMap extends TermMap {
 	 * @throws IllegalStateException
 	 *             If the term type of this ObjectMap is not rr:Literal.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_LANGUAGE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_LANGUAGE)
     public void setLanguageTag(String lang);
 
 	/**
@@ -67,7 +67,7 @@ public interface ObjectMap extends TermMap {
 	 * @throws IllegalStateException
 	 *             If the term type of this ObjectMap is not rr:Literal.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_DATATYPE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_DATATYPE)
 	public void setDatatype(IRI datatypeURI);
 
 	/**
@@ -76,7 +76,7 @@ public interface ObjectMap extends TermMap {
 	 * 
 	 * @return The language tag of this ObjectMap.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_LANGUAGE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_LANGUAGE)
 	public String getLanguageTag();
 
 	/**
@@ -85,20 +85,20 @@ public interface ObjectMap extends TermMap {
 	 *
 	 * @return The data type of this ObjectMap.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_DATATYPE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_DATATYPE)
     public IRI getDatatype();
 
 	/**
 	 * Remove the data type associated with this ObjectMap. The ObjectMap will
 	 * no longer be data typed.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_DATATYPE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_DATATYPE)
 	public void removeDatatype();
 
 	/**
 	 * Removes the language tag from this ObjectMap if there is one.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_LANGUAGE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_LANGUAGE)
 	public void removeLanguageTag();
 
 }

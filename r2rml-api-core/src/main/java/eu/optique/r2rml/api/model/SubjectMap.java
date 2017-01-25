@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Marius Strandhaug
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_SUBJECT_MAP)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_SUBJECT_MAP)
 public interface SubjectMap extends TermMap {
 
     /**
@@ -38,7 +38,7 @@ public interface SubjectMap extends TermMap {
      *
      * @param classURI The class URI that will be added.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CLASS)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_CLASS)
     public void addClass(IRI classURI);
 
     /**
@@ -47,7 +47,7 @@ public interface SubjectMap extends TermMap {
      *
      * @param gm The GraphMap that will be added.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_GRAPH_MAP)
     public void addGraphMap(GraphMap gm);
 
     /**
@@ -57,7 +57,7 @@ public interface SubjectMap extends TermMap {
      *
      * @param gms The list of GraphMaps that will be added.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_GRAPH_MAP)
     public void addGraphMap(List<GraphMap> gms);
 
     /**
@@ -78,7 +78,7 @@ public interface SubjectMap extends TermMap {
      * @return The class URI located at the given index.
      * @throws IndexOutOfBoundsException If the given index is out of range.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CLASS)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_CLASS)
     public IRI getClass(int index);
 
     /**
@@ -88,7 +88,7 @@ public interface SubjectMap extends TermMap {
      * @return The GraphMap located at the given index.
      * @throws IndexOutOfBoundsException If the given index is out of range.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_GRAPH_MAP)
     public GraphMap getGraphMap(int index);
 
     /**
@@ -97,7 +97,7 @@ public interface SubjectMap extends TermMap {
      *
      * @return An unmodifiable list of classes.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CLASS)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_CLASS)
     public List<IRI> getClasses();
 
     /**
@@ -106,7 +106,7 @@ public interface SubjectMap extends TermMap {
      *
      * @return An unmodifiable list of GraphMaps.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_GRAPH_MAP)
     public List<GraphMap> getGraphMaps();
 
     /**
@@ -116,7 +116,7 @@ public interface SubjectMap extends TermMap {
      *
      * @param classURI The class that will be removed.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CLASS)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_CLASS)
     public void removeClass(IRI classURI);
 
     /**
@@ -125,7 +125,7 @@ public interface SubjectMap extends TermMap {
      *
      * @param gm The GraphMap to be removed.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_GRAPH_MAP)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_GRAPH_MAP)
     public void removeGraphMap(GraphMap gm);
 
 }

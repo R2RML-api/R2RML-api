@@ -50,7 +50,7 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
         super(lc, columnName);
     }
 
-    GraphMapImpl(RDF rdf, RDFTerm constant) {
+    GraphMapImpl(RDF rdf, IRI constant) {
         super(rdf, constant);
     }
 

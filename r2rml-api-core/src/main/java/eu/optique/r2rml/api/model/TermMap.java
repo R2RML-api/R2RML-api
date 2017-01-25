@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author Marius Strandhaug
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_TERM_MAP)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_TERM_MAP)
 public interface TermMap extends MappingComponent {
 
     /**
@@ -51,7 +51,7 @@ public interface TermMap extends MappingComponent {
      * @throws IllegalArgumentException
      *             If typeIRI is not a valid term type for an ObjectMap.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_TERM_TYPE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_TERM_TYPE)
     void setTermType(IRI typeIRI);
 
 
@@ -72,7 +72,7 @@ public interface TermMap extends MappingComponent {
      * @param template The template value that will be set.
      * @throws IllegalStateException If the TermMap is not template-valued.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_TEMPLATE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_TEMPLATE)
     public void setTemplate(Template template);
 
     /**
@@ -81,7 +81,7 @@ public interface TermMap extends MappingComponent {
      * @param constVal The constant value that will be set.
      * @throws IllegalStateException If the TermMap is not constant-valued.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CONSTANT)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_CONSTANT)
     public void setConstant(RDFTerm constVal);
 
     /**
@@ -91,7 +91,7 @@ public interface TermMap extends MappingComponent {
      * @param columnName The column value that will be set.
      * @throws IllegalStateException If the TermMap is not column-valued.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_COLUMN)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_COLUMN)
     public void setColumn(String columnName);
 
     /**
@@ -104,7 +104,7 @@ public interface TermMap extends MappingComponent {
      * @param invExp The inverse expression.
      * @throws IllegalStateException If the TermMap is not template-valued or column-valued.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_INVERSE_EXPRESSION)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_INVERSE_EXPRESSION)
     public void setInverseExpression(InverseExpression invExp);
 
     /**
@@ -131,7 +131,7 @@ public interface TermMap extends MappingComponent {
      *
      * @return The term type of this TermMap.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_TERM_TYPE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_TERM_TYPE)
     public IRI getTermType();
 
     /**
@@ -140,7 +140,7 @@ public interface TermMap extends MappingComponent {
      *
      * @return The template value of this TermMap.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_TEMPLATE)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_TEMPLATE)
     public Template getTemplate();
 
     /**
@@ -156,7 +156,7 @@ public interface TermMap extends MappingComponent {
      *
      * @return The constant value of this TermMap.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CONSTANT)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_CONSTANT)
     public RDFTerm getConstant();
 
     /**
@@ -165,7 +165,7 @@ public interface TermMap extends MappingComponent {
      *
      * @return The column value of this TermMap.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_COLUMN)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_COLUMN)
     public String getColumn();
 
     /**
@@ -173,7 +173,7 @@ public interface TermMap extends MappingComponent {
      *
      * @return The inverse expression of this TermMap.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_INVERSE_EXPRESSION)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_INVERSE_EXPRESSION)
     public InverseExpression getInverseExpression();
 
     /**
@@ -186,7 +186,7 @@ public interface TermMap extends MappingComponent {
     /**
      * Remove this TermMap's inverse expression if there is one.
      */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_INVERSE_EXPRESSION)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_INVERSE_EXPRESSION)
     public void removeInverseExpression();
 
 }
