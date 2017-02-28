@@ -49,7 +49,6 @@ public class TriplesMapImpl extends MappingComponentImpl implements TriplesMap {
 	private ArrayList<PredicateObjectMap> pomList;
 
 	TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm) {
-
 		super(rdf);
 
 		pomList = new ArrayList<>();
@@ -60,21 +59,21 @@ public class TriplesMapImpl extends MappingComponentImpl implements TriplesMap {
 	}
 
 	TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
-
         super(rdf);
 
 		pomList = new ArrayList<>();
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-        setNode(getRDF().createIRI(resourceIdentifier));
+		String triplesMapIRI = resourceIdentifier.contains(":") ? resourceIdentifier : "http://ex.org/" + resourceIdentifier;
+
+        setNode(getRDF().createIRI(triplesMapIRI));
 	}
 
 	@Override
 	public void setLogicalTable(LogicalTable lt) {
 		if (lt == null) {
-			throw new NullPointerException(
-					"A TriplesMap must have a LogicalTable.");
+			throw new NullPointerException("A TriplesMap must have a LogicalTable.");
 		} else {
 			logTable = lt;
 		}
@@ -83,8 +82,7 @@ public class TriplesMapImpl extends MappingComponentImpl implements TriplesMap {
 	@Override
 	public void setSubjectMap(SubjectMap sm) {
 		if (sm == null) {
-			throw new NullPointerException(
-					"A TriplesMap must have a SubjectMap.");
+			throw new NullPointerException("A TriplesMap must have a SubjectMap.");
 		} else {
 			subMap = sm;
 		}
