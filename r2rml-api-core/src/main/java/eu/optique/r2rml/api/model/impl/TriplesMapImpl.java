@@ -58,16 +58,16 @@ public class TriplesMapImpl extends MappingComponentImpl implements TriplesMap {
         setNode(getRDF().createBlankNode());
 	}
 
-	TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm, String resourceIdentifier) {
+	TriplesMapImpl(RDF rdf, LogicalTable lt, SubjectMap sm, BlankNodeOrIRI node) {
         super(rdf);
 
 		pomList = new ArrayList<>();
 		setLogicalTable(lt);
 		setSubjectMap(sm);
 
-		String triplesMapIRI = resourceIdentifier.contains(":") ? resourceIdentifier : "http://ex.org/" + resourceIdentifier;
+		//String triplesMapIRI = node.contains(":") ? node : "http://ex.org/" + node;
 
-        setNode(getRDF().createIRI(triplesMapIRI));
+        setNode(node);
 	}
 
 	@Override

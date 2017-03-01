@@ -16,6 +16,7 @@ import eu.optique.r2rml.api.model.SQLBaseTableOrView;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.RDFTerm;
@@ -40,8 +41,8 @@ public class MappingFactoryImpl implements MappingFactory {
 	}
 
 	@Override
-	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, String triplesMapIdentifier) {
-		return new TriplesMapImpl(rdf, lt, sm, triplesMapIdentifier);
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, BlankNodeOrIRI node) {
+		return new TriplesMapImpl(rdf, lt, sm, node);
 	}
 
 	@Override
@@ -53,8 +54,8 @@ public class MappingFactoryImpl implements MappingFactory {
 	}
 
 	@Override
-	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom, String triplesMapIdentifier) {
-		TriplesMap tm = new TriplesMapImpl(rdf, lt, sm, triplesMapIdentifier);
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom, BlankNodeOrIRI node) {
+		TriplesMap tm = new TriplesMapImpl(rdf, lt, sm, node);
 		tm.addPredicateObjectMap(pom);
 		return tm;
 	}

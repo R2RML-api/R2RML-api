@@ -13,6 +13,7 @@ import eu.optique.r2rml.api.model.SQLBaseTableOrView;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDFTerm;
 
@@ -36,7 +37,7 @@ public interface MappingFactory {
      */
     TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm);
 
-    TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, String triplesMapIdentifier);
+    TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, BlankNodeOrIRI node);
 
     /**
      * Create a new TriplesMap with the given LogicalTable, SubjectMap and
@@ -50,7 +51,7 @@ public interface MappingFactory {
      */
     TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom);
 
-    TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom, String triplesMapIdentifier);
+    TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom, BlankNodeOrIRI node);
 
     /**
      * Create a new TriplesMap with the given LogicalTable, SubjectMap and list
