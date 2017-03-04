@@ -23,6 +23,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.rdf4j.RDF4J;
+import org.eclipse.rdf4j.model.ValueFactory;
+import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,7 +37,6 @@ import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
-import eu.optique.r2rml.api.model.TermMap.TermMapType;
 import eu.optique.r2rml.api.model.TriplesMap;
 
 /**
@@ -47,7 +50,9 @@ public class InMemoryStructureCreation_Test {
 	public void test(){
         RDF4JR2RMLMappingManager mm = RDF4JR2RMLMappingManager.getInstance();
 		MappingFactory mfact = mm.getMappingFactory();
-	
+        ValueFactory myFactory = ValueFactoryImpl.getInstance();
+        RDF4J rdf4j = new RDF4J();
+
 		//Table
 		LogicalTable lt = mfact.createR2RMLView("SELECT * FROM TABLE");
 		
@@ -56,7 +61,8 @@ public class InMemoryStructureCreation_Test {
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//PredicateObjectMap
-		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");
+		PredicateMap pred = mfact.createPredicateMap((IRI)rdf4j.asRDFTerm(myFactory.createURI(
+                "http://example.com/role")));
 		Template templo = mfact.createTemplate("http://data.example.com/roles/{ROLE}");
 		ObjectMap obm = mfact.createObjectMap(templo);
 		PredicateObjectMap pom = mfact.createPredicateObjectMap(pred, obm);
@@ -80,7 +86,7 @@ public class InMemoryStructureCreation_Test {
 				Iterator<PredicateMap> pmit=pom1.getPredicateMaps().iterator();
 				while(pmit.hasNext()){
 					PredicateMap p=pmit.next();
-					Assert.assertTrue(p.getConstant().contains("role"));
+					Assert.assertTrue(p.getConstant().toString().contains("role"));
 					
 				}
 				

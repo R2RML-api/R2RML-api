@@ -24,7 +24,7 @@ package eu.optique.r2rml.api.model;
  * 
  * @author Marius Strandhaug
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_BASE_TABLE_OR_VIEW)
 public interface SQLBaseTableOrView extends LogicalTable {
 
 	/**

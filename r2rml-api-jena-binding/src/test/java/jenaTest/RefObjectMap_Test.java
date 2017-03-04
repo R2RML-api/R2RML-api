@@ -78,7 +78,7 @@ public class RefObjectMap_Test {
 				while(pomit.hasNext()){
 					PredicateObjectMap pom=pomit.next();
 					
-					if(pom.getPredicateMaps().iterator().next().getConstant().contains("Sport")){
+					if(pom.getPredicateMaps().iterator().next().getConstant().toString().contains("Sport")){
 						Iterator<RefObjectMap> gmit=pom.getRefObjectMaps().iterator();
 						while(gmit.hasNext()){
 							RefObjectMap rom=gmit.next();

@@ -16,8 +16,10 @@ import eu.optique.r2rml.api.model.SQLBaseTableOrView;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
-import eu.optique.r2rml.api.model.TermMap;
+import org.apache.commons.rdf.api.BlankNodeOrIRI;
+import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
+import org.apache.commons.rdf.api.RDFTerm;
 
 /**
  * Implementation of the Mapping Factory interface.
@@ -39,13 +41,12 @@ public class MappingFactoryImpl implements MappingFactory {
 	}
 
 	@Override
-	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, String triplesMapIdentifier) {
-		return new TriplesMapImpl(rdf, lt, sm, triplesMapIdentifier);
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, BlankNodeOrIRI node) {
+		return new TriplesMapImpl(rdf, lt, sm, node);
 	}
 
 	@Override
-	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm,
-			PredicateObjectMap pom) {
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom) {
 
 		TriplesMap tm = new TriplesMapImpl(rdf, lt, sm);
 		tm.addPredicateObjectMap(pom);
@@ -53,15 +54,14 @@ public class MappingFactoryImpl implements MappingFactory {
 	}
 
 	@Override
-	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom, String triplesMapIdentifier) {
-		TriplesMap tm = new TriplesMapImpl(rdf, lt, sm, triplesMapIdentifier);
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, PredicateObjectMap pom, BlankNodeOrIRI node) {
+		TriplesMap tm = new TriplesMapImpl(rdf, lt, sm, node);
 		tm.addPredicateObjectMap(pom);
 		return tm;
 	}
 
 	@Override
-	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm,
-			List<PredicateObjectMap> listOfPom) {
+	public TriplesMap createTriplesMap(LogicalTable lt, SubjectMap sm, List<PredicateObjectMap> listOfPom) {
 
 		TriplesMap tm = new TriplesMapImpl(rdf, lt, sm);
 
@@ -73,21 +73,18 @@ public class MappingFactoryImpl implements MappingFactory {
 	}
 
 	@Override
-	public PredicateObjectMap createPredicateObjectMap(PredicateMap pm,
-			ObjectMap om) {
+	public PredicateObjectMap createPredicateObjectMap(PredicateMap pm, ObjectMap om) {
 
 		return new PredicateObjectMapImpl(rdf, pm, om);
 	}
 
 	@Override
-	public PredicateObjectMap createPredicateObjectMap(PredicateMap pm,
-			RefObjectMap rom) {
+	public PredicateObjectMap createPredicateObjectMap(PredicateMap pm, RefObjectMap rom) {
 		return new PredicateObjectMapImpl(rdf, pm, rom);
 	}
 
 	@Override
-	public PredicateObjectMap createPredicateObjectMap(List<PredicateMap> pms,
-			List<ObjectMap> oms, List<RefObjectMap> roms) {
+	public PredicateObjectMap createPredicateObjectMap(List<PredicateMap> pms, List<ObjectMap> oms, List<RefObjectMap> roms) {
 
 		return new PredicateObjectMapImpl(rdf, pms, oms, roms);
 	}
@@ -104,44 +101,63 @@ public class MappingFactoryImpl implements MappingFactory {
 
 	@Override
 	public GraphMap createGraphMap(Template template) {
-		return new GraphMapImpl(rdf, TermMap.TermMapType.TEMPLATE_VALUED, template);
+		return new GraphMapImpl(rdf, template);
 	}
 
 	@Override
-	public GraphMap createGraphMap(TermMap.TermMapType type, String columnOrConst) {
-		return new GraphMapImpl(rdf, type, columnOrConst);
+	public GraphMap createGraphMap(String columnName) {
+		return new GraphMapImpl(rdf, columnName);
 	}
 
-	@Override
+    @Override
+    public GraphMap createGraphMap(IRI constant) {
+        return new GraphMapImpl(rdf, constant);
+    }
+
+    @Override
 	public SubjectMap createSubjectMap(Template template) {
-		return new SubjectMapImpl(rdf, TermMap.TermMapType.TEMPLATE_VALUED, template);
+		return new SubjectMapImpl(rdf, template);
 	}
 
 	@Override
-	public SubjectMap createSubjectMap(TermMap.TermMapType type, String columnOrConst) {
-		return new SubjectMapImpl(rdf, type, columnOrConst);
+	public SubjectMap createSubjectMap(String columnName) {
+		return new SubjectMapImpl(rdf, columnName);
 	}
 
-	@Override
+    @Override
+    public SubjectMap createSubjectMap(IRI constant) {
+        return new SubjectMapImpl(rdf, constant);
+    }
+
+    @Override
 	public PredicateMap createPredicateMap(Template template) {
-		return new PredicateMapImpl(rdf, TermMap.TermMapType.TEMPLATE_VALUED, template);
+		return new PredicateMapImpl(rdf, template);
 	}
 
 	@Override
-	public PredicateMap createPredicateMap(TermMap.TermMapType type,
-			String columnOrConst) {
-		return new PredicateMapImpl(rdf, type, columnOrConst);
+	public PredicateMap createPredicateMap(String columnName) {
+		return new PredicateMapImpl(rdf, columnName);
 	}
+
+    @Override
+    public PredicateMap createPredicateMap(IRI constant) {
+        return new PredicateMapImpl(rdf, constant);
+    }
 
 	@Override
 	public ObjectMap createObjectMap(Template template) {
-		return new ObjectMapImpl(rdf, TermMap.TermMapType.TEMPLATE_VALUED, template);
+		return new ObjectMapImpl(rdf, template);
 	}
 
 	@Override
-	public ObjectMap createObjectMap(TermMap.TermMapType type, String columnOrConst) {
-		return new ObjectMapImpl(rdf, type, columnOrConst);
+	public ObjectMap createObjectMap(String columnName) {
+		return new ObjectMapImpl(rdf, columnName);
 	}
+
+    @Override
+    public ObjectMap createObjectMap(RDFTerm constant) {
+        return new ObjectMapImpl(rdf, constant);
+    }
 	
 	public RefObjectMap createRefObjectMap(TriplesMap parentMap) {
 		return new RefObjectMapImpl(rdf, parentMap);

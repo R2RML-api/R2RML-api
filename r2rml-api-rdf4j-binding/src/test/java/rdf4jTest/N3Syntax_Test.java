@@ -120,7 +120,7 @@ public class N3Syntax_Test
 				
 				Iterator<PredicateMap> pmit=pom.getPredicateMaps().iterator();
 				PredicateMap p=pmit.next();
-				Assert.assertTrue(p.getConstant().contains("name"));
+				Assert.assertTrue(p.getConstant().toString().contains("name"));
 				Assert.assertFalse(pmit.hasNext());
 				
 				

@@ -19,12 +19,6 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import eu.optique.r2rml.api.model.GraphMap;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.SubjectMap;
@@ -34,6 +28,13 @@ import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.Triple;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * An implementation of a SubjectMap.
  * 
@@ -41,25 +42,35 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 
-	ArrayList<IRI> classList;
+    private List<IRI> validTermTypes = Arrays.asList(
+            getRDF().createIRI(R2RMLVocabulary.TERM_IRI),
+            getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE));
 
-	ArrayList<GraphMap> graphList;
 
-	public SubjectMapImpl(RDF c, TermMap.TermMapType termMapType,
-                          Template template) {
-		super(c, termMapType, template);
+    private ArrayList<IRI> classList;
+
+	private ArrayList<GraphMap> graphList;
+
+	SubjectMapImpl(RDF c, Template template) {
+		super(c, template);
+
+		classList = new ArrayList<>();
+		graphList = new ArrayList<>();
+	}
+
+	SubjectMapImpl(RDF c, String columnName) {
+		super(c, columnName);
 
 		classList = new ArrayList<>();
 		graphList = new ArrayList<>();
 	}
 
-	public SubjectMapImpl(RDF c, TermMap.TermMapType termMapType,
-			String columnOrConst) {
-		super(c, termMapType, columnOrConst);
+    SubjectMapImpl(RDF c, IRI constant) {
+        super(c, constant);
 
-		classList = new ArrayList<>();
-		graphList = new ArrayList<>();
-	}
+        classList = new ArrayList<>();
+        graphList = new ArrayList<>();
+    }
 
 	@Override
 	public void addClass(IRI classURI) {
@@ -74,27 +85,6 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	@Override
 	public void addGraphMap(List<GraphMap> gms) {
 		graphList.addAll(gms);
-	}
-
-	@Override
-	public void setTermType(IRI typeURI) {
-		// Check if the typeIRI is one of the possible term type values for a
-		// SubjectMap.
-        if (typeURI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_IRI))
-				|| typeURI.equals(getRDF().createIRI(R2RMLVocabulary.TERM_BLANK_NODE))) {
-
-			if (type == TermMap.TermMapType.COLUMN_VALUED
-					|| type == TermMap.TermMapType.TEMPLATE_VALUED) {
-				termtype = typeURI;
-			} else {
-				throw new IllegalStateException(
-						"The term type can only be set for column "
-								+ "and template valued SubjectMaps.");
-			}
-		} else {
-			throw new IllegalArgumentException("The typeIRI is not a valid "
-					+ "term type IRI for a SubjectMap.");
-		}
 	}
 
 	@Override
@@ -142,7 +132,7 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 		for(GraphMap g : graphList){
 			if(g.getTermMapType() == TermMap.TermMapType.CONSTANT_VALUED){
 				// Use constant shortcut property.
-                stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), getRDF().createIRI(g.getConstant())));
+                stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), g.getConstant()));
 			}else{
                 stmtSet.add(getRDF().createTriple(getNode(), getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
 				stmtSet.addAll(g.serialize());
@@ -187,10 +177,14 @@ public class SubjectMapImpl extends TermMapImpl implements SubjectMap {
 	@Override
 	public String toString() {
 		return "SubjectMapImpl [classList=" + classList + ", graphList="
-				+ graphList + ", type=" + type + ", termtype=" + termtype
+				+ graphList + ", termMapType=" + termMapType + ", termTypeIRI=" + termTypeIRI
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
 				+ ", node=" + getNode() + "]";
 	}
 
+    @Override
+    public List<IRI> getValidTermTypes() {
+        return validTermTypes;
+    }
 }

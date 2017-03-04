@@ -19,14 +19,18 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model.impl;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TermMap;
+import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
+import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -36,15 +40,19 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 
-	public PredicateMapImpl(RDF rdf, TermMap.TermMapType termMapType,
-                            Template template) {
-		super(rdf, termMapType, template);
+    private List<IRI> validTermTypes = Arrays.asList(getRDF().createIRI(R2RMLVocabulary.TERM_IRI));
+
+	PredicateMapImpl(RDF rdf, Template template) {
+		super(rdf, template);
 	}
 
-	public PredicateMapImpl(RDF rdf, TermMap.TermMapType termMapType,
-                            String columnOrConst) {
-		super(rdf, termMapType, columnOrConst);
+	PredicateMapImpl(RDF rdf, String columnName) {
+		super(rdf, columnName);
 	}
+
+    PredicateMapImpl(RDF rdf, RDFTerm constant) {
+        super(rdf, constant);
+    }
 
 	@Override
 	public Set<Triple> serialize() {
@@ -61,10 +69,14 @@ public class PredicateMapImpl extends TermMapImpl implements PredicateMap {
 
 	@Override
 	public String toString() {
-		return "PredicateMapImpl [type=" + type + ", termtype=" + termtype
+		return "PredicateMapImpl [termMapType=" + termMapType + ", termTypeIRI=" + termTypeIRI
 				+ ", template=" + template + ", constVal=" + constVal
 				+ ", columnName=" + columnName + ", inverseExp=" + inverseExp
 				+ ", node=" + getNode() + "]";
 	}
 
+    @Override
+    public List<IRI> getValidTermTypes() {
+        return validTermTypes;
+    }
 }

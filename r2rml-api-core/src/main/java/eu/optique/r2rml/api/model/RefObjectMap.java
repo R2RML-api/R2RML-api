@@ -27,7 +27,7 @@ import java.util.List;
  * @author Marius Strandhaug
  * @author Martin G. Skjæveland
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_REF_OBJECT_MAP)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_REF_OBJECT_MAP)
 public interface RefObjectMap extends MappingComponent {
 
 	/**
@@ -39,7 +39,7 @@ public interface RefObjectMap extends MappingComponent {
 	 *            The triples map that will be set as the
 	 *            parent triples map.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP)
 	public void setParentMap(TriplesMap tm);
 
 	/**
@@ -110,7 +110,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * @param j
 	 *            The join condition to be added.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_JOIN_CONDITION)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_JOIN_CONDITION)
 	public void addJoinCondition(Join j);
 
 	/**
@@ -122,7 +122,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * @throws IndexOutOfBoundsException
 	 *             If the given index is out of range.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_JOIN_CONDITION)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_JOIN_CONDITION)
 	public Join getJoinCondition(int index);
 
 	/**
@@ -131,7 +131,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * 
 	 * @return An unmodifiable list of Joins.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_JOIN_CONDITION)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_JOIN_CONDITION)
     public List<Join> getJoinConditions();
 
 	/**
@@ -139,7 +139,7 @@ public interface RefObjectMap extends MappingComponent {
 	 *
 	 * @return The parent triples map.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_PARENT_TRIPLES_MAP)
 	public TriplesMap getParentMap();
 
 	/**
@@ -149,7 +149,7 @@ public interface RefObjectMap extends MappingComponent {
 	 * @param j
 	 *            The join condition that will be removed.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_JOIN_CONDITION)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_JOIN_CONDITION)
 	public void removeJoinCondition(Join j);
 
 	

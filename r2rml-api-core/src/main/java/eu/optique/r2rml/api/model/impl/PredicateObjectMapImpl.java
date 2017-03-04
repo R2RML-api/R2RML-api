@@ -280,7 +280,7 @@ public class PredicateObjectMapImpl extends MappingComponentImpl implements Pred
         for (PredicateMap pm : predList) {
             if (pm.getTermMapType() == TermMap.TermMapType.CONSTANT_VALUED) {
                 // Use constant shortcut property.
-                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE), getRDF().createIRI(pm.getConstant())));
+                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE), pm.getConstant()));
             } else {
                 stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP), pm.getNode()));
                 stmtSet.addAll(pm.serialize());
@@ -292,14 +292,10 @@ public class PredicateObjectMapImpl extends MappingComponentImpl implements Pred
                 // Use constant shortcut property.
                 if (om.getTermType().equals(
                         getRDF().createIRI(R2RMLVocabulary.TERM_IRI))) {
-
-                    stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT), getRDF().createIRI(om.getConstant())));
-
+                    stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT), om.getConstant()));
                 } else if (om.getTermType().equals(
                         getRDF().createIRI(R2RMLVocabulary.TERM_LITERAL))) {
-
-                    stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT),
-                            getRDF().createLiteral(om.getConstant())));
+                    stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT), om.getConstant()));
 
                 }
             } else {
@@ -316,7 +312,7 @@ public class PredicateObjectMapImpl extends MappingComponentImpl implements Pred
         for (GraphMap g : graphList) {
             if (g.getTermMapType() == TermMap.TermMapType.CONSTANT_VALUED) {
                 // Use constant shortcut property.
-                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), getRDF().createIRI(g.getConstant())));
+                stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH), g.getConstant()));
             } else {
                 stmtSet.add(getRDF().createTriple(node, getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP), g.getNode()));
                 stmtSet.addAll(g.serialize());

@@ -92,35 +92,6 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		load(graph);
 	}
 
-    /**
-     *
-     * Gets the lexical form (no quotation or escape) of a node
-     * <ul>
-     * <li>
-     *     For IRIs, return the UNQUOTED String representation.
-     * </li>
-     * <li>
-     *     For Literals, return the UNESCAPED string representation of the value.
-     * </li>
-     * </ul>
-     *
-     * NOTE: Avoid using toString() methods in general, since they are not reliable.
-     *
-     * @param node an IRI, Literal, or BNode
-     * @return string
-     */
-    private static String getLexicalForm(RDFTerm node) {
-        if (node instanceof IRI) {
-            return ((IRI)node).getIRIString();
-        } else if (node instanceof BlankNode) {
-            return ((BlankNode)node).uniqueReference();
-        } else if (node instanceof Literal) {
-            return ((Literal)node).getLexicalForm();
-        } else {
-            throw new IllegalArgumentException("unknown term: " + node);
-        }
-    }
-
     @Override
 	public void addTriplesMap(TriplesMap mapping) {
 		triplesMaps.put(mapping.getNode(), mapping);
@@ -214,9 +185,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			throws InvalidR2RMLMappingException {
 		LogicalTable toReturn = null;
 		// find logical table nodes
-        Collection<RDFTerm> logicalTableNode = graph.stream(node, getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE), null)
-                .map(Triple::getObject)
-                .collect(toSet());
+        Collection<RDFTerm> logicalTableNode = readObjectsInMappingGraph(node, getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE));
 		// must be exactly one logicaltable node
 		if (logicalTableNode.size() != 1) {
 			throw new InvalidR2RMLMappingException(
@@ -226,29 +195,27 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			boolean isSQLTable = false;
 
 			// look for tableName
-            String tableName = readResource(logicalTable,
-                    getRDF().createIRI(R2RMLVocabulary.PROP_TABLE_NAME));
+            RDFTerm tableName = readObjectInMappingGraph(logicalTable, getRDF().createIRI(R2RMLVocabulary.PROP_TABLE_NAME));
 			if (tableName != null) {
 				isSQLTable = true;
-				toReturn = mfact.createSQLBaseTableOrView(tableName);
+				toReturn = mfact.createSQLBaseTableOrView(((Literal)tableName).getLexicalForm());
 			}
 
 			// look for sql query
-            String query = readResource(logicalTable,
-                    getRDF().createIRI(R2RMLVocabulary.PROP_SQL_QUERY));
+            RDFTerm query = readObjectInMappingGraph(logicalTable, getRDF().createIRI(R2RMLVocabulary.PROP_SQL_QUERY));
 			if (query != null) {
 				if (isSQLTable) {
 					throw new InvalidR2RMLMappingException(
 							"Invalid mapping: Logical table in TripleMap " + node + " has both a tablename and a SQL query.");
 				}
 
-				toReturn = mfact.createR2RMLView(query);
+				toReturn = mfact.createR2RMLView(((Literal)query).getLexicalForm());
 
 				// look for sql version -> what to do with it?
-                String version = readResource(logicalTable,
+                RDFTerm version = readObjectInMappingGraph(logicalTable,
                         getRDF().createIRI(R2RMLVocabulary.PROP_SQL_VERSION));
 				if (version != null) {
-                    ((R2RMLView) toReturn).addSQLVersion(getRDF().createIRI(version));
+                    ((R2RMLView) toReturn).addSQLVersion((IRI) version);
 				}
 			}
 
@@ -273,14 +240,15 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	 *            The URI as predicate
 	 * @return the extracted first object as String
 	 */
-	private String readResource(BlankNodeOrIRI node, IRI resourceType) {
+	private RDFTerm readObjectInMappingGraph(BlankNodeOrIRI node, IRI resourceType) {
 		// look for resourceType declaration
         Collection<RDFTerm> obj = graph.stream(node, resourceType, null)
                 .map(Triple::getObject)
                 .collect(toSet());
 		if (obj.size() == 1)
-			return getLexicalForm(obj.iterator().next());
-		return null;
+			return obj.iterator().next();
+		else
+		    return null;
 	}
 
 	/**
@@ -294,64 +262,14 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	 *            The URI as predicate
 	 * @return the extracted first object as String
 	 */
-	private List<String> readResources(BlankNodeOrIRI node, IRI resourceType) {
-		List<String> resources = new ArrayList<String>();
+	private Collection<RDFTerm> readObjectsInMappingGraph(BlankNodeOrIRI node, IRI resourceType) {
 		// look for resourceType declaration
-        Collection<RDFTerm> obj = graph.stream(node, resourceType, null)
+        return graph.stream(node, resourceType, null)
                 .map(Triple::getObject)
                 .collect(toSet());
-		if (obj.size() > 0) {
-			for (RDFTerm val : obj) {
-				resources.add(getLexicalForm(val));
-			}
-			return resources;
-		}
-		return null;
 	}
 
-	/**
-	 * This method processes the given Resource node as subject by finding the
-	 * object node with the given resourceType URI as predicate. Finds and
-	 * returns the first object.
-	 * 
-	 * @param node
-	 *            The Resource node as subject
-	 * @param resourceType
-	 *            The URI as predicate
-	 * @return the extracted first object as URI
-	 */
-	private RDFTerm readResourceURI(BlankNodeOrIRI node, IRI resourceType) {
-		// look for resourceType declaration
-        Collection<RDFTerm> obj = graph.stream(node, resourceType, null)
-                .map(Triple::getObject)
-                .collect(toSet());
-		if (obj.size() == 1)
-			return obj.iterator().next();
-		return null;
-	}
-
-	/**
-	 * This method reads and returns all the object nodes of a given subject
-	 * Resource node and a URI predicate.
-	 * 
-	 * @param node
-	 *            The Resource node as subject
-	 * @param resourceType
-	 *            The URI as predicate
-	 * @return The set of matched objects as URIs.
-	 */
-	private Set<RDFTerm> readResourceURIs(BlankNodeOrIRI node, IRI resourceType) {
-		Set<RDFTerm> resources = new HashSet<>();
-		// look for resourceType declarations
-        Collection<RDFTerm> obj = graph.stream(node, resourceType, null)
-                .map(Triple::getObject)
-                .collect(toSet());
-		for (RDFTerm value : obj)
-			resources.add(value);
-		return resources;
-	}
-
-	/**
+    /**
 	 * This method reads and returns the list of GraphMap-s of a given Resource
 	 * node.
 	 * 
@@ -367,8 +285,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                 .collect(toSet());
 		if (graphDecl.size() > 0) {
 			for (RDFTerm val : graphDecl) {
-				graphMapList.add(mfact.createGraphMap(
-						TermMap.TermMapType.CONSTANT_VALUED, val.toString()));
+				graphMapList.add(mfact.createGraphMap((IRI)val));
 			}
 		} else {
 			// look for graphMap nodes
@@ -400,11 +317,11 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	private SubjectMap readSubjectMap(BlankNodeOrIRI node)
 			throws InvalidR2RMLMappingException {
 		// look for subject declaration -> constant
-        String subject = readResource(node,
+        RDFTerm subject = readObjectInMappingGraph(node,
                 getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT));
 		if (subject != null) {
 			// return constant valued
-			return mfact.createSubjectMap(TermMap.TermMapType.CONSTANT_VALUED, subject);
+			return mfact.createSubjectMap((IRI)subject);
 		} else {
 			// look for subjectMap declarations
             Collection<RDFTerm> subjectMapNode = graph.stream(node, getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP), null)
@@ -423,7 +340,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 					return null;
 
 				// look for termtype -> iri or bnode
-                IRI termtype = (IRI) readResourceURI(subjectNode,
+                IRI termtype = (IRI) readObjectInMappingGraph(subjectNode,
                         getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE));
 				// set termtype if not null
 				if (termtype != null)
@@ -435,15 +352,15 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 					subjectMap.addGraphMap(graphMap);
 
 				// look for inverseExpression
-                String invExpr = readResource(
+                RDFTerm invExpr = readObjectInMappingGraph(
 						subjectNode,
                         getRDF().createIRI(R2RMLVocabulary.PROP_INVERSE_EXPRESSION));
 				if (invExpr != null)
 					subjectMap.setInverseExpression(mfact
-							.createInverseExpression(invExpr));
+							.createInverseExpression(((Literal)invExpr).getLexicalForm()));
 
 				// look for class declarations
-                Set<RDFTerm> classes = readResourceURIs(subjectNode,
+                Collection<RDFTerm> classes = readObjectsInMappingGraph(subjectNode,
                         getRDF().createIRI(R2RMLVocabulary.PROP_CLASS));
 
 				// add all declared classes
@@ -522,13 +439,12 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	private List<PredicateMap> readPredicateMaps(BlankNodeOrIRI node) {
 		List<PredicateMap> predicateMaps = new ArrayList<PredicateMap>();
 		// look for predicate declaration -> constant
-        List<String> predicates = readResources(node,
+        Collection<RDFTerm> predicates = readObjectsInMappingGraph(node,
                 getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE));
 		if (predicates != null) {
-			for (String predicate : predicates) {
+			for (RDFTerm predicate : predicates) {
 				// return constant valued
-				predicateMaps.add(mfact.createPredicateMap(
-						TermMap.TermMapType.CONSTANT_VALUED, predicate));
+				predicateMaps.add(mfact.createPredicateMap((IRI)predicate));
 			}
 		}
 
@@ -567,20 +483,18 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	private List<ObjectMap> readObjectMaps(BlankNodeOrIRI node) {
 		List<ObjectMap> objectMaps = new ArrayList<ObjectMap>();
 		// look for predicate declaration -> constant
-        List<String> objects = readResources(node,
+        Collection<RDFTerm> objects = readObjectsInMappingGraph(node,
                 getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT));
-		if (objects != null) {
-			for (String object : objects) {
-				// return constant valued
-				objectMaps.add(mfact.createObjectMap(
-						TermMap.TermMapType.CONSTANT_VALUED, object));
-			}
-		}
 
-		// look for objectMap declaration
-        Collection<RDFTerm> objectMapNodes = graph.stream(node, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP), null)
-                .map(Triple::getObject)
-                .collect(toSet());
+        for (RDFTerm object : objects) {
+            // return constant valued
+            objectMaps.add(mfact.createObjectMap(object));
+        }
+
+
+        // look for objectMap declaration
+        Collection<RDFTerm> objectMapNodes = readObjectsInMappingGraph(node,
+                getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP));
 		for (RDFTerm objectMapNode : objectMapNodes) {
 
             BlankNodeOrIRI objectNode = (BlankNodeOrIRI) objectMapNode;
@@ -591,31 +505,30 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			if (objectMap != null) {
 
 				// look for termtype -> iri or bnode or literal
-                IRI termtype = (IRI) readResourceURI(objectNode,
+                IRI termtype = (IRI) readObjectInMappingGraph(objectNode,
                         getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE));
 				// set termtype if not null
 				if (termtype != null)
 					objectMap.setTermType(termtype);
 
 				// look for inverseExpression
-                String invExpr = readResource(
+                RDFTerm invExpr = readObjectInMappingGraph(
 						objectNode,
                         getRDF().createIRI(R2RMLVocabulary.PROP_INVERSE_EXPRESSION));
 				if (invExpr != null)
 					objectMap.setInverseExpression(mfact
-							.createInverseExpression(invExpr));
+							.createInverseExpression(((Literal)invExpr).getLexicalForm()));
 
 				// look for datatype
-                IRI datatype = (IRI) readResourceURI(objectNode,
+                IRI datatype = (IRI) readObjectInMappingGraph(objectNode,
                         getRDF().createIRI(R2RMLVocabulary.PROP_DATATYPE));
 				if (datatype != null)
 					objectMap.setDatatype(datatype);
 
 				// look for language
-                String lang = readResource(objectNode,
-                        getRDF().createIRI(R2RMLVocabulary.PROP_LANGUAGE));
+                RDFTerm lang =  readObjectInMappingGraph(objectNode, getRDF().createIRI(R2RMLVocabulary.PROP_LANGUAGE));
 				if (lang != null)
-					objectMap.setLanguageTag(lang);
+					objectMap.setLanguageTag(((Literal)lang).getLexicalForm());
 
 				objectMap.setNode(objectNode);
 				objectMaps.add(objectMap);
@@ -638,54 +551,65 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 	private TermMap readTermMap(BlankNodeOrIRI node, IRI type) {
 
 		// look for template
-        String resource = readResource(node,
-                getRDF().createIRI(R2RMLVocabulary.PROP_TEMPLATE));
+        RDFTerm resource = readObjectInMappingGraph(node, getRDF().createIRI(R2RMLVocabulary.PROP_TEMPLATE));
 		TermMap.TermMapType termMapType = TermMap.TermMapType.TEMPLATE_VALUED;
 
 		// look for column
 		if (resource == null) {
-            resource = readResource(node,
-                    getRDF().createIRI(R2RMLVocabulary.PROP_COLUMN));
+            resource = readObjectInMappingGraph(node, getRDF().createIRI(R2RMLVocabulary.PROP_COLUMN));
 			termMapType = TermMap.TermMapType.COLUMN_VALUED;
 		}
 
 		// look for constant
 		if (resource == null) {
-            resource = readResource(node,
-                    getRDF().createIRI(R2RMLVocabulary.PROP_CONSTANT));
+            resource = readObjectInMappingGraph(node, getRDF().createIRI(R2RMLVocabulary.PROP_CONSTANT));
 			termMapType = TermMap.TermMapType.CONSTANT_VALUED;
 		}
 
 		if (resource != null) {
             if (type.equals(getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP))) {
 				// return the corresponding subjectMap
-				if (termMapType.equals(TermMap.TermMapType.TEMPLATE_VALUED))
-					return mfact.createSubjectMap(mfact
-							.createTemplate(resource));
-				else
-					return mfact.createSubjectMap(termMapType, resource);
+                switch (termMapType){
+                    case COLUMN_VALUED:
+                        return mfact.createSubjectMap(((Literal) resource).getLexicalForm());
+                    case CONSTANT_VALUED:
+                        return mfact.createSubjectMap((IRI)resource);
+                    case TEMPLATE_VALUED:
+                        return mfact.createSubjectMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
+                }
 
 			} else if (type.equals(getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP))) {
 				// return the corresponding predicateMap
-				if (termMapType.equals(TermMap.TermMapType.TEMPLATE_VALUED))
-					return mfact.createPredicateMap(mfact
-							.createTemplate(resource));
-				else
-					return mfact.createPredicateMap(termMapType, resource);
+                switch (termMapType){
+                    case COLUMN_VALUED:
+                        return mfact.createPredicateMap(((Literal) resource).getLexicalForm());
+                    case CONSTANT_VALUED:
+                        return mfact.createPredicateMap((IRI)resource);
+                    case TEMPLATE_VALUED:
+                        return mfact.createPredicateMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
+                }
 
 			} else if (type.equals(getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP))) {
 				// return the corresponding objectMap
-				if (termMapType.equals(TermMap.TermMapType.TEMPLATE_VALUED))
-					return mfact
-							.createObjectMap(mfact.createTemplate(resource));
-				else
-					return mfact.createObjectMap(termMapType, resource);
+                switch (termMapType){
+                    case COLUMN_VALUED:
+                        return mfact.createObjectMap(((Literal) resource).getLexicalForm());
+                    case CONSTANT_VALUED:
+                        return mfact.createObjectMap(resource);
+                    case TEMPLATE_VALUED:
+                        return mfact.createObjectMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
+                }
+
 			} else if (type.equals(getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP))) {
 				// return the corresponding graphMap
-				if (termMapType.equals(TermMap.TermMapType.TEMPLATE_VALUED))
-					return mfact.createGraphMap(mfact.createTemplate(resource));
-				else
-					return mfact.createGraphMap(termMapType, resource);
+                switch (termMapType){
+                    case COLUMN_VALUED:
+                        return mfact.createGraphMap(((Literal) resource).getLexicalForm());
+                    case CONSTANT_VALUED:
+                        return mfact.createGraphMap((IRI)resource);
+                    case TEMPLATE_VALUED:
+                        return mfact.createGraphMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
+                }
 			}
 		}
 		return null;
@@ -746,12 +670,12 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				BlankNodeOrIRI joinCondition = (BlankNodeOrIRI) value;
 
 				// look for child declaration
-                String childColumn = readResource(joinCondition,
-                        getRDF().createIRI(R2RMLVocabulary.PROP_CHILD));
+                String childColumn = ((Literal) readObjectInMappingGraph(joinCondition,
+                        getRDF().createIRI(R2RMLVocabulary.PROP_CHILD))).getLexicalForm();
 
 				// look for parent declaration
-                String parentColumn = readResource(joinCondition,
-                        getRDF().createIRI(R2RMLVocabulary.PROP_PARENT));
+                String parentColumn = ((Literal) readObjectInMappingGraph(joinCondition,
+                        getRDF().createIRI(R2RMLVocabulary.PROP_PARENT))).getLexicalForm();
 
 				// add join condition to refobjMap instance
 				if (childColumn != null && parentColumn != null)

@@ -24,7 +24,7 @@ package eu.optique.r2rml.api.model;
  * 
  * @author Marius Strandhaug
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_JOIN)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_JOIN)
 public interface Join extends MappingComponent {
 
 	/**
@@ -37,7 +37,7 @@ public interface Join extends MappingComponent {
 	 * @throws NullPointerException
 	 *             If columnName is null.
 	 */
-	@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CHILD)
+	@W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_CHILD)
 	public void setChild(String columnName);
 
 	/**
@@ -49,7 +49,7 @@ public interface Join extends MappingComponent {
 	 * @throws NullPointerException
 	 *             If columnName is null.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PARENT)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_PARENT)
 	public void setParent(String columnName);
 
 	/**
@@ -57,7 +57,7 @@ public interface Join extends MappingComponent {
 	 * 
 	 * @return The child associated with this Join.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_CHILD)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_CHILD)
 	public String getChild();
 
 	/**
@@ -65,7 +65,7 @@ public interface Join extends MappingComponent {
 	 * 
 	 * @return The parent associated with this Join.
 	 */
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_PARENT)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_PARENT)
 	public String getParent();
 
 }

@@ -33,17 +33,17 @@ import eu.optique.r2rml.api.model.Template;
  */
 public class TemplateImpl implements Template {
 
-	ArrayList<String> segList;
-	ArrayList<String> colList;
+	private ArrayList<String> segList;
+	private ArrayList<String> colList;
 
-	public TemplateImpl() {
-		segList = new ArrayList<String>();
-		colList = new ArrayList<String>();
+	TemplateImpl() {
+		segList = new ArrayList<>();
+		colList = new ArrayList<>();
 	}
 
-	public TemplateImpl(String template) {
-		segList = new ArrayList<String>();
-		colList = new ArrayList<String>();
+	TemplateImpl(String template) {
+		segList = new ArrayList<>();
+		colList = new ArrayList<>();
 
 		char[] chars = template.toCharArray();
 
@@ -56,7 +56,7 @@ public class TemplateImpl implements Template {
 		int prev = 0;
 		int index = 0;
 		for (int i = 0; i < chars.length; i++) {
-			if (chars[i] == '{' && !R2RMLUtil.isEscaped(i, chars)) {
+			if (chars[i] == '{' && !isEscaped(i, chars)) {
 				if (!braceFound) {
 					braceFound = true;
 
@@ -66,7 +66,7 @@ public class TemplateImpl implements Template {
 					throw new IllegalArgumentException(
 							"Illegal template syntax. The curly braces don't match.");
 				}
-			} else if (chars[i] == '}' && !R2RMLUtil.isEscaped(i, chars)) {
+			} else if (chars[i] == '}' && !isEscaped(i, chars)) {
 				if (braceFound) {
 					braceFound = false;
 
@@ -85,12 +85,38 @@ public class TemplateImpl implements Template {
 					"Illegal template syntax. The curly braces don't match.");
 		} else {
 			if (chars[chars.length - 1] != '}'
-					|| R2RMLUtil.isEscaped(chars.length - 1, chars))
+					|| isEscaped(chars.length - 1, chars))
 				addStringSegment(index, template.substring(prev, chars.length));
 		}
 	}
 
-	@Override
+    /**
+	 * Check if the character on the given index is escaped.
+	 *
+	 * @param index
+	 *            The index of the possibly escaped character.
+	 * @param chars
+	 *            The array of characters to look in.
+	 * @return True if the character was escaped, false otherwise.
+	 */
+	private static boolean isEscaped(int index, char[] chars) {
+		if (index >= chars.length) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+
+		boolean odd = false;
+		for (int i = index - 1; i >= 0; i--) {
+			if (chars[i] == '\\') {
+				odd = !odd;
+			} else {
+				return odd;
+			}
+		}
+
+		return odd;
+	}
+
+    @Override
 	public String getStringSegment(int segIndex) {
 		return segList.get(segIndex);
 	}

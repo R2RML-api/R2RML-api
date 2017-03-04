@@ -24,7 +24,7 @@ package eu.optique.r2rml.api.model;
  * 
  * @author Marius Strandhaug
  */
-@W3C_R2RML_Recommendation(iri = R2RMLVocabulary.TYPE_GRAPH_MAP)
+@W3C_R2RML_Recommendation(R2RMLVocabulary.TYPE_GRAPH_MAP)
 public interface GraphMap extends TermMap {
 
 }

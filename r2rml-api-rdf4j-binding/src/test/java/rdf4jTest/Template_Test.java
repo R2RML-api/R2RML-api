@@ -113,7 +113,7 @@ public class Template_Test
 			Iterator<PredicateMap> pmit=pom.getPredicateMaps().iterator();
 			while(pmit.hasNext()){
 				PredicateMap p=pmit.next();
-				boolean first=p.getConstant().contains("department");
+				boolean first=p.getConstant().toString().contains("department");
 				
 				Assert.assertTrue(first);
 				

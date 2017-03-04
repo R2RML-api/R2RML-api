@@ -37,7 +37,6 @@ import eu.optique.r2rml.api.model.PredicateMap;
 import eu.optique.r2rml.api.model.PredicateObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
-import eu.optique.r2rml.api.model.TermMap.TermMapType;
 import eu.optique.r2rml.api.model.TriplesMap;
 
 /**
@@ -68,14 +67,14 @@ public class InMemoryStructureCreation1_Test {
 		sm.addClass((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://example.com/", "Student")));
 					
 		//PredicateObjectMap
-		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");
+		PredicateMap pred = mfact.createPredicateMap((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://example.com/role")));
 		Template templo = mfact.createTemplate("http://data.example.com/roles/{ROLE}");
 		ObjectMap obm = mfact.createObjectMap(templo);
 		PredicateObjectMap pom = mfact.createPredicateObjectMap(pred, obm);
 		
 		//Other PredicateObjectMap with DataType
-		PredicateMap pred1 = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role1");
-		ObjectMap obm1 = mfact.createObjectMap(TermMapType.COLUMN_VALUED, "ROLESS");
+		PredicateMap pred1 = mfact.createPredicateMap((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://example.com/role1")));
+		ObjectMap obm1 = mfact.createObjectMap("ROLESS");
 		obm1.setDatatype((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://www.w3.org/2001/XMLSchema#", "positiveInteger")));
 		PredicateObjectMap pom11 = mfact.createPredicateObjectMap(pred1, obm1);
 		
@@ -115,7 +114,7 @@ public class InMemoryStructureCreation1_Test {
 				Iterator<PredicateMap> pmit=pom1.getPredicateMaps().iterator();
 				while(pmit.hasNext()){
 					PredicateMap p=pmit.next();
-					Assert.assertTrue(p.getConstant().contains("role"));
+					Assert.assertTrue(p.getConstant().toString().contains("role"));
 					
 				}
 				

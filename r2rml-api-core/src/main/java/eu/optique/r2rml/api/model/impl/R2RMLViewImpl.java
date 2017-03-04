@@ -39,12 +39,11 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class R2RMLViewImpl extends LogicalTableImpl implements R2RMLView {
 
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_QUERY)
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_SQL_QUERY)
     private String sqlQuery;
 
-    @W3C_R2RML_Recommendation(iri = R2RMLVocabulary.PROP_SQL_VERSION)
-    private
-    ArrayList<IRI> versionList;
+    @W3C_R2RML_Recommendation(R2RMLVocabulary.PROP_SQL_VERSION)
+    private ArrayList<IRI> versionList;
 
 	R2RMLViewImpl(RDF c, String sqlQuery) {
 		super(c);

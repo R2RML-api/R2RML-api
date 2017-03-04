@@ -74,11 +74,11 @@ public class TriplesMapsWithMultiplePOMap_Test
 				while(ii.hasNext()){
 					ObjectMap o=ii.next();
 					if(o.getConstant()!=null){
-						if(o.getConstant().contains("Lives")){
+						if(o.getConstant().toString().contains("Lives")){
 							livesMatched=true;			
 						}
 						
-						if(o.getConstant().contains("IOUs")){
+						if(o.getConstant().toString().contains("IOUs")){
 							iousMatched=true;			
 						}
 					}

@@ -92,7 +92,7 @@ public class TermType_Test {
 				Iterator<PredicateMap> pmit=pom.getPredicateMaps().iterator();
 				while(pmit.hasNext()){
 					PredicateMap p=pmit.next();
-					boolean first=p.getConstant().contains("name");
+					boolean first=p.getConstant().toString().contains("name");
 					
 					Assert.assertTrue(first);
 					

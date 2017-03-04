@@ -111,7 +111,7 @@ public class SubjectMapMultipleColumn_Test
 				Iterator<PredicateMap> pmit=pom.getPredicateMaps().iterator();
 				PredicateMap p=pmit.next();
 				Assert.assertEquals(NodeFactory.createURI(R2RMLVocabulary.TERM_IRI), jena.asJenaNode(p.getTermType()));
-				Assert.assertTrue(p.getConstant().contains("role"));
+				Assert.assertTrue(p.getConstant().toString().contains("role"));
 				
 				Iterator<ObjectMap> omit=pom.getObjectMaps().iterator();
 				ObjectMap o=omit.next();

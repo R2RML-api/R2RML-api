@@ -19,13 +19,17 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model.impl;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import eu.optique.r2rml.api.model.GraphMap;
 import eu.optique.r2rml.api.model.R2RMLVocabulary;
 import eu.optique.r2rml.api.model.Template;
+import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDF;
+import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
 
 /**
@@ -35,14 +39,19 @@ import org.apache.commons.rdf.api.Triple;
  */
 public class GraphMapImpl extends TermMapImpl implements GraphMap {
 
-    GraphMapImpl(RDF lc, TermMapType termMapType,
-                 Template template) {
-        super(lc, termMapType, template);
+    private List<IRI> validTermTypes = Arrays.asList(getRDF().createIRI(R2RMLVocabulary.TERM_IRI));
+
+
+    GraphMapImpl(RDF lc, Template template) {
+        super(lc, template);
     }
 
-    GraphMapImpl(RDF lc, TermMapType termMapType,
-                 String columnOrConst) {
-        super(lc, termMapType, columnOrConst);
+    GraphMapImpl(RDF lc, String columnName) {
+        super(lc, columnName);
+    }
+
+    GraphMapImpl(RDF rdf, IRI constant) {
+        super(rdf, constant);
     }
 
     @Override
@@ -61,10 +70,15 @@ public class GraphMapImpl extends TermMapImpl implements GraphMap {
 
     @Override
     public String toString() {
-        return "GraphMapImpl [type=" + type + ", termtype=" + termtype
+        return "GraphMapImpl [type=" + termMapType + ", termtype=" + termTypeIRI
                 + ", template=" + template + ", constVal=" + constVal
                 + ", columnName=" + columnName + ", inverseExp=" + inverseExp
                 + ", node=" + getNode() + "]";
     }
 
+
+    @Override
+    public List<IRI> getValidTermTypes() {
+        return validTermTypes;
+    }
 }

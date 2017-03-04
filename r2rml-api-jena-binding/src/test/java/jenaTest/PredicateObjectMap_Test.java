@@ -104,7 +104,7 @@ public class PredicateObjectMap_Test
 				
 				Iterator<PredicateMap> pmit=pom.getPredicateMaps().iterator();
 				PredicateMap p=pmit.next();
-				Assert.assertTrue(p.getConstant().contains("name"));
+				Assert.assertTrue(p.getConstant().toString().contains("name"));
 				Assert.assertFalse(pmit.hasNext());
 				
 				Iterator<ObjectMap> omit=pom.getObjectMaps().iterator();

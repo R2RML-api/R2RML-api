@@ -23,7 +23,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import eu.optique.r2rml.api.binding.jena.JenaR2RMLMappingManager;
+import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.jena.JenaRDF;
+import org.apache.jena.graph.NodeFactory;
 import org.junit.Assert;
 
 import org.junit.Test;
@@ -39,7 +41,6 @@ import eu.optique.r2rml.api.model.RefObjectMap;
 import eu.optique.r2rml.api.model.SubjectMap;
 import eu.optique.r2rml.api.model.Template;
 import eu.optique.r2rml.api.model.TriplesMap;
-import eu.optique.r2rml.api.model.TermMap.TermMapType;
 
 /**
  * JUnit Test Cases
@@ -64,10 +65,10 @@ public class InMemoryStructureCreation3_Test{
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//GraphMap
-		sm.addGraphMap(mfact.createGraphMap(TermMapType.CONSTANT_VALUED, "http://example.com/graph/sports"));
+		sm.addGraphMap(mfact.createGraphMap((IRI)jena.asRDFTerm(NodeFactory.createURI("http://example.com/graph/sports"))));
 			
 		//PredicateObjectMap
-		PredicateMap pred = mfact.createPredicateMap(TermMapType.CONSTANT_VALUED, "http://example.com/role");
+		PredicateMap pred = mfact.createPredicateMap((IRI)jena.asRDFTerm(NodeFactory.createURI("http://example.com/role")));
 		Template templo = mfact.createTemplate("http://data.example.com/roles/{ROLE}");
 		ObjectMap obm = mfact.createObjectMap(templo);
 		PredicateObjectMap pom = mfact.createPredicateObjectMap(pred, obm);
@@ -95,7 +96,7 @@ public class InMemoryStructureCreation3_Test{
 			int conta=0;
 			while(gmit.hasNext()){
 				GraphMap g=gmit.next();
-				Assert.assertTrue(g.getConstant().contains("http://example.com/graph/sports"));
+				Assert.assertTrue(g.getConstant().toString().contains("http://example.com/graph/sports"));
 				conta++;
 			}
 			Assert.assertTrue(conta==1);
@@ -125,7 +126,7 @@ public class InMemoryStructureCreation3_Test{
 				Iterator<PredicateMap> pmit=pom1.getPredicateMaps().iterator();
 				while(pmit.hasNext()){
 					PredicateMap p=pmit.next();
-					Assert.assertTrue(p.getConstant().contains("role"));
+					Assert.assertTrue(p.getConstant().toString().contains("role"));
 					
 				}
 				
