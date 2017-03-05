@@ -1,0 +1,44 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix ex: <http://example.com/ns#>.
+
+<#TriplesMap1>
+    rr:logicalTable [ rr:tableName "EMP" ];
+    rr:subjectMap [
+        rr:template "http://data.example.com/employee/{EMPNO}";
+        rr:class ex:Employee;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:name;
+        rr:objectMap [ rr:column "ENAME" ];
+    ].
+    
+<#TriplesMap2>
+    rr:logicalTable <#DeptTableView>;
+    rr:subjectMap [
+        rr:template "http://data.example.com/department/{DEPTNO}";
+        rr:class ex:Department;
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:name;
+        rr:objectMap [ rr:column "DNAME" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:location;
+        rr:objectMap [ rr:column "LOC" ];
+    ];
+    rr:predicateObjectMap [
+        rr:predicate ex:staff;
+        rr:objectMap [ rr:column "STAFF" ];
+    ].    
+    
+<#TriplesMap1>
+    rr:predicateObjectMap [
+        rr:predicate ex:department;
+        rr:objectMap [
+            rr:parentTriplesMap <#TriplesMap2>;
+            rr:joinCondition [
+                rr:child "DEPTNO";
+                rr:parent "DEPTNO";
+            ];
+        ];
+    ].    
