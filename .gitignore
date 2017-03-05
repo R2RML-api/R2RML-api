@@ -28,3 +28,4 @@ catalog-v*.xml
 tmp.*
 
 plugin-runtime
+/.gradle/
