@@ -1,0 +1,8 @@
+rootProject.name = 'r2rml-api-parent'
+include ':r2rml-api-core'
+include ':r2rml-api-jena-binding'
+include ':r2rml-api-rdf4j-binding'
+
+project(':r2rml-api-core').projectDir = "$rootDir/r2rml-api-core" as File
+project(':r2rml-api-jena-binding').projectDir = "$rootDir/r2rml-api-jena-binding" as File
+project(':r2rml-api-rdf4j-binding').projectDir = "$rootDir/r2rml-api-rdf4j-binding" as File

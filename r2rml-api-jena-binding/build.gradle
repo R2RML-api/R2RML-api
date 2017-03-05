@@ -1,0 +1,11 @@
+
+description = 'Optique R2RML API - Jena binding'
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-rdf-jena', version:'0.3.0-incubating'
+    compile(group: 'org.apache.jena', name: 'jena-core', version:'3.1.1') {
+exclude(module: 'log4j')
+exclude(module: 'slf4j-log4j12')
+    }
+  compile project(':r2rml-api-core')
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+}
