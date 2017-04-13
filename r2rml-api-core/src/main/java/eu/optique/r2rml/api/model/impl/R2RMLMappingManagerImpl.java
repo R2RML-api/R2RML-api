@@ -66,12 +66,10 @@ public class R2RMLMappingManagerImpl implements R2RMLMappingManager {
         R2RMLMappingCollection mc = extractR2RMLMapping(graph);
 
         if (mc == null || mc.getTriplesMaps().isEmpty())
-            throw new IllegalArgumentException(
-                    "Does not contain any (valid) TriplesMaps");
+            throw new IllegalArgumentException("Does not contain any (valid) TriplesMaps");
         for (TriplesMap map : mc.getTriplesMaps()) {
             requireNonNull(map.getLogicalTable(),  () -> "No logical table for TriplesMap " + map.getNode().toString());
-            if (map.getLogicalTable().getNode() == null
-                    && map.getLogicalTable().getSQLQuery() == null)
+            if (map.getLogicalTable().getNode() == null && map.getLogicalTable().getSQLQuery() == null)
                 throw new IllegalArgumentException("No logical table for TriplesMap " + map.getNode().toString());
             requireNonNull(map.getSubjectMap(), () -> map.getNode().toString() + " does not have any SubjectMap");
         }
