@@ -37,7 +37,15 @@ public interface Template {
 	 */
 	String getStringSegment(int segIndex);
 
-	/**
+    /**
+     * Gets the string segments
+     * @return The string segments
+     */
+    List<String> getStringSegments();
+
+    String getTemplateStringWithoutColumnNames();
+
+    /**
 	 * Set the string segment on the given index. Any previously set segments on
 	 * this index will be removed. Adding a new string segment (that don't
 	 * overwrite older ones), must be done by adding it with an index one higher
