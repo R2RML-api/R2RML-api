@@ -36,7 +36,7 @@ public interface TermMap extends MappingComponent {
      * The term map must be set to one of these values when created.
      */
     public enum TermMapType {
-        CONSTANT_VALUED, TEMPLATE_VALUED, COLUMN_VALUED
+        CONSTANT_VALUED, TEMPLATE_VALUED, COLUMN_VALUED, RDF_STAR_VALUED
     }
 
 

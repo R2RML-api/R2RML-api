@@ -22,27 +22,13 @@ package eu.optique.r2rml.api.model.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import eu.optique.r2rml.api.model.GraphMap;
-import eu.optique.r2rml.api.model.LogicalTable;
+import eu.optique.r2rml.api.model.*;
 import eu.optique.r2rml.api.MappingFactory;
-import eu.optique.r2rml.api.model.ObjectMap;
-import eu.optique.r2rml.api.model.PredicateMap;
-import eu.optique.r2rml.api.model.PredicateObjectMap;
-import eu.optique.r2rml.api.model.R2RMLMappingCollection;
 import eu.optique.r2rml.api.R2RMLMappingManager;
-import eu.optique.r2rml.api.model.R2RMLView;
-import eu.optique.r2rml.api.model.R2RMLVocabulary;
-import eu.optique.r2rml.api.model.RefObjectMap;
-import eu.optique.r2rml.api.model.SubjectMap;
-import eu.optique.r2rml.api.model.TermMap;
-import eu.optique.r2rml.api.model.TriplesMap;
-import org.apache.commons.rdf.api.BlankNode;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.IRI;
@@ -566,6 +552,15 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 			termMapType = TermMap.TermMapType.CONSTANT_VALUED;
 		}
 
+		// look for RDF-star triple
+		if (resource == null) {
+			resource = readObjectInMappingGraph(node, getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE));
+			if (resource != null && resource.toString().equals(RDFStarVocabulary.TERM_STAR_TRIPLE)) {
+				termMapType = TermMap.TermMapType.RDF_STAR_VALUED; }
+			else {
+				resource = null; }
+		}
+
 		if (resource != null) {
             if (type.equals(getRDF().createIRI(R2RMLVocabulary.PROP_SUBJECT_MAP))) {
 				// return the corresponding subjectMap
@@ -576,7 +571,12 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                         return mfact.createSubjectMap((IRI)resource);
                     case TEMPLATE_VALUED:
                         return mfact.createSubjectMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
-                }
+					case RDF_STAR_VALUED:
+						return mfact.createSubjectMap(
+								(ObjectMap) readEmbeddedTermMap(node, "subject"),
+								(PredicateMap) readEmbeddedTermMap(node, "predicate"),
+								(ObjectMap) readEmbeddedTermMap(node, "object"));
+				}
 
 			} else if (type.equals(getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP))) {
 				// return the corresponding predicateMap
@@ -598,7 +598,12 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                         return mfact.createObjectMap(resource);
                     case TEMPLATE_VALUED:
                         return mfact.createObjectMap(mfact.createTemplate(((Literal) resource).getLexicalForm()));
-                }
+					case RDF_STAR_VALUED:
+						return mfact.createObjectMap(
+								(ObjectMap) readEmbeddedTermMap(node, "subject"),
+								(PredicateMap) readEmbeddedTermMap(node, "predicate"),
+								(ObjectMap) readEmbeddedTermMap(node, "object"));
+				}
 
 			} else if (type.equals(getRDF().createIRI(R2RMLVocabulary.PROP_GRAPH_MAP))) {
 				// return the corresponding graphMap
@@ -614,6 +619,31 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		}
 		return null;
 
+	}
+
+	/**
+	 * Reads and returns a TermMap embedded in an RDFStar TermMap.
+	 *
+	 * @param node
+	 *            - the Resource node in which to look
+	 * @param type
+	 *            - a string, one of subject, predicate, object
+	 * @return the created TermMap object
+	 * @author Lukas Sundqvist
+	 */
+	private TermMap readEmbeddedTermMap(BlankNodeOrIRI node, String type) {
+		RDFTerm resource;
+		switch (type){
+			case "subject":
+				resource = readObjectInMappingGraph(node, getRDF().createIRI(RDFStarVocabulary.PROP_STAR_SUBJECT));
+				return readTermMap((BlankNodeOrIRI) resource, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP));
+			case "predicate":
+				resource = readObjectInMappingGraph(node, getRDF().createIRI(RDFStarVocabulary.PROP_STAR_PREDICATE));
+				return readTermMap((BlankNodeOrIRI) resource, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP));
+			case "object":
+				resource = readObjectInMappingGraph(node, getRDF().createIRI(RDFStarVocabulary.PROP_STAR_OBJECT));
+				return readTermMap((BlankNodeOrIRI) resource, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP));}
+		return null;
 	}
 
 	/**

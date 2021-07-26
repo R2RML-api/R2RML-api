@@ -86,6 +86,14 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
         setNode(getRDF().createBlankNode());
     }
 
+    // Is only used by unofficial RDF-star extension
+    TermMapImpl(RDF rdf) {
+        super(rdf);
+        this.termMapType = TermMapType.RDF_STAR_VALUED;
+        this.termTypeIRI = null;
+        setNode(getRDF().createBlankNode());
+    }
+
 
     @Override
     public TermMapType getTermMapType() {
@@ -102,6 +110,7 @@ public abstract class TermMapImpl extends MappingComponentImpl implements TermMa
         switch (termMapType) {
             case TEMPLATE_VALUED:
             case COLUMN_VALUED:
+            case RDF_STAR_VALUED:
                 this.termTypeIRI = typeIRI;
                 break;
             case CONSTANT_VALUED:

@@ -2,7 +2,7 @@ allprojects {
     apply plugin: 'maven'
 
     group = 'eu.optique-project'
-    version = '0.6.0'
+    version = '0.6.1'
 }
 
 subprojects {
