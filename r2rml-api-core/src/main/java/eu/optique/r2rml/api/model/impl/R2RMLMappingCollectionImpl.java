@@ -19,29 +19,9 @@
  ******************************************************************************/
 package eu.optique.r2rml.api.model.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import eu.optique.r2rml.api.model.GraphMap;
-import eu.optique.r2rml.api.model.LogicalTable;
 import eu.optique.r2rml.api.MappingFactory;
-import eu.optique.r2rml.api.model.ObjectMap;
-import eu.optique.r2rml.api.model.PredicateMap;
-import eu.optique.r2rml.api.model.PredicateObjectMap;
-import eu.optique.r2rml.api.model.R2RMLMappingCollection;
 import eu.optique.r2rml.api.R2RMLMappingManager;
-import eu.optique.r2rml.api.model.R2RMLView;
-import eu.optique.r2rml.api.model.R2RMLVocabulary;
-import eu.optique.r2rml.api.model.RefObjectMap;
-import eu.optique.r2rml.api.model.SubjectMap;
-import eu.optique.r2rml.api.model.TermMap;
-import eu.optique.r2rml.api.model.TriplesMap;
+import eu.optique.r2rml.api.model.*;
 import org.apache.commons.rdf.api.BlankNode;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Graph;
@@ -50,6 +30,8 @@ import org.apache.commons.rdf.api.Literal;
 import org.apache.commons.rdf.api.RDF;
 import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.api.Triple;
+
+import java.util.*;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -188,8 +170,10 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
         Collection<RDFTerm> logicalTableNode = readObjectsInMappingGraph(node, getRDF().createIRI(R2RMLVocabulary.PROP_LOGICAL_TABLE));
 		// must be exactly one logicaltable node
 		if (logicalTableNode.size() != 1) {
-			throw new InvalidR2RMLMappingException(
-					"Invalid mapping: TriplesMap " + node + " has no LogicalTable.");
+			if (logicalTableNode.isEmpty())
+				throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " without LogicalTable node");
+			else // size > 1
+				throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " with more than one LogicalTable node");
 		} else {
 			BlankNodeOrIRI logicalTable = (BlankNodeOrIRI) logicalTableNode.toArray()[0];
 			boolean isSQLTable = false;
@@ -328,8 +312,10 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                     .map(Triple::getObject)
                     .collect(toSet());
 			if (subjectMapNode.size() != 1) {
-				throw new InvalidR2RMLMappingException(
-						"Invalid mapping: TriplesMap without subjectMap node");
+				if (subjectMapNode.isEmpty()) 
+					throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " without subjectMap node");
+				 else // size > 1
+					throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " with more than one subjectMap node");
 			} else {
 				BlankNodeOrIRI subjectNode = (BlankNodeOrIRI) subjectMapNode.toArray()[0];
 
