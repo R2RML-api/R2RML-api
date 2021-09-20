@@ -171,7 +171,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		// must be exactly one logicaltable node
 		if (logicalTableNode.size() != 1) {
 			if (logicalTableNode.isEmpty())
-				throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " without LogicalTable node");
+				throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " without a LogicalTable node");
 			else // size > 1
 				throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " with more than one LogicalTable node");
 		} else {
@@ -313,7 +313,7 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
                     .collect(toSet());
 			if (subjectMapNode.size() != 1) {
 				if (subjectMapNode.isEmpty()) 
-					throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " without subjectMap node");
+					throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " without a subjectMap node");
 				 else // size > 1
 					throw new InvalidR2RMLMappingException("Invalid mapping: TriplesMap " + node + " with more than one subjectMap node");
 			} else {
