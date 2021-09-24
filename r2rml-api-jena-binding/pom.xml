@@ -2,13 +2,13 @@
 	<parent>
 		<artifactId>r2rml-api-parent</artifactId>
 		<groupId>eu.optique-project</groupId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>r2rml-api-jena-binding</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7.0-SNAPSHOT</version>
+	<version>0.7.0</version>
 	<name>Optique R2RML API - Jena binding</name>
 	<properties>
 		<jena.version>3.17.0</jena.version>
@@ -37,7 +37,7 @@
 		<dependency>
 			<groupId>eu.optique-project</groupId>
 			<artifactId>r2rml-api-core</artifactId>
-			<version>0.7.0-SNAPSHOT</version>
+			<version>0.7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
