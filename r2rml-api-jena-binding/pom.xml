@@ -11,7 +11,7 @@
 	<version>0.7.0-SNAPSHOT</version>
 	<name>Optique R2RML API - Jena binding</name>
 	<properties>
-		<jena.version>3.17.0</jena.version>
+		<jena.version>4.2.0</jena.version>
 	</properties>
 	<dependencies>
         <dependency>
