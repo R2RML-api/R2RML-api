@@ -555,8 +555,8 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 		// look for RDF-star triple
 		if (resource == null) {
 			resource = readObjectInMappingGraph(node, getRDF().createIRI(R2RMLVocabulary.PROP_TERM_TYPE));
-			if (resource != null && resource.toString().equals(RDFStarVocabulary.TERM_STAR_TRIPLE)) {
-				termMapType = TermMap.TermMapType.RDF_STAR_VALUED; }
+			if ((resource instanceof IRI) && resource.toString().equals(RDFStarVocabulary.TERM_STAR_TRIPLE)) {
+				termMapType = TermMap.TermMapType.RDF_STAR_VALUED; }	// TODO: Change comparison
 			else {
 				resource = null; }
 		}
@@ -642,8 +642,10 @@ public class R2RMLMappingCollectionImpl implements R2RMLMappingCollection {
 				return readTermMap((BlankNodeOrIRI) resource, getRDF().createIRI(R2RMLVocabulary.PROP_PREDICATE_MAP));
 			case "object":
 				resource = readObjectInMappingGraph(node, getRDF().createIRI(RDFStarVocabulary.PROP_STAR_OBJECT));
-				return readTermMap((BlankNodeOrIRI) resource, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP));}
-		return null;
+				return readTermMap((BlankNodeOrIRI) resource, getRDF().createIRI(R2RMLVocabulary.PROP_OBJECT_MAP));
+			default:
+				return null;
+		}
 	}
 
 	/**

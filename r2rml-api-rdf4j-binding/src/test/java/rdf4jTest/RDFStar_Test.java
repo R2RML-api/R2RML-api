@@ -58,74 +58,13 @@ public class RDFStar_Test
 		rdfParser.parse(fis, "testMapping");
 		
 		Collection<TriplesMap> coll = mm.importMappings(m);
-		
-		Assert.assertTrue(coll.size()==2);
-		
-		Iterator<TriplesMap> it=coll.iterator();
-		/*while(it.hasNext()){
-			TriplesMap current=it.next();
 
-			SubjectMap s=current.getSubjectMap();
-			Template t=s.getTemplate();
-			Assert.assertTrue(t.getColumnName(0).contains("EMPNO"));
-			
-			LogicalTable table=current.getLogicalTable();
-			
-			SQLBaseTableOrViewImpl ta= (SQLBaseTableOrViewImpl) table;
-			Assert.assertTrue(ta.getTableName().contains("EMP2DEPT"));
-				
-		}*/
+		Assert.assertEquals(2, coll.size());
+		Assert.assertTrue(coll.stream()
+				.anyMatch(triplesMap -> triplesMap.getSubjectMap() instanceof RDFStarTermMap));
+		Assert.assertTrue(coll.stream()
+				.flatMap(triplesMap -> triplesMap.getPredicateObjectMaps().stream()
+						.flatMap(predicateObjectMap -> predicateObjectMap.getObjectMaps().stream()))
+				.anyMatch(objectMap -> objectMap instanceof RDFStarTermMap));
 	}
-	
-	
-
-	
-	
-	@Test
-	@Ignore
-	public void test2() throws Exception{
-		
-		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test5.ttl");
-		
-		RDF4JR2RMLMappingManager mm = RDF4JR2RMLMappingManager.getInstance();
-		
-		// Read the file into a model.
-		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
-		Model m = new LinkedHashModel();
-		rdfParser.setRDFHandler(new StatementCollector(m));
-		rdfParser.parse(fis, "testMapping");
-		
-		Collection<TriplesMap> coll = mm.importMappings(m);
-		
-		Assert.assertTrue(coll.size()==1);
-		
-		Iterator<TriplesMap> it=coll.iterator();
-		while(it.hasNext()){
-			TriplesMap current=it.next();
-
-			Iterator<PredicateObjectMap> pomit=current.getPredicateObjectMaps().iterator();
-			PredicateObjectMap pom=pomit.next();
-			
-			Iterator<PredicateMap> pmit=pom.getPredicateMaps().iterator();
-			while(pmit.hasNext()){
-				PredicateMap p=pmit.next();
-				boolean first=p.getConstant().toString().contains("department");
-				
-				Assert.assertTrue(first);
-				
-			}
-			
-			Iterator<ObjectMap> omit=pom.getObjectMaps().iterator();
-			while(omit.hasNext()){
-				ObjectMap o=omit.next();
-				
-				boolean first=o.getTemplate().getColumnName(0).contains("DEPTNO");
-				
-				Assert.assertTrue(first);
-
-			}
-		}
-	}
-
-	
 }
