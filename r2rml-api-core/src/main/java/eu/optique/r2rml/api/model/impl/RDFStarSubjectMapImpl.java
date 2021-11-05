@@ -10,7 +10,6 @@ import java.util.*;
 /**
  * An implementation of a SubjectMap containing an embedded triple.
  *
- * @author Marius Strandhaug
  * @author Lukas Sundqvist
  */
 public class RDFStarSubjectMapImpl extends RDFStarTermMapImpl implements SubjectMap {

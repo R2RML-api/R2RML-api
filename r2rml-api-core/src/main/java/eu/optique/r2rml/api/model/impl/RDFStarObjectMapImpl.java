@@ -13,7 +13,6 @@ import java.util.Set;
 /**
  * An implementation of an ObjectMap containing an embedded triple.
  *
- * @author Marius Strandhaug
  * @author Lukas Sundqvist
  */
 public class RDFStarObjectMapImpl extends RDFStarTermMapImpl implements ObjectMap {
