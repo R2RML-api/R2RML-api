@@ -7,7 +7,7 @@ package eu.optique.r2rml.api.model;
  */
 public class RDFStarVocabulary {
 
-    public static final String NAMESPACE = "https://w3id.org/obda/r2rmlstar/termmap#";
+    public static final String NAMESPACE = "https://w3id.org/obda/r2rmlstar#";
 
     public static final String PROP_STAR_SUBJECT = NAMESPACE + "subject";
     public static final String PROP_STAR_PREDICATE = NAMESPACE + "predicate";
