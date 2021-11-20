@@ -130,6 +130,11 @@ public class MappingFactoryImpl implements MappingFactory {
     }
 
     @Override
+	public SubjectMap createSubjectMap(ObjectMap subject, PredicateMap predicate, ObjectMap object) {
+		return new RDFStarSubjectMapImpl(rdf, subject, predicate, object);
+	}
+
+	@Override
 	public PredicateMap createPredicateMap(Template template) {
 		return new PredicateMapImpl(rdf, template);
 	}
@@ -158,7 +163,12 @@ public class MappingFactoryImpl implements MappingFactory {
     public ObjectMap createObjectMap(RDFTerm constant) {
         return new ObjectMapImpl(rdf, constant);
     }
-	
+
+	@Override
+	public ObjectMap createObjectMap(ObjectMap subject, PredicateMap predicate, ObjectMap object) {
+		return new RDFStarObjectMapImpl(rdf, subject, predicate, object);
+	}
+
 	public RefObjectMap createRefObjectMap(TriplesMap parentMap) {
 		return new RefObjectMapImpl(rdf, parentMap);
 	}

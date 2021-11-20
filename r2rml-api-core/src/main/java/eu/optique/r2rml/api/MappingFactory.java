@@ -1,18 +1,6 @@
 package eu.optique.r2rml.api;
 
-import eu.optique.r2rml.api.model.GraphMap;
-import eu.optique.r2rml.api.model.InverseExpression;
-import eu.optique.r2rml.api.model.Join;
-import eu.optique.r2rml.api.model.LogicalTable;
-import eu.optique.r2rml.api.model.ObjectMap;
-import eu.optique.r2rml.api.model.PredicateMap;
-import eu.optique.r2rml.api.model.PredicateObjectMap;
-import eu.optique.r2rml.api.model.R2RMLView;
-import eu.optique.r2rml.api.model.RefObjectMap;
-import eu.optique.r2rml.api.model.SQLBaseTableOrView;
-import eu.optique.r2rml.api.model.SubjectMap;
-import eu.optique.r2rml.api.model.Template;
-import eu.optique.r2rml.api.model.TriplesMap;
+import eu.optique.r2rml.api.model.*;
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDFTerm;
@@ -173,6 +161,19 @@ public interface MappingFactory {
     SubjectMap createSubjectMap(IRI constant);
 
     /**
+     * Create a new SubjectMap containing an embedded triple, the embedded
+     * triple consists of three embedded term maps which are passed to the
+     * constructor. The term map type of the SubjectMap will be set to
+     * TermMapType.RDF_STAR_VALUED.
+     *
+     * @param subject The embedded subject.
+     * @param predicate The embedded predicate.
+     * @param object The embedded object.
+     * @return The created SubjectMap.
+     */
+    SubjectMap createSubjectMap(ObjectMap subject, PredicateMap predicate, ObjectMap object);
+
+    /**
      * Create a new PredicateMap with the given template. The term map type of
      * the PredicateMap will be set to TermMapType.TEMPLATE_VALUED.
      *
@@ -227,6 +228,19 @@ public interface MappingFactory {
      * @return The created ObjectMap.
      */
     ObjectMap createObjectMap(RDFTerm constant);
+
+    /**
+     * Create a new ObjectMap containing an embedded triple, the embedded
+     * triple consists of three embedded term maps which are passed to the
+     * constructor. The term map type of the SubjectMap will be set to
+     * TermMapType.RDF_STAR_VALUED.
+     *
+     * @param subject The embedded subject.
+     * @param predicate The embedded predicate.
+     * @param object The embedded object.
+     * @return The created ObjectMap.
+     */
+    ObjectMap createObjectMap(ObjectMap subject, PredicateMap predicate, ObjectMap object);
 
     /**
      * Create a new RefObjectMap with the given resource for the parent triples
