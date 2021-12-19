@@ -13,27 +13,36 @@ R2RML-api
 		<dependency>
 			<groupId>eu.optique-project</groupId>
 			<artifactId>r2rml-api-core</artifactId>
-			<version>0.6.0</version>
+			<version>0.8.0</version>
 		</dependency>
 
         <!-- Optique R2RML API RDF4J Binding -->
 		<dependency>
 			<groupId>eu.optique-project</groupId>
 			<artifactId>r2rml-api-rdf4j-binding</artifactId>
-			<version>0.6.0</version>
+			<version>0.8.0</version>
 		</dependency>
 
         <!-- Optique R2RML API Jena Binding -->
         <dependency>
 			<groupId>eu.optique-project</groupId>
 			<artifactId>r2rml-api-jena-binding</artifactId>
-			<version>0.6.0</version>
+			<version>0.8.0</version>
 		</dependency>
 	</dependencies>
 ```
 
 
 ## Release history
+
+<a name="v0.8.0"></a>
+### 17 December, 2021 ::  Version 0.8.0 
+* support for `RDF*` added
+
+<a name="v0.7.0"></a>
+### 24 September, 2017 ::  Version 0.7.0 
+* update dependecies
+* better error message
 
 <a name="v0.6.0"></a>
 ### 1 March, 2017 ::  Version 0.6.0 
