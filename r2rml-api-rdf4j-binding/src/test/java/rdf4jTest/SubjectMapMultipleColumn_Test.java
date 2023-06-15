@@ -24,12 +24,12 @@ import java.util.Iterator;
 
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
 import org.apache.commons.rdf.rdf4j.RDF4J;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
-import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
@@ -95,7 +95,7 @@ public class SubjectMapMultipleColumn_Test
 	@Test
 	public void test2() throws Exception{
 		
-		ValueFactory myFactory = ValueFactoryImpl.getInstance();
+		ValueFactory myFactory = SimpleValueFactory.getInstance();
 		RDF4J rdf4J = new RDF4J();
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test3.ttl");
 

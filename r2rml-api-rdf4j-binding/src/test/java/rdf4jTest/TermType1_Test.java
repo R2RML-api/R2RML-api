@@ -25,12 +25,12 @@ import java.util.Iterator;
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.rdf4j.RDF4J;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
-import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.Rio;
@@ -54,7 +54,7 @@ public class TermType1_Test {
 	@Test
 	public void test() throws Exception{
 
-		ValueFactory myFactory = ValueFactoryImpl.getInstance();
+		ValueFactory myFactory = SimpleValueFactory.getInstance();
 		
 		InputStream fis = getClass().getResourceAsStream("../mappingFiles/test8.ttl");
 		

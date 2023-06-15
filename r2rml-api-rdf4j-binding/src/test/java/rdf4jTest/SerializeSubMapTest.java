@@ -25,11 +25,10 @@ import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Triple;
 import org.apache.commons.rdf.rdf4j.RDF4J;
 import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.ValueFactory;
-import org.eclipse.rdf4j.model.impl.URIImpl;
-import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 
 import eu.optique.r2rml.api.MappingFactory;
 import eu.optique.r2rml.api.model.SubjectMap;
@@ -42,20 +41,20 @@ public class SerializeSubMapTest {
 	public void test(){
         RDF4JR2RMLMappingManager mm = RDF4JR2RMLMappingManager.getInstance();
 		MappingFactory mfact = mm.getMappingFactory();
-		ValueFactory myFactory = ValueFactoryImpl.getInstance();
+		ValueFactory myFactory = SimpleValueFactory.getInstance();
 
         RDF4J rdf4J = new RDF4J();
 
 		//SubjectMap
 		String subMapURI = "http://data.example.com/resource/subject";
-		IRI subRes = new URIImpl(subMapURI);
+		IRI subRes = myFactory.createIRI(subMapURI);
 		Template templs =  mfact.createTemplate("http://data.example.com/employee/{EMPNO}");
 		SubjectMap sm =  mfact.createSubjectMap(templs);
 		sm.setNode((BlankNodeOrIRI) rdf4J.asRDFTerm(subRes));
 
 		Set<Triple> stmts = sm.serialize();
 		for(Triple stmt : stmts){
-			if(myFactory.createURI(R2RMLVocabulary.PROP_TEMPLATE).equals(stmt.getPredicate())){
+			if(myFactory.createIRI(R2RMLVocabulary.PROP_TEMPLATE).equals(stmt.getPredicate())){
 
 				Assert.assertTrue(stmt.getObject().toString().contains("{EMPNO}"));
 			}
