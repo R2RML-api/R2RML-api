@@ -25,10 +25,10 @@ import java.util.LinkedList;
 import eu.optique.r2rml.api.binding.rdf4j.RDF4JR2RMLMappingManager;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.rdf4j.RDF4J;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import org.eclipse.rdf4j.model.ValueFactory;
-import org.eclipse.rdf4j.model.impl.ValueFactoryImpl;
 
 import eu.optique.r2rml.api.model.LogicalTable;
 import eu.optique.r2rml.api.MappingFactory;
@@ -62,20 +62,20 @@ public class InMemoryStructureCreation1_Test {
 		SubjectMap sm = mfact.createSubjectMap(templs);
 		
 		//Associated Classes
-		ValueFactory myFactory = ValueFactoryImpl.getInstance();
-		sm.addClass((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://xmlns.com/foaf/0.1/", "Person")));
-		sm.addClass((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://example.com/", "Student")));
+		ValueFactory myFactory = SimpleValueFactory.getInstance();
+		sm.addClass((IRI) rdf4j.asRDFTerm(myFactory.createIRI("http://xmlns.com/foaf/0.1/", "Person")));
+		sm.addClass((IRI) rdf4j.asRDFTerm(myFactory.createIRI("http://example.com/", "Student")));
 					
 		//PredicateObjectMap
-		PredicateMap pred = mfact.createPredicateMap((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://example.com/role")));
+		PredicateMap pred = mfact.createPredicateMap((IRI) rdf4j.asRDFTerm(myFactory.createIRI("http://example.com/role")));
 		Template templo = mfact.createTemplate("http://data.example.com/roles/{ROLE}");
 		ObjectMap obm = mfact.createObjectMap(templo);
 		PredicateObjectMap pom = mfact.createPredicateObjectMap(pred, obm);
 		
 		//Other PredicateObjectMap with DataType
-		PredicateMap pred1 = mfact.createPredicateMap((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://example.com/role1")));
+		PredicateMap pred1 = mfact.createPredicateMap((IRI) rdf4j.asRDFTerm(myFactory.createIRI("http://example.com/role1")));
 		ObjectMap obm1 = mfact.createObjectMap("ROLESS");
-		obm1.setDatatype((IRI) rdf4j.asRDFTerm(myFactory.createURI("http://www.w3.org/2001/XMLSchema#", "positiveInteger")));
+		obm1.setDatatype((IRI) rdf4j.asRDFTerm(myFactory.createIRI("http://www.w3.org/2001/XMLSchema#", "positiveInteger")));
 		PredicateObjectMap pom11 = mfact.createPredicateObjectMap(pred1, obm1);
 		
 		//TriplesMap

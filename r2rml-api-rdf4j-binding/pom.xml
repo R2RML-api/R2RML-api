@@ -2,32 +2,90 @@
     <parent>
         <artifactId>r2rml-api-parent</artifactId>
         <groupId>eu.optique-project</groupId>
-        <version>0.8.1-SNAPSHOT</version>
+        <version>0.9.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>r2rml-api-rdf4j-binding</artifactId>
     <packaging>jar</packaging>
-    <version>0.8.1-SNAPSHOT</version>
+    <version>0.9.0-SNAPSHOT</version>
     <properties>
-        <rdf4j.version>3.7.3</rdf4j.version>
+        <rdf4j.version>[4.2.4,)</rdf4j.version>
     </properties>
     <name>Optique R2RML API - RDF4J binding</name>
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-rdf-rdf4j</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-repository-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-repository-sail</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-util</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-rio-turtle</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-rio-ntriples</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-rio-nquads</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-rio-rdfxml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-rio-trig</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-rio-jsonld</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-sail-memory</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.rdf4j</groupId>
+                    <artifactId>rdf4j-repository-sail</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>eu.optique-project</groupId>
             <artifactId>r2rml-api-core</artifactId>
-            <version>0.8.1-SNAPSHOT</version>
+            <version>0.9.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-model</artifactId>
+            <version>${rdf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-repository-api</artifactId>
+            <version>${rdf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-repository-sail</artifactId>
             <version>${rdf4j.version}</version>
         </dependency>
 
