@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <version>0.9.1-SNAPSHOT</version>
     <properties>
-        <rdf4j.version>[4.2.4,)</rdf4j.version>
+        <rdf4j.version>4.3.7</rdf4j.version>
     </properties>
     <name>Optique R2RML API - RDF4J binding</name>
     <dependencies>
