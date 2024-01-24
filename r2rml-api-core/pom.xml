@@ -2,12 +2,12 @@
     <parent>
         <artifactId>r2rml-api-parent</artifactId>
         <groupId>eu.optique-project</groupId>
-        <version>0.9.1-SNAPSHOT</version>
+        <version>0.9.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>r2rml-api-core</artifactId>
-    <version>0.9.1-SNAPSHOT</version>
+    <version>0.9.1</version>
     <properties>
 
     </properties>
